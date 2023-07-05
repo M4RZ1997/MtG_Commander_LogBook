@@ -1,0 +1,13 @@
+\DTLnewdb{CommanderDecks}
+
+\newcommand{\addCommanderDeck}[3]{%
+	\DTLnewrow{CommanderDecks}%
+	\DTLnewdbentry{CommanderDecks}{DeckName}{#1}%
+	\DTLnewdbentry{CommanderDecks}{Commander}{#2}%
+	\DTLnewdbentry{CommanderDecks}{ColorIdentity}{#3}%
+}
+
+\addCommanderDeck{De/Reforestation}{Titania, Voice of Gaea}{G}%
+\addCommanderDeck{Strength IS Relative}{Rograkh, Son of Rogahh and Jeska, Thrice Reborn}{R}%
+\addCommanderDeck{Adamantine Flyers}{Sephara, Sky's Blade}{W}%
+\addCommanderDeck{}{}{}%
