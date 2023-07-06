@@ -1,0 +1,25 @@
+% ------------------------------------------------------------------------------------------------- %
+% 							 	datastyle.sty 	Marcel Zauder 06/07/2021							 %
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------------- Lists -------------------------------------------- %
+\def\listWinConditions{HP0, Poison, DeckOut, CardEffect, CommanderDamage}%
+\def\listObviousProblems{ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None}%
+\def\listMulliganCauses{ManaScrew, ManaFlood, BadManaCurve, ActionLack, DeckSpecific, None}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------------#--- New Commands ----------------------------------------- %
+\newcommand{\conditionalSet}[4]{
+	\def\foundMatch{0}%
+	\foreach \str in #1 {
+		\ifnum\pdfstrcmp{#4}{\str}=0%
+			\xdef\foundMatch{1}
+			\DTLnewdbentry{#2}{#3}{#4}%
+			\breakforeach
+		\fi
+	}
+	\ifnum\foundMatch=0%
+		\PackageError{M4RZStyleCorp}{Error: #4 Invalid Input}{The Input can only be: #1}%%
+	\fi
+}

@@ -1,0 +1,87 @@
+% ------------------------------------------------------------------------------------------------- %
+%                           cmd_lb_commands.sty  Marcel Zauder 23/03/2021                           %
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------------------- Counters ------------------------------------------- %
+\newcounter{entrynumbers}
+
+\newcounter{winningnumber}
+\newcounter{losingnumber}
+
+\newcounter{hponumber}
+\newcounter{poisonnumber}
+\newcounter{deckoutnumber}
+\newcounter{cardeffectnumber}
+\newcounter{commanderdamagenumber}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------- Print only non-zero Values in Pie-Chart ---------------------------- %
+\def\printonlypositive#1{\ifdim#1pt>0pt
+	#1~\%
+\fi}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------- Win/Lose-Percentage Calculation -------------------------------- %
+\newcommand{\calculateWinLosePercentage}[1]{
+	\setcounter{entrynumbers}{\DTLrowcount{#1}}
+	
+	\setcounter{winningnumber}{0}
+	\DTLforeach{#1}{\columnname=WinOrLose}{%
+	  \ifthenelse{\equal{\columnname}{WIN}}{\stepcounter{winningnumber}}{}
+	}
+	\setcounter{losingnumber}{0}
+	\DTLforeach{#1}{\columnname=WinOrLose}{%
+	  \ifthenelse{\equal{\columnname}{LOSE}}{\stepcounter{losingnumber}}{}
+	}
+	
+	\FPset{winpercentage}{0}
+	\FPeval{winpercentage}{round(\thewinningnumber/\theentrynumbers*100,2)}
+	\xdef\winpercentage{\winpercentage}\relax
+	\FPset{losepercentage}{0}
+	\FPeval{losepercentage}{round(\thelosingnumber/\theentrynumbers*100,2)}
+	\xdef\losepercentage{\losepercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------------- Win-Conditions Calculation ---------------------------------- %
+\newcommand{\calculateWinConditionsPercentages}[2]{
+	\setcounter{entrynumbers}{\DTLrowcount{#1}}
+	
+	\setcounter{hponumber}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
+	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{HP0}}{\stepcounter{hponumber}}{}}{}
+	}
+	\setcounter{poisonnumber}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
+	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{Poison}}{\stepcounter{poisonnumber}}{}}{}
+	}
+	\setcounter{deckoutnumber}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
+	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{Deckout}}{\stepcounter{deckoutnumber}}{}}{}
+	}
+	\setcounter{cardeffectnumber}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
+	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{CardEffect}}{\stepcounter{cardeffectnumber}}{}}{}
+	}
+	\setcounter{commanderdamagenumber}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
+	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{CommanderDamage}}{\stepcounter{commanderdamagenumber}}{}}{}
+	}
+	
+	\FPset{hpopercentage}{0}
+	\FPeval{hpopercentage}{round(\thehponumber/\theentrynumbers*100,2)}
+	\xdef\hpopercentage{\hpopercentage}\relax
+	\FPset{poisonpercentage}{0}
+	\FPeval{poisonpercentage}{round(\thepoisonnumber/\theentrynumbers*100,2)}
+	\xdef\poisonpercentage{\poisonpercentage}\relax
+	\FPset{deckoutpercentage}{0}
+	\FPeval{deckoutpercentage}{round(\thedeckoutnumber/\theentrynumbers*100,2)}
+	\xdef\deckoutpercentage{\deckoutpercentage}\relax
+	\FPset{cardeffectpercentage}{0}
+	\FPeval{cardeffectpercentage}{round(\thecardeffectnumber/\theentrynumbers*100,2)}
+	\xdef\cardeffectpercentage{\cardeffectpercentage}\relax
+	\FPset{commanderdamagepercentage}{0}
+	\FPeval{commanderdamagepercentage}{round(\thecommanderdamagenumber/\theentrynumbers*100,2)}
+	\xdef\commanderdamagepercentage{\commanderdamagepercentage}\relax
+}

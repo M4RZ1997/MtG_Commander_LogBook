@@ -1,6 +1,8 @@
 \documentclass{article}
 
+\usepackage{data/datastyle}
 \usepackage{stylesheets/cmd_lb_stylesheet}
+\usepackage{stylesheets/cmd_lb_commands}
 
 \begin{document}
 	\KOMAoptions{paper=landscape,DIV=last}
@@ -9,29 +11,9 @@
 	
 	\section*{1v1 Commander Breakdown}
 	\input{data/data_1v1.tex}
-	\newcounter{entrynumbers}
-	\setcounter{entrynumbers}{\DTLrowcount{LogBook1v1}}
-	
-	\newcounter{winningnumber}
-	\setcounter{winningnumber}{0}
-	\DTLforeach{LogBook1v1}{\columnname=WinOrLose}{%
-	  \ifthenelse{\equal{\columnname}{WIN}}{\stepcounter{winningnumber}}{}
-	}
-	
-	\newcounter{losingnumber}
-	\setcounter{losingnumber}{0}
-	\DTLforeach{LogBook1v1}{\columnname=WinOrLose}{%
-	  \ifthenelse{\equal{\columnname}{LOSE}}{\stepcounter{losingnumber}}{}
-	}
-	
-	\FPset{winpercentage}{0}
-	\FPeval{winpercentage}{round(\thewinningnumber/\theentrynumbers*100,2)}
-	\xdef\winpercentage{\winpercentage}\relax
-	\FPset{losepercentage}{0}
-	\FPeval{losepercentage}{round(\thelosingnumber/\theentrynumbers*100,2)}
-	\xdef\losepercentage{\losepercentage}\relax
+	\calculateWinLosePercentage{LogBook1v1}
 	\begin{tikzpicture}%
-		\pie[explode=0.05, text=inside, radius=3, color={MarzGreen!80, MarzRed}]{%
+		\pie[explode=0.05, text=inside, radius=3, color={MarzGreen!60, MarzRed}]{%
 			\winpercentage/WIN,
 			\losepercentage/LOSE
 		}%
@@ -41,12 +23,20 @@
 	\noindent The Average Turn Number is: \averageTurnNumber\\
 	The Average Win Percentage is: \winpercentage\%
 	
+	\calculateWinConditionsPercentages{LogBook1v1}{WIN}
+	\begin{tikzpicture}%
+		\pie[explode=0.05, text=legend, radius=3, color={MarzDarkRed, MarzPurple, MarzBlue, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
+			\hpopercentage/Hit Points 0,
+			\poisonpercentage/Poison,
+			\deckoutpercentage/Deck-Out,
+			\cardeffectpercentage/Card Effect,
+			\commanderdamagepercentage/ Commander Damage
+		}%
+	\end{tikzpicture}%
+	
 	\newpage
 	\section*{3-Player Commander Breakdown}
 	
 	\newpage
 	\section*{4-Player Commander Breakdown}
-	
-	\newpage
-	\section*{Large Group Commander Breakdown}
 \end{document}
