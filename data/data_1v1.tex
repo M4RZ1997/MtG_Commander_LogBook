@@ -1,9 +1,9 @@
 \DTLnewdb{LogBook1v1}
 
-\newcommand{\add1v1entry}[9]{%
+\newcommand{\addsingleplayerentry}[9]{%
 	\DTLnewrow{LogBook1v1}%
 	\DTLnewdbentry{LogBook1v1}{DeckName}{#1}%
-	\DTLnewdbentry{LogBook1v1}{WinOrLoose}{#2}%
+	\DTLnewdbentry{LogBook1v1}{WinOrLose}{#2}%
 	\DTLnewdbentry{LogBook1v1}{PlayerStart}{#3}%
 	\DTLnewdbentry{LogBook1v1}{FastMana}{#4}%
 	\DTLnewdbentry{LogBook1v1}{TurnNumber}{#5}%
@@ -13,6 +13,6 @@
 	\DTLnewdbentry{LogBook1v1}{ObviousProblems}{#9}%
 }
 
-\add1v1entry{Burning Heavens}{WIN}{self}{no}{12}{Life hit 0}{1}{MANA-Screw}{no}%
-\add1v1entry{Burning Heavens}{WIN}{self}{no}{4}{Life hit 0}{1}{MANA-Screw}{no}%
-\add1v1entry{Hiding Ninjas}{WIN}{opponent}{yes}{8}{Poison Deatch}{0}{none}{no}%
+\addsingleplayerentry{Burning Heavens}{WIN}{self}{no}{12}{Life hit 0}{1}{MANA-Screw}{no}%
+\addsingleplayerentry{Burning Heavens}{WIN}{self}{no}{4}{Life hit 0}{1}{MANA-Screw}{no}%
+\addsingleplayerentry{Hiding Ninjas}{WIN}{opponent}{yes}{8}{Poison Deatch}{0}{none}{no}%

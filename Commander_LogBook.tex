@@ -1,0 +1,52 @@
+\documentclass{article}
+
+\usepackage{stylesheets/cmd_lb_stylesheet}
+
+\begin{document}
+	\KOMAoptions{paper=landscape,DIV=last}
+	\newgeometry{hmargin=2.5cm,bottom=25mm,height=150mm,includehead, textheight=490pt}
+	\input{data/commander_decklist.tex}
+	
+	\section*{1v1 Commander Breakdown}
+	\input{data/data_1v1.tex}
+	\newcounter{entrynumbers}
+	\setcounter{entrynumbers}{\DTLrowcount{LogBook1v1}}
+	
+	\newcounter{winningnumber}
+	\setcounter{winningnumber}{0}
+	\DTLforeach{LogBook1v1}{\columnname=WinOrLose}{%
+	  \ifthenelse{\equal{\columnname}{WIN}}{\stepcounter{winningnumber}}{}
+	}
+	
+	\newcounter{losingnumber}
+	\setcounter{losingnumber}{0}
+	\DTLforeach{LogBook1v1}{\columnname=WinOrLose}{%
+	  \ifthenelse{\equal{\columnname}{LOSE}}{\stepcounter{losingnumber}}{}
+	}
+	
+	\FPset{winpercentage}{0}
+	\FPeval{winpercentage}{round(\thewinningnumber/\theentrynumbers*100,2)}
+	\xdef\winpercentage{\winpercentage}\relax
+	\FPset{losepercentage}{0}
+	\FPeval{losepercentage}{round(\thelosingnumber/\theentrynumbers*100,2)}
+	\xdef\losepercentage{\losepercentage}\relax
+	\begin{tikzpicture}%
+		\pie[explode=0.05, text=inside, radius=3, color={MarzGreen!80, MarzRed}]{%
+			\winpercentage/WIN,
+			\losepercentage/LOSE
+		}%
+	\end{tikzpicture}%
+	
+	\DTLmeanforcolumn{LogBook1v1}{TurnNumber}{\averageTurnNumber}
+	\noindent The Average Turn Number is: \averageTurnNumber\\
+	The Average Win Percentage is: \winpercentage\%
+	
+	\newpage
+	\section*{3-Player Commander Breakdown}
+	
+	\newpage
+	\section*{4-Player Commander Breakdown}
+	
+	\newpage
+	\section*{Large Group Commander Breakdown}
+\end{document}
