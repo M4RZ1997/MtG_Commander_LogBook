@@ -4,16 +4,37 @@
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % -------------------------------------------- Counters ------------------------------------------- %
-\newcounter{entrynumbers}
+\newcounter{entrynumber}%
 
-\newcounter{winningnumber}
-\newcounter{losingnumber}
+\newcounter{winningnumber}%
+\newcounter{losingnumber}%
 
-\newcounter{hponumber}
-\newcounter{poisonnumber}
-\newcounter{deckoutnumber}
-\newcounter{cardeffectnumber}
-\newcounter{commanderdamagenumber}
+\newcounter{hponumber}%
+\newcounter{poisonnumber}%
+\newcounter{deckoutnumber}%
+\newcounter{cardeffectnumber}%
+\newcounter{commanderdamagenumber}%
+
+\newcounter{shortgamenumber}%
+\newcounter{midgamenumber}%
+\newcounter{longgamenumber}%
+\newcounter{verylonggamenumber}%
+
+\newcounter{manascrewnumber}%
+\newcounter{manafloodnumber}%
+\newcounter{carddrawnumber}%
+\newcounter{lackofresponsesnumber}%
+\newcounter{highcmcnumber}%
+\newcounter{targetingnumber}%
+\newcounter{misplaysnumber}%
+
+\newcounter{fastmanawin}%
+\newcounter{fastmanalose}%
+\newcounter{nofastmanawin}%
+\newcounter{nofastmanalose}%
+
+\newcounter{startgamewin}%
+\newcounter{startgamelose}%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------- Print only non-zero Values in Pie-Chart ---------------------------- %
@@ -24,7 +45,7 @@
 % ################################################################################################# %
 % -------------------------------- Win/Lose-Percentage Calculation -------------------------------- %
 \newcommand{\calculateWinLosePercentage}[1]{
-	\setcounter{entrynumbers}{\DTLrowcount{#1}}
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
 	
 	\setcounter{winningnumber}{0}
 	\DTLforeach{#1}{\columnname=WinOrLose}{%
@@ -36,17 +57,21 @@
 	}
 	
 	\FPset{winpercentage}{0}
-	\FPeval{winpercentage}{round(\thewinningnumber/\theentrynumbers*100,2)}
+	\FPeval{winpercentage}{round(\thewinningnumber/\theentrynumber*100,2)}
 	\xdef\winpercentage{\winpercentage}\relax
 	\FPset{losepercentage}{0}
-	\FPeval{losepercentage}{round(\thelosingnumber/\theentrynumbers*100,2)}
+	\FPeval{losepercentage}{round(\thelosingnumber/\theentrynumber*100,2)}
 	\xdef\losepercentage{\losepercentage}\relax
 }
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ----------------------------------- Win-Conditions Calculation ---------------------------------- %
 \newcommand{\calculateWinConditionsPercentages}[2]{
-	\setcounter{entrynumbers}{\DTLrowcount{#1}}
+	\setcounter{entrynumber}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose}{%
+	  \ifthenelse{\equal{\winorlose}{#2}}{\stepcounter{entrynumber}}{}
+	}
+	\ifthenelse{\equal{\theentrynumber}{0}}{\setcounter{entrynumber}{1}}{}
 	
 	\setcounter{hponumber}{0}
 	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
@@ -58,7 +83,7 @@
 	}
 	\setcounter{deckoutnumber}{0}
 	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
-	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{Deckout}}{\stepcounter{deckoutnumber}}{}}{}
+	  \ifthenelse{\equal{\winorlose}{#2}}{\ifthenelse{\equal{\columnname}{DeckOut}}{\stepcounter{deckoutnumber}}{}}{}
 	}
 	\setcounter{cardeffectnumber}{0}
 	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=WinCondition}{%
@@ -70,18 +95,160 @@
 	}
 	
 	\FPset{hpopercentage}{0}
-	\FPeval{hpopercentage}{round(\thehponumber/\theentrynumbers*100,2)}
+	\FPeval{hpopercentage}{round(\thehponumber/\theentrynumber*100,2)}
 	\xdef\hpopercentage{\hpopercentage}\relax
 	\FPset{poisonpercentage}{0}
-	\FPeval{poisonpercentage}{round(\thepoisonnumber/\theentrynumbers*100,2)}
+	\FPeval{poisonpercentage}{round(\thepoisonnumber/\theentrynumber*100,2)}
 	\xdef\poisonpercentage{\poisonpercentage}\relax
 	\FPset{deckoutpercentage}{0}
-	\FPeval{deckoutpercentage}{round(\thedeckoutnumber/\theentrynumbers*100,2)}
+	\FPeval{deckoutpercentage}{round(\thedeckoutnumber/\theentrynumber*100,2)}
 	\xdef\deckoutpercentage{\deckoutpercentage}\relax
 	\FPset{cardeffectpercentage}{0}
-	\FPeval{cardeffectpercentage}{round(\thecardeffectnumber/\theentrynumbers*100,2)}
+	\FPeval{cardeffectpercentage}{round(\thecardeffectnumber/\theentrynumber*100,2)}
 	\xdef\cardeffectpercentage{\cardeffectpercentage}\relax
 	\FPset{commanderdamagepercentage}{0}
-	\FPeval{commanderdamagepercentage}{round(\thecommanderdamagenumber/\theentrynumbers*100,2)}
+	\FPeval{commanderdamagepercentage}{round(\thecommanderdamagenumber/\theentrynumber*100,2)}
 	\xdef\commanderdamagepercentage{\commanderdamagepercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------ Game Lengths Calculations ---------------------------------- %
+\newcommand{\calculateGameLengthsPercentages}[4]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\def\shortgamelength{#2}
+	\def\midgamelength{#3}
+	\def\longgamelength{#4}
+	\setcounter{shortgamenumber}{0}
+	\setcounter{midgamenumber}{0}
+	\setcounter{longgamenumber}{0}
+	\setcounter{verylonggamenumber}{0}
+	\DTLforeach{#1}{\columnname=TurnNumber}{%
+	  \ifthenelse{\columnname<\shortgamelength}{%
+	  	\stepcounter{shortgamenumber}
+	  }{%
+	  	\ifthenelse{\columnname<\midgamelength}{%
+	  		\stepcounter{midgamenumber}
+	  	}{%
+	  		\ifthenelse{\columnname<\longgamelength}{\stepcounter{longgamenumber}}{\stepcounter{verylonggamenumber}}%
+	  	}%
+	  }%
+	}%
+	
+	\FPset{shortgamepercentage}{0}
+	\FPeval{shortgamepercentage}{round(\theshortgamenumber/\theentrynumber*100,2)}
+	\xdef\shortgamepercentage{\shortgamepercentage}\relax
+	\FPset{midgamepercentage}{0}
+	\FPeval{midgamepercentage}{round(\themidgamenumber/\theentrynumber*100,2)}
+	\xdef\midgamepercentage{\midgamepercentage}\relax
+	\FPset{longgamepercentage}{0}
+	\FPeval{longgamepercentage}{round(\thelonggamenumber/\theentrynumber*100,2)}
+	\xdef\longgamepercentage{\longgamepercentage}\relax
+	\FPset{verylonggamepercentage}{0}
+	\FPeval{verylonggamepercentage}{round(\theverylonggamenumber/\theentrynumber*100,2)}
+	\xdef\verylonggamepercentage{\verylonggamepercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------ Game Lengths Calculations ---------------------------------- %
+\newcommand{\calculateObviousProblemsPercentages}[1]{
+	\setcounter{entrynumber}{0}
+	
+	\DTLforeach{#1}{\columnname=ObviousProblems}{%
+	  \ifthenelse{\equal{\columnname}{ManaScrew}}{\stepcounter{entrynumber}\stepcounter{manascrewnumber}}{}%
+	  \ifthenelse{\equal{\columnname}{ManaFlood}}{\stepcounter{entrynumber}\stepcounter{manafloodnumber}}{}%
+	  \ifthenelse{\equal{\columnname}{CardDraw}}{\stepcounter{entrynumber}\stepcounter{carddrawnumber}}{}%
+	  \ifthenelse{\equal{\columnname}{LackOfResponses}}{\stepcounter{entrynumber}\stepcounter{lackofresponsesnumber}}{}%
+	  \ifthenelse{\equal{\columnname}{HighCMC}}{\stepcounter{entrynumber}\stepcounter{highcmcnumber}}{}%
+	  \ifthenelse{\equal{\columnname}{Targeting}}{\stepcounter{entrynumber}\stepcounter{targetingnumber}}{}%
+	  \ifthenelse{\equal{\columnname}{Misplays}}{\stepcounter{entrynumber}\stepcounter{misplaysnumber}}{}%
+	}%
+	
+	\ifthenelse{\equal{\theentrynumber}{0}}{\setcounter{entrynumber}{1}}{}
+	
+	\FPset{manascrewpercentage}{0}
+	\FPeval{manascrewpercentage}{round(\themanascrewnumber/\theentrynumber*100,2)}
+	\xdef\manascrewpercentage{\manascrewpercentage}\relax
+	\FPset{manafloodpercentage}{0}
+	\FPeval{manafloodpercentage}{round(\themanafloodnumber/\theentrynumber*100,2)}
+	\xdef\manafloodpercentage{\manafloodpercentage}\relax
+	\FPset{carddrawpercentage}{0}
+	\FPeval{carddrawpercentage}{round(\thecarddrawnumber/\theentrynumber*100,2)}
+	\xdef\carddrawpercentage{\carddrawpercentage}\relax
+	\FPset{lackofresponsespercentage}{0}
+	\FPeval{lackofresponsespercentage}{round(\thelackofresponsesnumber/\theentrynumber*100,2)}
+	\xdef\lackofresponsespercentage{\lackofresponsespercentage}\relax
+	\FPset{highcmcpercentage}{0}
+	\FPeval{highcmcpercentage}{round(\thehighcmcnumber/\theentrynumber*100,2)}
+	\xdef\highcmcpercentage{\highcmcpercentage}\relax
+	\FPset{targetingpercentage}{0}
+	\FPeval{targetingpercentage}{round(\thetargetingnumber/\theentrynumber*100,2)}
+	\xdef\targetingpercentage{\targetingpercentage}\relax
+	\FPset{misplayspercentage}{0}
+	\FPeval{misplayspercentage}{round(\themisplaysnumber/\theentrynumber*100,2)}
+	\xdef\misplayspercentage{\misplayspercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------- 1v1 Fast-Mana WIN/LOSE Calculation ------------------------------ %
+\newcommand{\calculateFastManaWinLosePercentages}[1]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\setcounter{fastmanawin}{0}
+	\setcounter{fastmanalose}{0}
+	\setcounter{nofastmanawin}{0}
+	\setcounter{nofastmanalose}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=FastMana}{%
+	  \ifthenelse{\equal{\winorlose}{WIN}}%
+	  {%
+	  	\ifthenelse{\equal{\columnname}{NONE}}{\stepcounter{nofastmanawin}\stepcounter{nofastmanalose}}{}%
+	  	\ifthenelse{\equal{\columnname}{SELF}}{\stepcounter{fastmanawin}\stepcounter{nofastmanalose}}{}%
+	  	\ifthenelse{\equal{\columnname}{OPP}}{\stepcounter{nofastmanawin}\stepcounter{fastmanalose}}{}%
+	  	\ifthenelse{\equal{\columnname}{BOTH}}{\stepcounter{fastmanawin}\stepcounter{fastmanalose}}{}%
+	  }{%
+	  	\ifthenelse{\equal{\columnname}{NONE}}{\stepcounter{nofastmanawin}\stepcounter{nofastmanalose}}{}%
+	  	\ifthenelse{\equal{\columnname}{SELF}}{\stepcounter{nofastmanawin}\stepcounter{fastmanalose}}{}%
+	  	\ifthenelse{\equal{\columnname}{OPP}}{\stepcounter{fastmanawin}\stepcounter{nofastmanalose}}{}%
+	  	\ifthenelse{\equal{\columnname}{BOTH}}{\stepcounter{fastmanawin}\stepcounter{fastmanalose}}{}%
+	  }%
+	}%
+	
+	\FPset{nofastmanawinpercentage}{0}
+	\FPeval{nofastmanawinpercentage}{round(\thenofastmanawin/(2*\theentrynumber)*100,2)}
+	\xdef\nofastmanawinpercentage{\nofastmanawinpercentage}\relax
+	\FPset{fastmanawinpercentage}{0}
+	\FPeval{fastmanawinpercentage}{round(\thefastmanawin/(2*\theentrynumber)*100,2)}
+	\xdef\fastmanawinpercentage{\fastmanawinpercentage}\relax
+	\FPset{nofastmanalosepercentage}{0}
+	\FPeval{nofastmanalosepercentage}{round(\thenofastmanalose/(2*\theentrynumber)*100,2)}
+	\xdef\nofastmanalosepercentage{\nofastmanalosepercentage}\relax
+	\FPset{fastmanalosepercentage}{0}
+	\FPeval{fastmanalosepercentage}{round(\thefastmanalose/(2*\theentrynumber)*100,2)}
+	\xdef\fastmanalosepercentage{\fastmanalosepercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------- 1v1 Start Game WIN/LOSE Calculation ----------------------------- %
+\newcommand{\calculateStartGameWinLosePercentage}[1]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\setcounter{startgamewin}{0}
+	\setcounter{startgamelose}{0}
+	\DTLforeach{#1}{\winorlose=WinOrLose, \columnname=PlayerStart}{%
+		\ifthenelse{\equal{\winorlose}{WIN}}%
+	  {%
+	  	\ifthenelse{\equal{\columnname}{SELF}}{\stepcounter{startgamewin}}{}%
+	  	\ifthenelse{\equal{\columnname}{OPP}}{\stepcounter{startgamelose}}{}%
+	  }{%
+	  	\ifthenelse{\equal{\columnname}{SELF}}{\stepcounter{startgamelose}}{}%
+	  	\ifthenelse{\equal{\columnname}{OPP}}{\stepcounter{startgamewin}}{}%
+	  }%
+	}%
+	
+	\FPset{startgamewinpercentage}{0}
+	\FPeval{startgamewinpercentage}{round(\thestartgamewin/\theentrynumber*100,2)}
+	\xdef\startgamewinpercentage{\startgamewinpercentage}\relax
+	\FPset{startgamelosepercentage}{0}
+	\FPeval{startgamelosepercentage}{round(\thestartgamelose/\theentrynumber*100,2)}
+	\xdef\startgamelosepercentage{\startgamelosepercentage}\relax
 }

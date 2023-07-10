@@ -1,0 +1,38 @@
+\newcommand{\calculateMedian}[2]{
+	% Count the number of rows in the database
+	\def\numrows{\DTLrowcount{#1}}
+
+	% Sort the database by the "Value" column
+	\DTLsort{#2}{#1}
+
+	% Calculate the median
+	\FPeval{rowindex}{round((\numrows+1)/2,0)}
+	\DTLgetvalue{\median}{#1}{\rowindex}{\dtlcolumnindex{#1}{#2}}
+	\xdef\median{\median}\relax
+	% \DTLgetvalue{\median}{#1}{\numexpr{(\numrows+1)/2}}{#2}
+}
+
+\newcommand{\calculateAverage}[2]{
+	\DTLmeanforcolumn{#1}{#2}{\average}
+	\FPeval{averageTurnNumber}{round(\average,2)}
+	\xdef\averageTurnNumber{\averageTurnNumber}\relax
+}
+
+\newcommand{\calculateMinMax}[2]{
+	% Initialize the maximum and minimum values
+	\xdef\maxvalue{0}
+	\xdef\minvalue{10}
+
+	% Iterate over the database to find the maximum and minimum values
+	\DTLforeach{#1}{\value=#2}{%
+		\ifnum\value>\maxvalue
+			\xdef\maxvalue{\value}
+		\fi
+		\ifnum\value<\minvalue
+			\xdef\minvalue{\value}
+		\fi
+	}
+	
+	\xdef\maximum{\maxvalue}\relax
+	\xdef\minimum{\minvalue}\relax
+}

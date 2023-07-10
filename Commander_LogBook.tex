@@ -3,36 +3,126 @@
 \usepackage{data/datastyle}
 \usepackage{stylesheets/cmd_lb_stylesheet}
 \usepackage{stylesheets/cmd_lb_commands}
+\usepackage{stylesheets/cmd_lb_helpers}
 
 \begin{document}
 	\KOMAoptions{paper=landscape,DIV=last}
-	\newgeometry{hmargin=2.5cm,bottom=25mm,height=150mm,includehead, textheight=490pt}
+	\newgeometry{hmargin=2.5cm,bottom=20mm,height=150mm,includehead, textheight=515pt, left=0.5cm, right=0.5cm}
 	\input{data/commander_decklist.tex}
+	
+	\def\winlosepieradius{4}
 	
 	\section*{1v1 Commander Breakdown}
 	\input{data/data_1v1.tex}
-	\calculateWinLosePercentage{LogBook1v1}
-	\begin{tikzpicture}%
-		\pie[explode=0.05, text=inside, radius=3, color={MarzGreen!60, MarzRed}]{%
-			\winpercentage/WIN,
-			\losepercentage/LOSE
-		}%
-	\end{tikzpicture}%
 	
-	\DTLmeanforcolumn{LogBook1v1}{TurnNumber}{\averageTurnNumber}
-	\noindent The Average Turn Number is: \averageTurnNumber\\
-	The Average Win Percentage is: \winpercentage\%
+	\usepgfplotslibrary{statistics}
 	
-	\calculateWinConditionsPercentages{LogBook1v1}{WIN}
-	\begin{tikzpicture}%
-		\pie[explode=0.05, text=legend, radius=3, color={MarzDarkRed, MarzPurple, MarzBlue, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
-			\hpopercentage/Hit Points 0,
-			\poisonpercentage/Poison,
-			\deckoutpercentage/Deck-Out,
-			\cardeffectpercentage/Card Effect,
-			\commanderdamagepercentage/ Commander Damage
-		}%
-	\end{tikzpicture}%
+	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
+	\begin{tabular}{p{0.325\textwidth}}
+		\calculateWinLosePercentage{LogBook1v1}
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
+				\winpercentage/WIN,
+				\losepercentage/LOSE
+			}%
+		\end{tikzpicture}%
+		\\
+
+		\calculateAverage{LogBook1v1}{TurnNumber}
+		\calculateMedian{LogBook1v1}{TurnNumber}
+		\calculateMinMax{LogBook1v1}{TurnNumber}
+		
+		\noindent The Average Turn Number is: \averageTurnNumber\\
+		The Median Turn Number is: \median\\
+		The Minimum is: \minimum\\
+		The Maximum is: \maximum\\		
+		The Average Win-Percentage is: \winpercentage\%
+	\end{tabular}
+	&
+	\def\informationradius{2}
+	\begin{tabular}{m{0.3\textwidth}m{0.3\textwidth}}
+		\textbf{\textsc{Win Condition}} & \textbf{\textsc{Lose Condition}}\\
+		\calculateWinConditionsPercentages{LogBook1v1}{WIN}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
+				\hpopercentage/Hit Points 0,
+				\poisonpercentage/Poison,
+				\deckoutpercentage/Deck-Out,
+				\cardeffectpercentage/Card Effect,
+				\commanderdamagepercentage/ Commander Damage
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		&
+		\calculateWinConditionsPercentages{LogBook1v1}{LOSE}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
+				\hpopercentage/Hit Points 0,
+				\poisonpercentage/Poison,
+				\deckoutpercentage/Deck-Out,
+				\cardeffectpercentage/Card Effect,
+				\commanderdamagepercentage/ Commander Damage
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		\\\\\\
+		\textbf{\textsc{Fast Mana to Win/Lose}} & \textbf{\textsc{Starter to Win/Lose}}
+		\\
+		\calculateFastManaWinLosePercentages{LogBook1v1}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
+				\fastmanawinpercentage/Fast Mana Win,
+				\nofastmanawinpercentage/No Fast Mana Win,
+				\nofastmanalosepercentage/No Fast Mana Lose,
+				\fastmanalosepercentage/Fast Mana Lose
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		&
+		\calculateStartGameWinLosePercentage{LogBook1v1}
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, gray}, before number=\printonlypositive, after number=,]{%
+				\startgamewinpercentage/Starter Win,
+				\startgamelosepercentage/Starter Lose
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		\\\\\\
+		\textbf{\textsc{Game Lengths}} & \textbf{\textsc{Obvious Problems}}
+		\\
+		\calculateGameLengthsPercentages{LogBook1v1}{5}{9}{13}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
+				\shortgamepercentage/{0-\shortgamelength},
+				\midgamepercentage/{\shortgamelength -\midgamelength},
+				\longgamepercentage/{\midgamelength -\longgamelength},
+				\verylonggamepercentage/{\longgamelength +}
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		&
+		% ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None
+		\calculateObviousProblemsPercentages{LogBook1v1}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={green!85, red!85, blue!85, yellow!95, green!35, red!35, blue!35}, before number=\printonlypositive, after number=,]{%
+				\manascrewpercentage/{Mana Screw},
+				\manafloodpercentage/{Mana Flood},
+				\carddrawpercentage/{Card Draw},
+				\lackofresponsespercentage/{Lack of Responses},
+				\highcmcpercentage/{High CMC},
+				\targetingpercentage/{Targeting},
+				\misplayspercentage/{Misplays}
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+	\end{tabular}
+	\end{tabular}
 	
 	\newpage
 	\section*{3-Player Commander Breakdown}
