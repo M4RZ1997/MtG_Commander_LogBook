@@ -1,0 +1,23 @@
+\DTLnewdb{LogBook3Player}
+
+\newcommand{\addthreeplayerentry}[9]{%
+	\DTLnewrow{LogBook3Player}%
+	\DTLnewdbentry{LogBook3Player}{DeckName}{#1}%
+	\setWinOrLose{LogBook3Player}{#2}%
+	\setThreePlayerFinishPosition{LogBook3Player}{#3}%
+	\setThreePlayerFastMana{LogBook3Player}{#4}%
+	\DTLnewdbentry{LogBook3Player}{TurnNumber}{#5}%
+	\conditionalSet{\listWinConditions}{LogBook3Player}{WinCondition}{#6}%
+	\DTLnewdbentry{LogBook3Player}{MulliganNumber}{#7}%
+	\conditionalSet{\listMulliganCauses}{LogBook3Player}{MulliganCause}{#8}%
+	\conditionalSet{\listObviousProblems}{LogBook3Player}{ObviousProblems}{#9}%
+}
+
+\addthreeplayerentry{Burning Heavens}{WIN}{SELF/2,1/2,2/1,3/3}{NO/YES/NO}{12}{HP0}{1}{ManaScrew}{Misplays}%
+\addthreeplayerentry{Burning Heavens}{LOSE/B}{SELF/3,1/2,2/1,3/3}{YES/NO/YES}{14}{Poison}{1}{ManaScrew}{ManaScrew}%
+\addthreeplayerentry{Burning Heavens}{LOSE/UR}{SELF/2,1/1,2/2,3/3}{YES/YES/NO}{5}{CardEffect}{1}{ManaScrew}{Targeting}%
+%\addsingleplayerentry{Burning Heavens}{WIN}{SELF}{NONE}{4}{HP0}{1}{ManaScrew}{None}%
+%\addsingleplayerentry{Hiding Ninjas}{WIN}{OPP}{SELF}{8}{Poison}{0}{None}{None}%
+% Test
+%\addsingleplayerentry{TEST}{LOSE/WUBRG}{OPP}{BOTH}{7}{CommanderDamage}{0}{None}{CardDraw}%
+%\addsingleplayerentry{TEST}{LOSE/B}{SELF}{SELF}{25}{DeckOut}{0}{None}{LackOfResponses}%

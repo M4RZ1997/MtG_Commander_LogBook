@@ -1,3 +1,9 @@
+% ------------------------------------------------------------------------------------------------- %
+%                            cmd_lb_helpers.sty  Marcel Zauder 23/03/2021                           %
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------- Median and Quartile Calculator -------------------------------- %
 \newcommand{\calculateMedian}[2]{
 	% Count the number of rows in the database
 	\def\numrows{\DTLrowcount{#1}}
@@ -6,10 +12,51 @@
 	\DTLsort{#2}{#1}
 
 	% Calculate the median
-	\FPeval{rowindex}{round((\numrows+1)/2,0)}
-	\DTLgetvalue{\median}{#1}{\rowindex}{\dtlcolumnindex{#1}{#2}}
+	\FPeval{medianindex}{clip((\numrows+1)/2)}
+	\FPeval{isInteger}{clip(\medianindex - round(\medianindex,0))}
+	\ifdim\isInteger pt = 0pt
+		\DTLgetvalue{\median}{#1}{\medianindex}{\dtlcolumnindex{#1}{#2}}
+		\FPeval{npoints}{\medianindex-1}
+		\FPset{upperindex}{\medianindex}
+	\else
+		\FPeval{lowerindex}{round(\medianindex -1, 0)}
+		\FPeval{upperindex}{round(\medianindex,0)}
+		\FPset{npoints}{\lowerindex}
+		\DTLgetvalue{\lowermedian}{#1}{\lowerindex}{\dtlcolumnindex{#1}{#2}}
+		\DTLgetvalue{\uppermedian}{#1}{\upperindex}{\dtlcolumnindex{#1}{#2}}
+		\FPeval{median}{round((\lowermedian + \uppermedian)/2,2)}
+	\fi
 	\xdef\median{\median}\relax
-	% \DTLgetvalue{\median}{#1}{\numexpr{(\numrows+1)/2}}{#2}
+	
+	% Calculate Lower and Upper Quartile Indices
+	\FPeval{lowerquartileindex}{clip((\npoints+1)/2)}
+	\FPeval{upperquartileindex}{clip(\numrows - \lowerquartileindex + 1)}
+	
+	% Calculate Lower Quartile
+	\FPeval{isInteger}{clip(\lowerquartileindex - round(\lowerquartileindex,0))}
+	\ifdim\isInteger pt = 0pt
+		\DTLgetvalue{\lowerquartile}{#1}{\lowerquartileindex}{\dtlcolumnindex{#1}{#2}}
+	\else
+		\FPeval{lowerlqindex}{round(\lowerquartileindex -1, 0)}
+		\FPeval{upperlqindex}{round(\lowerquartileindex,0)}
+		\DTLgetvalue{\lowerlqmedian}{#1}{\lowerlqindex}{\dtlcolumnindex{#1}{#2}}
+		\DTLgetvalue{\upperlqmedian}{#1}{\upperlqindex}{\dtlcolumnindex{#1}{#2}}
+		\FPeval{lowerquartile}{round((\lowerlqmedian + \upperlqmedian)/2,2)}
+	\fi
+	\xdef\lowerquartile{\lowerquartile}\relax
+	
+	% Calculate Upper Quartile
+	\FPeval{isInteger}{clip(\upperquartileindex - round(\upperquartileindex,0))}
+	\ifdim\isInteger pt = 0pt
+		\DTLgetvalue{\upperquartile}{#1}{\upperquartileindex}{\dtlcolumnindex{#1}{#2}}
+	\else
+		\FPeval{loweruqindex}{round(\upperquartileindex -1, 0)}
+		\FPeval{upperuqindex}{round(\upperquartileindex,0)}
+		\DTLgetvalue{\loweruqmedian}{#1}{\loweruqindex}{\dtlcolumnindex{#1}{#2}}
+		\DTLgetvalue{\upperuqmedian}{#1}{\upperuqindex}{\dtlcolumnindex{#1}{#2}}
+		\FPeval{upperquartile}{round((\loweruqmedian + \upperuqmedian)/2,2)}
+	\fi
+	\xdef\upperquartile{\upperquartile}\relax
 }
 
 \newcommand{\calculateAverage}[2]{
@@ -20,19 +67,31 @@
 
 \newcommand{\calculateMinMax}[2]{
 	% Initialize the maximum and minimum values
-	\xdef\maxvalue{0}
-	\xdef\minvalue{10}
+	\FPset{maxvalue}{0}
+	\FPset{minvalue}{10}
 
 	% Iterate over the database to find the maximum and minimum values
-	\DTLforeach{#1}{\value=#2}{%
-		\ifnum\value>\maxvalue
-			\xdef\maxvalue{\value}
+	\DTLforeach{#1}{\valTN=#2}{%
+		\ifnum\valTN>\maxvalue
+			\FPset{maxvalue}{\valTN}
 		\fi
-		\ifnum\value<\minvalue
-			\xdef\minvalue{\value}
+		\ifnum\valTN<\minvalue
+			\FPset{minvalue}{\valTN}
 		\fi
 	}
 	
 	\xdef\maximum{\maxvalue}\relax
 	\xdef\minimum{\minvalue}\relax
+}
+
+\newcommand{\calculateBoxPlotOffsetAndStep}[2]{
+	\FPeval{range}{#2 - (#1 - 1)}
+	\FPeval{crudestep}{clip(\range / 8)}
+	\FPeval{step}{round(\crudestep, 0)}
+	\ifdim\step pt<\crudestep pt
+		\FPeval{steps}{clip(\step + 1)}
+	\else
+		\FPeval{steps}{clip(\step)}
+	\fi
+	\FPeval{offset}{clip(#1 - 1 - \steps)}
 }

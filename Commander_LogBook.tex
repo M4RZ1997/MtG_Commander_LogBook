@@ -7,42 +7,62 @@
 
 \begin{document}
 	\KOMAoptions{paper=landscape,DIV=last}
-	\newgeometry{hmargin=2.5cm,bottom=20mm,height=150mm,includehead, textheight=515pt, left=0.5cm, right=0.5cm}
+	\newgeometry{hmargin=2.5cm,bottom=17.5mm,height=150mm,includehead, textheight=520pt, left=0.5cm, right=0.5cm}
 	\input{data/commander_decklist.tex}
 	
 	\def\winlosepieradius{4}
 	
-	\section*{1v1 Commander Breakdown}
+	\section*{\LARGE{1v1 Commander Breakdown}}
 	\input{data/data_1v1.tex}
+	\xdef\logbook{LogBook1v1}
+	
+	%\DTLdisplaydb{LogBook1v1}
 	
 	\usepgfplotslibrary{statistics}
 	
 	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
 	\begin{tabular}{p{0.325\textwidth}}
-		\calculateWinLosePercentage{LogBook1v1}
+		\Large{\textbf{WIN/LOSE Statistics}}\\
+		\calculateWinLosePercentage{\logbook}
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
 				\winpercentage/WIN,
 				\losepercentage/LOSE
 			}%
 		\end{tikzpicture}%
-		\\
-
-		\calculateAverage{LogBook1v1}{TurnNumber}
-		\calculateMedian{LogBook1v1}{TurnNumber}
-		\calculateMinMax{LogBook1v1}{TurnNumber}
-		
-		\noindent The Average Turn Number is: \averageTurnNumber\\
-		The Median Turn Number is: \median\\
-		The Minimum is: \minimum\\
-		The Maximum is: \maximum\\		
-		The Average Win-Percentage is: \winpercentage\%
+		\\\\
+		\Large{\textbf{Turn Number Statistics}}\\
+		\calculateAverage{\logbook}{TurnNumber}
+		\calculateMedian{\logbook}{TurnNumber}
+		\calculateMinMax{\logbook}{TurnNumber}
+		\vspace*{-1.2\fontdimen6\font}\hspace*{1cm}\footnotesize{Average Number of Turns: \averageTurnNumber}\\
+		\begin{tikzpicture}
+			\calculateBoxPlotOffsetAndStep{\minimum}{\maximum}
+			\draw[gray] (0cm,0cm) -- (8cm,0cm);
+			
+			\foreach \x in {1,...,8}
+    			\draw[gray!50, text=black] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3 cm) 
+      			node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*\steps+\offset}};
+      		
+      		\draw[fill=gray!30] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) rectangle ++(\fpeval{((\upperquartile-\offset)/\steps) - ((\lowerquartile-\offset)/\steps)} cm,-1.5 cm);
+      		
+      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -2 cm); % Minimum
+      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+      		\draw[MarzRoyal, thick] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Lower Quartil
+      		\draw[MarzRed, thick] (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
+      		\draw (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+      		\draw (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -2 cm); % Maximum
+      		\draw[MarzOrange, thick] (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
+      		
+      		\filldraw[fill=MarzDarkRed] (\fpeval{((\averageTurnNumber-\offset)/\steps) - 0.5} cm,-1.5 cm) circle (3pt);
+		\end{tikzpicture}
 	\end{tabular}
 	&
 	\def\informationradius{2}
 	\begin{tabular}{m{0.3\textwidth}m{0.3\textwidth}}
-		\textbf{\textsc{Win Condition}} & \textbf{\textsc{Lose Condition}}\\
-		\calculateWinConditionsPercentages{LogBook1v1}{WIN}%
+		\large{\textbf{\textsc{Win Condition}}} & \large{\textbf{\textsc{Lose Condition}}}
+		\\
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
 				\hpopercentage/Hit Points 0,
@@ -55,7 +75,7 @@
 			\node at (-2.25,-2.25) {};%
 		\end{tikzpicture}%
 		&
-		\calculateWinConditionsPercentages{LogBook1v1}{LOSE}%
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
 				\hpopercentage/Hit Points 0,
@@ -68,9 +88,9 @@
 			\node at (-2.25,-2.25) {};%
 		\end{tikzpicture}%
 		\\\\\\
-		\textbf{\textsc{Fast Mana to Win/Lose}} & \textbf{\textsc{Starter to Win/Lose}}
+		\large{\textbf{\textsc{Fast Mana to Win/Lose}}} & \large{\textbf{\textsc{Starter to Win/Lose}}}
 		\\
-		\calculateFastManaWinLosePercentages{LogBook1v1}%
+		\calculateFastManaWinLosePercentages{\logbook}%
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
 				\fastmanawinpercentage/Fast Mana Win,
@@ -82,7 +102,7 @@
 			\node at (-2.25,-2.25) {};%
 		\end{tikzpicture}%
 		&
-		\calculateStartGameWinLosePercentage{LogBook1v1}
+		\calculateStartGameWinLosePercentage{\logbook}
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, gray}, before number=\printonlypositive, after number=,]{%
 				\startgamewinpercentage/Starter Win,
@@ -92,9 +112,9 @@
 			\node at (-2.25,-2.25) {};%
 		\end{tikzpicture}%
 		\\\\\\
-		\textbf{\textsc{Game Lengths}} & \textbf{\textsc{Obvious Problems}}
+		\large{\textbf{\textsc{Game Lengths}}} & \large{\textbf{\textsc{Obvious Problems}}}
 		\\
-		\calculateGameLengthsPercentages{LogBook1v1}{5}{9}{13}%
+		\calculateGameLengthsPercentages{\logbook}{5}{9}{13}%
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
 				\shortgamepercentage/{0-\shortgamelength},
@@ -107,7 +127,7 @@
 		\end{tikzpicture}%
 		&
 		% ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None
-		\calculateObviousProblemsPercentages{LogBook1v1}%
+		\calculateObviousProblemsPercentages{\logbook}%
 		\begin{tikzpicture}%
 			\pie[explode=0.05, text=legend, radius=\informationradius, color={green!85, red!85, blue!85, yellow!95, green!35, red!35, blue!35}, before number=\printonlypositive, after number=,]{%
 				\manascrewpercentage/{Mana Screw},
@@ -125,8 +145,179 @@
 	\end{tabular}
 	
 	\newpage
-	\section*{3-Player Commander Breakdown}
+	\section*{\LARGE{3-Player Commander Breakdown}}
+	\input{data/data_3player.tex}
+	\xdef\logbook{LogBook3Player}
+	
+	%\DTLdisplaydb{LogBook3Player}
+	%\newpage
+	
+	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
+	\begin{tabular}{p{0.325\textwidth}}
+		\Large{\textbf{WIN/LOSE Statistics}}\\
+		\calculateWinLosePercentage{\logbook}
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
+				\winpercentage/WIN,
+				\losepercentage/LOSE
+			}%
+		\end{tikzpicture}%
+		\\\\
+		\Large{\textbf{Turn Number Statistics}}\\
+		\calculateAverage{\logbook}{TurnNumber}
+		\calculateMedian{\logbook}{TurnNumber}
+		\calculateMinMax{\logbook}{TurnNumber}
+		\vspace*{-1.2\fontdimen6\font}\hspace*{1cm}\footnotesize{Average Number of Turns: \averageTurnNumber}\\
+		\begin{tikzpicture}
+			\calculateBoxPlotOffsetAndStep{\minimum}{\maximum}
+			\draw[gray] (0cm,0cm) -- (8cm,0cm);
+			
+			\foreach \x in {1,...,8}
+    			\draw[gray!50, text=black] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3 cm) 
+      			node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*\steps+\offset}};
+      		
+      		\draw[fill=gray!30] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) rectangle ++(\fpeval{((\upperquartile-\offset)/\steps) - ((\lowerquartile-\offset)/\steps)} cm,-1.5 cm);
+      		
+      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -2 cm); % Minimum
+      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+      		\draw[MarzRoyal, thick] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Lower Quartil
+      		\draw[MarzRed, thick] (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
+      		\draw (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+      		\draw (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -2 cm); % Maximum
+      		\draw[MarzOrange, thick] (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
+      		
+      		\filldraw[fill=MarzDarkRed] (\fpeval{((\averageTurnNumber-\offset)/\steps) - 0.5} cm,-1.5 cm) circle (3pt);
+		\end{tikzpicture}
+	\end{tabular}
+	&
+	\def\informationradius{2}
+	\begin{tabular}{m{0.3\textwidth}m{0.3\textwidth}}
+		\large{\textbf{\textsc{Win Condition}}} & \large{\textbf{\textsc{Lose Condition}}}
+		\\
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
+				\hpopercentage/Hit Points 0,
+				\poisonpercentage/Poison,
+				\deckoutpercentage/Deck-Out,
+				\cardeffectpercentage/Card Effect,
+				\commanderdamagepercentage/ Commander Damage
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		&
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
+				\hpopercentage/Hit Points 0,
+				\poisonpercentage/Poison,
+				\deckoutpercentage/Deck-Out,
+				\cardeffectpercentage/Card Effect,
+				\commanderdamagepercentage/ Commander Damage
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+%		\\\\\\
+%		\large{\textbf{\textsc{Fast Mana to Win/Lose}}} & \large{\textbf{\textsc{Starter to Win/Lose}}}
+%		\\
+%		\calculateFastManaWinLosePercentages{\logbook}%
+%		\begin{tikzpicture}%
+%			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
+%				\fastmanawinpercentage/Fast Mana Win,
+%				\nofastmanawinpercentage/No Fast Mana Win,
+%				\nofastmanalosepercentage/No Fast Mana Lose,
+%				\fastmanalosepercentage/Fast Mana Lose
+%			}%
+%			\node at (-2.25,2.25) {};%
+%			\node at (-2.25,-2.25) {};%
+%		\end{tikzpicture}%
+%		&
+%		\calculateStartGameWinLosePercentage{\logbook}
+%		\begin{tikzpicture}%
+%			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, gray}, before number=\printonlypositive, after number=,]{%
+%				\startgamewinpercentage/Starter Win,
+%				\startgamelosepercentage/Starter Lose
+%			}%
+%			\node at (-2.25,2.25) {};%
+%			\node at (-2.25,-2.25) {};%
+%		\end{tikzpicture}%
+		\\\\\\
+		\large{\textbf{\textsc{Game Lengths}}} & \large{\textbf{\textsc{Obvious Problems}}}
+		\\
+		\calculateGameLengthsPercentages{\logbook}{5}{9}{13}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
+				\shortgamepercentage/{0-\shortgamelength},
+				\midgamepercentage/{\shortgamelength -\midgamelength},
+				\longgamepercentage/{\midgamelength -\longgamelength},
+				\verylonggamepercentage/{\longgamelength +}
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+		&
+		% ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None
+		\calculateObviousProblemsPercentages{\logbook}%
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=legend, radius=\informationradius, color={green!85, red!85, blue!85, yellow!95, green!35, red!35, blue!35}, before number=\printonlypositive, after number=,]{%
+				\manascrewpercentage/{Mana Screw},
+				\manafloodpercentage/{Mana Flood},
+				\carddrawpercentage/{Card Draw},
+				\lackofresponsespercentage/{Lack of Responses},
+				\highcmcpercentage/{High CMC},
+				\targetingpercentage/{Targeting},
+				\misplayspercentage/{Misplays}
+			}%
+			\node at (-2.25,2.25) {};%
+			\node at (-2.25,-2.25) {};%
+		\end{tikzpicture}%
+	\end{tabular}
+	\end{tabular}
 	
 	\newpage
-	\section*{4-Player Commander Breakdown}
+	\section*{\LARGE{4-Player Commander Breakdown}}
+	
+	\newpage
+	\section*{\LARGE{\textsc{Burning Heavens} - Kaalia of the Vast}}
+	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
+	\begin{tabular}{p{0.325\textwidth}}
+		\Large{\textbf{WIN/LOSE Statistics}}\\
+		\calculateWinLosePercentage{LogBook1v1}
+		\begin{tikzpicture}%
+			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
+				\winpercentage/WIN,
+				\losepercentage/LOSE
+			}%
+		\end{tikzpicture}%
+		\\\\
+		\Large{\textbf{Turn Number Statistics}}\\
+		\calculateAverage{LogBook1v1}{TurnNumber}
+		\calculateMedian{LogBook1v1}{TurnNumber}
+		\calculateMinMax{LogBook1v1}{TurnNumber}
+		\vspace*{-1.2\fontdimen6\font}\hspace*{1cm}\footnotesize{Average Number of Turns: \averageTurnNumber}\\
+		\begin{tikzpicture}
+			\calculateBoxPlotOffsetAndStep{\minimum}{\maximum}
+			\draw[gray] (0cm,0cm) -- (8cm,0cm);
+			
+			\foreach \x in {1,...,8}
+    			\draw[gray!50, text=black] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3 cm) 
+      			node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*\steps+\offset}};
+      		
+      		\draw[fill=gray!30] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) rectangle ++(\fpeval{((\upperquartile-\offset)/\steps) - ((\lowerquartile-\offset)/\steps)} cm,-1.5 cm);
+      		
+      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -2 cm); % Minimum
+      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+      		\draw[MarzRoyal, thick] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Lower Quartil
+      		\draw[MarzRed, thick] (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
+      		\draw (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+      		\draw (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -2 cm); % Maximum
+      		\draw[MarzOrange, thick] (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
+      		
+      		\filldraw[fill=MarzDarkRed] (\fpeval{((\averageTurnNumber-\offset)/\steps) - 0.5} cm,-1.5 cm) circle (3pt);
+		\end{tikzpicture}
+	\end{tabular}
+	&
+	\end{tabular}
 \end{document}

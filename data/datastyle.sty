@@ -9,7 +9,7 @@
 \def\listMulliganCauses{ManaScrew, ManaFlood, BadManaCurve, ActionLack, DeckSpecific, None}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
-% --------------------------------------#--- New Commands ----------------------------------------- %
+% ------------------------------- Conditional Set for listed Columns ------------------------------ %
 \newcommand{\conditionalSet}[4]{
 	\def\foundMatch{0}%
 	\foreach \str in #1 {
@@ -23,3 +23,141 @@
 		\PackageError{M4RZStyleCorp}{Error: #4 Invalid Input}{The Input can only be: #1}%%
 	\fi
 }
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ Set Opponent Color Identity of Lost ------------------------------ %
+\newcommand{\setWinOrLose}[2]{%
+	\ifthenelse{\equal{#2}{WIN}}{%
+		\DTLnewdbentry{#1}{WinOrLose}{#2}%
+		\DTLnewdbentry{#1}{WinnerColorIdentity}{NONE}%
+	}{%
+		\expandafter\def\expandafter\temp\expandafter{#2}%
+		\edef\temp{#2} % Store the argument in a temporary macro
+		\expandafter\splitInput\temp\relax % Call the splitInput function
+		\DTLnewdbentry{#1}{WinOrLose}{LOSE}%
+		\setColorIdentity{#1}{\coloridentity}%
+	}%
+}%
+\def\splitInput#1/#2\relax{%
+	\xdef\coloridentity{#2}
+}
+\newcommand{\setColorIdentity}[2]{
+	\ifthenelse{\equal{#2}{W}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{W}}{}
+	\ifthenelse{\equal{#2}{U}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{U}}{}
+	\ifthenelse{\equal{#2}{B}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{B}}{}
+	\ifthenelse{\equal{#2}{R}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{R}}{}
+	\ifthenelse{\equal{#2}{G}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{G}}{}
+	
+	\ifthenelse{\equal{#2}{WU}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WU}}{}
+	\ifthenelse{\equal{#2}{WB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WB}}{}
+	\ifthenelse{\equal{#2}{WR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WR}}{}
+	\ifthenelse{\equal{#2}{WG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WG}}{}
+	\ifthenelse{\equal{#2}{UB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UB}}{}
+	\ifthenelse{\equal{#2}{UR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UG}}{}
+	\ifthenelse{\equal{#2}{UG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UG}}{}
+	\ifthenelse{\equal{#2}{BR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BR}}{}
+	\ifthenelse{\equal{#2}{BG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BG}}{}
+	\ifthenelse{\equal{#2}{RG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{RG}}{}
+	
+	\ifthenelse{\equal{#2}{WUB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUB}}{}
+	\ifthenelse{\equal{#2}{WUR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUR}}{}
+	\ifthenelse{\equal{#2}{WUG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUG}}{}
+	\ifthenelse{\equal{#2}{WBR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WBR}}{}
+	\ifthenelse{\equal{#2}{WBG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WBG}}{}
+	\ifthenelse{\equal{#2}{WRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WRG}}{}
+	\ifthenelse{\equal{#2}{UBR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UBR}}{}
+	\ifthenelse{\equal{#2}{UBG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UBG}}{}
+	\ifthenelse{\equal{#2}{URG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{URG}}{}
+	\ifthenelse{\equal{#2}{BRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BRG}}{}
+	
+	\ifthenelse{\equal{#2}{WUBR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUBR}}{}
+	\ifthenelse{\equal{#2}{WUBG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUBG}}{}
+	\ifthenelse{\equal{#2}{WURG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WURG}}{}
+	\ifthenelse{\equal{#2}{WBRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WBRG}}{}
+	\ifthenelse{\equal{#2}{UBRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UBRG}}{}
+	
+	\ifthenelse{\equal{#2}{WUBRG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WUBRG}}{}
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ Set Player Start/Finish Correlation ------------------------------ %
+\newcommand{\setThreePlayerFinishPosition}[2]{
+	\edef\temp{#2}%
+	\foreach \x/\y in \temp {%
+		\xdef\start{\x}
+		\xdef\finishposition{\y}
+		\ifthenelse{\equal{\start}{SELF}}{%
+			\ifnum\finishposition=1%
+				\DTLnewdbentry{#1}{SelfStartPosition}{1}%
+			\else%
+				\ifnum\finishposition=2%
+					\DTLnewdbentry{#1}{SelfStartPosition}{2}%
+				\else%
+					\DTLnewdbentry{#1}{SelfStartPosition}{3}%
+				\fi%
+			\fi%
+		}{%
+			\ifnum\start=1%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{FirstPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{FirstPlayerFinish}{2}%
+					\else%
+						\DTLnewdbentry{#1}{FirstPlayerFinish}{3}%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=2%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{SecondPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{SecondPlayerFinish}{2}%
+					\else%
+						\DTLnewdbentry{#1}{SecondPlayerFinish}{3}%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=3%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{ThirdPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{ThirdPlayerFinish}{2}%
+					\else%
+						\DTLnewdbentry{#1}{ThirdPlayerFinish}{3}%
+					\fi%
+				\fi%
+			\fi%
+		}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ Set Player Start/Finish Correlation ------------------------------ %
+\newcommand{\setThreePlayerFastMana}[2]{%
+	\expandafter\def\expandafter\temp\expandafter{#2}%
+	\edef\temp{#2} % Store the argument in a temporary macro
+	\expandafter\splitFastMana\temp\relax % Call the splitInput function
+	\ifthenelse{\equal{\firstfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\secondfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\thirdfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{NO}%
+	}
+}%
+\def\splitFastMana#1/#2/#3\relax{%
+	\xdef\firstfastmana{#1}%
+	\xdef\secondfastmana{#2}%
+	\xdef\thirdfastmana{#3}%
+}%

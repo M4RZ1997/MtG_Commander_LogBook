@@ -3,7 +3,7 @@
 \newcommand{\addsingleplayerentry}[9]{%
 	\DTLnewrow{LogBook1v1}%
 	\DTLnewdbentry{LogBook1v1}{DeckName}{#1}%
-	\DTLnewdbentry{LogBook1v1}{WinOrLose}{#2}%
+	\setWinOrLose{LogBook1v1}{#2}%
 	\DTLnewdbentry{LogBook1v1}{PlayerStart}{#3}%
 	\DTLnewdbentry{LogBook1v1}{FastMana}{#4}%
 	\DTLnewdbentry{LogBook1v1}{TurnNumber}{#5}%
@@ -17,5 +17,5 @@
 \addsingleplayerentry{Burning Heavens}{WIN}{SELF}{NONE}{4}{HP0}{1}{ManaScrew}{None}%
 \addsingleplayerentry{Hiding Ninjas}{WIN}{OPP}{SELF}{8}{Poison}{0}{None}{None}%
 % Test
-%\addsingleplayerentry{TEST}{LOSE}{OPP}{BOTH}{7}{CommanderDamage}{0}{None}{CardDraw}%
-%\addsingleplayerentry{TEST}{LOSE}{SELF}{SELF}{25}{DeckOut}{0}{None}{LackOfResponses}%
+%\addsingleplayerentry{TEST}{LOSE/WUBRG}{OPP}{BOTH}{7}{CommanderDamage}{0}{None}{CardDraw}%
+%\addsingleplayerentry{TEST}{LOSE/B}{SELF}{SELF}{25}{DeckOut}{0}{None}{LackOfResponses}%
