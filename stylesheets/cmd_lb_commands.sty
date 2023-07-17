@@ -3,6 +3,12 @@
 % Stylesheet by Marcel                                                                              %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
+% -------------------------------------------- Variables ------------------------------------------ %
+\def\shortgamelength{5}
+\def\midgamelength{9}
+\def\longgamelength{13}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
 % -------------------------------------------- Counters ------------------------------------------- %
 \newcounter{entrynumber}%
 
@@ -35,12 +41,100 @@
 
 \newcounter{startgamewin}%
 \newcounter{startgamelose}%
+
+\newcounter{threeplayerfastmanawinnumber}%
+\newcounter{threeplayerfastmanalosenumber}%
+\newcounter{threeplayernofastmanawinnumber}%
+\newcounter{threeplayernofastmanalosenumber}%
+
+\newcounter{fourplayerfastmanawinnumber}%
+\newcounter{fourplayerfastmanalosenumber}%
+\newcounter{fourplayernofastmanawinnumber}%
+\newcounter{fourplayernofastmanalosenumber}%
+
+\newcounter{threeplayerfirstwinnumber}%
+\newcounter{threeplayersecondwinnumber}%
+\newcounter{threeplayerthirdwinnumber}%
+
+\newcounter{fourplayerfirstwinnumber}%
+\newcounter{fourplayersecondwinnumber}%
+\newcounter{fourplayerthirdwinnumber}%
+\newcounter{fourplayerfourthwinnumber}%
+
+\newcounter{deckwinnumber}%
+\newcounter{decklosenumber}%
+
+\newcounter{deckshortgamenumber}%
+\newcounter{deckmidgamenumber}%
+\newcounter{decklonggamenumber}%
+\newcounter{deckverylonggamenumber}%
+
+\newcounter{deckwinhponumber}%
+\newcounter{deckwinpoisonnumber}%
+\newcounter{deckwindeckoutnumber}%
+\newcounter{deckwincardeffectnumber}%
+\newcounter{deckwincommanderdamagenumber}%
+	
+\newcounter{decklosehponumber}%
+\newcounter{decklosepoisonnumber}%
+\newcounter{decklosedeckoutnumber}%
+\newcounter{decklosecardeffectnumber}%
+\newcounter{decklosecommanderdamagenumber}%
+
+\newcounter{winnercolorlessnumber}%
+\newcounter{winnerwhitenumber}%
+\newcounter{winnerbluenumber}%
+\newcounter{winnerblacknumber}%
+\newcounter{winnerrednumber}%
+\newcounter{winnergreennumber}%
+
+\newcounter{deckobviousproblemsnumber}%
+\newcounter{deckopmanascrewnumber}%
+\newcounter{deckopmanafloodnumber}%
+\newcounter{deckopcarddrawnumber}%
+\newcounter{deckoplackofresponsesnumber}%
+\newcounter{deckophighcmcnumber}%
+\newcounter{deckoptargetingnumber}%
+\newcounter{deckopmisplaysnumber}%
+
+\newcounter{deckmcmanascrewnumber}%
+\newcounter{deckmcmanafloodnumber}%
+\newcounter{deckmcbadmanacurvenumber}%
+\newcounter{deckmcactionlacknumber}%
+\newcounter{deckmcdeckspecificnumber}%
+
+\newcounter{deckTwoPlayerFastManaWins}%
+\newcounter{deckTwoPlayerFastManaLoses}%
+\newcounter{deckTwoPlayerNoFastManaWins}%
+\newcounter{deckTwoPlayerNoFastManaLoses}%
+
+\newcounter{deckTwoPlayerFirstPlayerWins}%
+\newcounter{deckTwoPlayerSecondPlayerWins}%
+
+\newcounter{deckThreePlayerFastManaWins}%
+\newcounter{deckThreePlayerFastManaLoses}%
+\newcounter{deckThreePlayerNoFastManaWins}%
+\newcounter{deckThreePlayerNoFastManaLoses}%
+	
+\newcounter{deckThreePlayerFirstPlayerWins}%
+\newcounter{deckThreePlayerSecondPlayerWins}%
+\newcounter{deckThreePlayerThirdPlayerWins}%
+
+\newcounter{deckFourPlayerFastManaWins}%
+\newcounter{deckFourPlayerFastManaLoses}%
+\newcounter{deckFourPlayerNoFastManaWins}%
+\newcounter{deckFourPlayerNoFastManaLoses}%
+	
+\newcounter{deckFourPlayerFirstPlayerWins}%
+\newcounter{deckFourPlayerSecondPlayerWins}%
+\newcounter{deckFourPlayerThirdPlayerWins}%
+\newcounter{deckFourPlayerFourthPlayerWins}%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------- Print only non-zero Values in Pie-Chart ---------------------------- %
-\def\printonlypositive#1{\ifdim#1pt>0pt
+\def\printonlypositive#1{\scriptsize{\ifdim#1pt>0pt
 	#1~\%
-\fi}
+\fi}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % -------------------------------- Win/Lose-Percentage Calculation -------------------------------- %
@@ -113,12 +207,9 @@
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------------ Game Lengths Calculations ---------------------------------- %
-\newcommand{\calculateGameLengthsPercentages}[4]{
+\newcommand{\calculateGameLengthsPercentages}[1]{
 	\setcounter{entrynumber}{\DTLrowcount{#1}}
 	
-	\def\shortgamelength{#2}
-	\def\midgamelength{#3}
-	\def\longgamelength{#4}
 	\setcounter{shortgamenumber}{0}
 	\setcounter{midgamenumber}{0}
 	\setcounter{longgamenumber}{0}
@@ -154,6 +245,13 @@
 \newcommand{\calculateObviousProblemsPercentages}[1]{
 	\setcounter{entrynumber}{0}
 	
+	\setcounter{manascrewnumber}{0}
+	\setcounter{manafloodnumber}{0}
+	\setcounter{carddrawnumber}{0}
+	\setcounter{lackofresponsesnumber}{0}
+	\setcounter{highcmcnumber}{0}
+	\setcounter{targetingnumber}{0}
+	\setcounter{misplaysnumber}{0}
 	\DTLforeach{#1}{\columnname=ObviousProblems}{%
 	  \ifthenelse{\equal{\columnname}{ManaScrew}}{\stepcounter{entrynumber}\stepcounter{manascrewnumber}}{}%
 	  \ifthenelse{\equal{\columnname}{ManaFlood}}{\stepcounter{entrynumber}\stepcounter{manafloodnumber}}{}%
@@ -191,7 +289,7 @@
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------- 1v1 Fast-Mana WIN/LOSE Calculation ------------------------------ %
-\newcommand{\calculateFastManaWinLosePercentages}[1]{
+\newcommand{\calculateTwoPlayerFastManaWinLosePercentages}[1]{
 	\setcounter{entrynumber}{\DTLrowcount{#1}}
 	
 	\setcounter{fastmanawin}{0}
@@ -228,8 +326,99 @@
 }
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
+% ----------------------------- 3 Player Fast-Mana WIN/LOSE Calculation --------------------------- %
+\newcommand{\calculateThreePlayerFastManaWinLosePercentages}[1]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\setcounter{threeplayerfastmanawinnumber}{0}
+	\setcounter{threeplayerfastmanalosenumber}{0}
+	\setcounter{threeplayernofastmanawinnumber}{0}
+	\setcounter{threeplayernofastmanalosenumber}{0}
+	\DTLforeach{#1}{\firstplayerfinish=FirstPlayerFinish, \secondplayerfinish=SecondPlayerFinish, \thirdplayerfinish=ThirdPlayerFinish, \firstplayerfastmana=FirstPlayerFastMana, \secondplayerfastmana=SecondPlayerFastMana, \thirdplayerfastmana=ThirdPlayerFastMana}{%
+		\ifthenelse{\equal{\firstplayerfinish}{1}}{
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanawinnumber}}{\stepcounter{threeplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanalosenumber}}{\stepcounter{threeplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanalosenumber}}{\stepcounter{threeplayernofastmanalosenumber}}%
+		}{}%
+		\ifthenelse{\equal{\secondplayerfinish}{1}}{
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanawinnumber}}{\stepcounter{threeplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanalosenumber}}{\stepcounter{threeplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanalosenumber}}{\stepcounter{threeplayernofastmanalosenumber}}%
+		}{}%
+		\ifthenelse{\equal{\thirdplayerfinish}{1}}{
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanawinnumber}}{\stepcounter{threeplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanalosenumber}}{\stepcounter{threeplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{threeplayerfastmanalosenumber}}{\stepcounter{threeplayernofastmanalosenumber}}%
+		}{}%
+	}
+	
+	\FPset{threeplayernofastmanawinpercentage}{0}
+	\FPeval{threeplayernofastmanawinpercentage}{round(\thethreeplayernofastmanawinnumber/(3*\theentrynumber)*100,2)}
+	\xdef\threeplayernofastmanawinpercentage{\threeplayernofastmanawinpercentage}\relax
+	\FPset{threeplayerfastmanawinpercentage}{0}
+	\FPeval{threeplayerfastmanawinpercentage}{round(\thethreeplayerfastmanawinnumber/(3*\theentrynumber)*100,2)}
+	\xdef\threeplayerfastmanawinpercentage{\threeplayerfastmanawinpercentage}\relax
+	\FPset{threeplayernofastmanalosepercentage}{0}
+	\FPeval{threeplayernofastmanalosepercentage}{round(\thethreeplayernofastmanalosenumber/(3*\theentrynumber)*100,2)}
+	\xdef\threeplayernofastmanalosepercentage{\threeplayernofastmanalosepercentage}\relax
+	\FPset{threeplayerfastmanalosepercentage}{0}
+	\FPeval{threeplayerfastmanalosepercentage}{round(\thethreeplayerfastmanalosenumber/(3*\theentrynumber)*100,2)}
+	\xdef\threeplayerfastmanalosepercentage{\threeplayerfastmanalosepercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------- 4 Player Fast-Mana WIN/LOSE Calculation --------------------------- %
+\newcommand{\calculateFourPlayerFastManaWinLosePercentages}[1]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\setcounter{fourplayerfastmanawinnumber}{0}
+	\setcounter{fourplayerfastmanalosenumber}{0}
+	\setcounter{fourplayernofastmanawinnumber}{0}
+	\setcounter{fourplayernofastmanalosenumber}{0}
+	\DTLforeach{#1}{\firstplayerfinish=FirstPlayerFinish, \secondplayerfinish=SecondPlayerFinish, \thirdplayerfinish=ThirdPlayerFinish, \fourthplayerfinish=FourthPlayerFinish, \firstplayerfastmana=FirstPlayerFastMana, \secondplayerfastmana=SecondPlayerFastMana, \thirdplayerfastmana=ThirdPlayerFastMana, \fourthplayerfastmana=FourthPlayerFastMana}{%
+		\ifthenelse{\equal{\firstplayerfinish}{1}}{
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanawinnumber}}{\stepcounter{fourplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+		}{}%
+		\ifthenelse{\equal{\secondplayerfinish}{1}}{
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanawinnumber}}{\stepcounter{fourplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+		}{}%
+		\ifthenelse{\equal{\thirdplayerfinish}{1}}{
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanawinnumber}}{\stepcounter{fourplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+		}{}%
+		\ifthenelse{\equal{\fourthplayerfinish}{1}}{
+			\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanawinnumber}}{\stepcounter{fourplayernofastmanawinnumber}}%
+			\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+			\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{fourplayerfastmanalosenumber}}{\stepcounter{fourplayernofastmanalosenumber}}%
+		}{}%
+	}
+	
+	\FPset{fourplayernofastmanawinpercentage}{0}
+	\FPeval{fourplayernofastmanawinpercentage}{round(\thefourplayernofastmanawinnumber/(4*\theentrynumber)*100,2)}
+	\xdef\fourplayernofastmanawinpercentage{\fourplayernofastmanawinpercentage}\relax
+	\FPset{fourplayerfastmanawinpercentage}{0}
+	\FPeval{fourplayerfastmanawinpercentage}{round(\thefourplayerfastmanawinnumber/(4*\theentrynumber)*100,2)}
+	\xdef\fourplayerfastmanawinpercentage{\fourplayerfastmanawinpercentage}\relax
+	\FPset{fourplayernofastmanalosepercentage}{0}
+	\FPeval{fourplayernofastmanalosepercentage}{round(\thefourplayernofastmanalosenumber/(4*\theentrynumber)*100,2)}
+	\xdef\fourplayernofastmanalosepercentage{\fourplayernofastmanalosepercentage}\relax
+	\FPset{fourplayerfastmanalosepercentage}{0}
+	\FPeval{fourplayerfastmanalosepercentage}{round(\thefourplayerfastmanalosenumber/(4*\theentrynumber)*100,2)}
+	\xdef\fourplayerfastmanalosepercentage{\fourplayerfastmanalosepercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
 % ------------------------------- 1v1 Start Game WIN/LOSE Calculation ----------------------------- %
-\newcommand{\calculateStartGameWinLosePercentage}[1]{
+\newcommand{\calculateTwoPlayerStartGameWinLosePercentage}[1]{
 	\setcounter{entrynumber}{\DTLrowcount{#1}}
 	
 	\setcounter{startgamewin}{0}
@@ -252,3 +441,767 @@
 	\FPeval{startgamelosepercentage}{round(\thestartgamelose/\theentrynumber*100,2)}
 	\xdef\startgamelosepercentage{\startgamelosepercentage}\relax
 }
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------- 3 Player Start Game WIN/LOSE Calculation ---------------------------- %
+\newcommand{\calculateThreePlayerStartGameWinLosePercentage}[1]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\setcounter{threeplayerfirstwinnumber}{0}
+	\setcounter{threeplayersecondwinnumber}{0}
+	\setcounter{threeplayerthirdwinnumber}{0}
+	\DTLforeach{#1}{\firstplayer=FirstPlayerFinish, \secondplayer=SecondPlayerFinish, \thirdplayer=ThirdPlayerFinish}{%
+		\ifnum\firstplayer=1%
+			\stepcounter{threeplayerfirstwinnumber}%
+		\fi%
+		\ifnum\secondplayer=1%
+			\stepcounter{threeplayersecondwinnumber}%
+		\fi%
+		\ifnum\thirdplayer=1%
+			\stepcounter{threeplayerthirdwinnumber}%
+		\fi%
+	}%
+	
+	\FPset{threeplayerfirstwinpercentage}{0}
+	\FPeval{threeplayerfirstwinpercentage}{round(\thethreeplayerfirstwinnumber/\theentrynumber*100,2)}
+	\xdef\threeplayerfirstwinpercentage{\threeplayerfirstwinpercentage}\relax
+	\FPset{threeplayersecondwinpercentage}{0}
+	\FPeval{threeplayersecondwinpercentage}{round(\thethreeplayersecondwinnumber/\theentrynumber*100,2)}
+	\xdef\threeplayersecondwinpercentage{\threeplayersecondwinpercentage}\relax
+	\FPset{threeplayerthirdwinpercentage}{0}
+	\FPeval{threeplayerthirdwinpercentage}{round(\thethreeplayerthirdwinnumber/\theentrynumber*100,2)}
+	\xdef\threeplayerthirdwinpercentage{\threeplayerthirdwinpercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------- 4 Player Start Game WIN/LOSE Calculation ---------------------------- %
+\newcommand{\calculateFourPlayerStartGameWinLosePercentage}[1]{
+	\setcounter{entrynumber}{\DTLrowcount{#1}}
+	
+	\setcounter{fourplayerfirstwinnumber}{0}
+	\setcounter{fourplayersecondwinnumber}{0}
+	\setcounter{fourplayerthirdwinnumber}{0}
+	\setcounter{fourplayerfourthwinnumber}{0}
+	\DTLforeach{#1}{\firstplayer=FirstPlayerFinish, \secondplayer=SecondPlayerFinish, \thirdplayer=ThirdPlayerFinish, \fourthplayer=FourthPlayerFinish}{%
+		\ifnum\firstplayer=1%
+			\stepcounter{fourplayerfirstwinnumber}%
+		\fi%
+		\ifnum\secondplayer=1%
+			\stepcounter{fourplayersecondwinnumber}%
+		\fi%
+		\ifnum\thirdplayer=1%
+			\stepcounter{fourplayerthirdwinnumber}%
+		\fi%
+		\ifnum\fourthplayer=1%
+			\stepcounter{fourplayerfourthwinnumber}%
+		\fi%
+	}%
+	
+	\FPset{fourplayerfirstwinpercentage}{0}
+	\FPeval{fourplayerfirstwinpercentage}{round(\thefourplayerfirstwinnumber/\theentrynumber*100,2)}
+	\xdef\fourplayerfirstwinpercentage{\fourplayerfirstwinpercentage}\relax
+	\FPset{fourplayersecondwinpercentage}{0}
+	\FPeval{fourplayersecondwinpercentage}{round(\thefourplayersecondwinnumber/\theentrynumber*100,2)}
+	\xdef\fourplayersecondwinpercentage{\fourplayersecondwinpercentage}\relax
+	\FPset{fourplayerthirdwinpercentage}{0}
+	\FPeval{fourplayerthirdwinpercentage}{round(\thefourplayerthirdwinnumber/\theentrynumber*100,2)}
+	\xdef\fourplayerthirdwinpercentage{\fourplayerthirdwinpercentage}\relax
+	\FPset{fourplayerfourthwinpercentage}{0}
+	\FPeval{fourplayerfourthwinpercentage}{round(\thefourplayerfourthwinnumber/\theentrynumber*100,2)}
+	\xdef\fourplayerfourthwinpercentage{\fourplayerfourthwinpercentage}\relax
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------- 3 Player Average Finish Position Calculation -------------------------- %
+\newcommand{\calculateThreePlayerAverageFinishPositions}[1]{
+	% Average Finish Position for Self
+	\DTLmeanforcolumn{#1}{SelfFinishPosition}{\average}%
+	\FPset{averageSelfFinishPosition}{0}%
+	\FPeval{averageSelfFinishPosition}{round(\average,2)}%
+	\xdef\averageSelfFinishPosition{\averageSelfFinishPosition}\relax%
+	% Average Finish Position for First Player
+	\DTLmeanforcolumn{#1}{FirstPlayerFinish}{\average}%
+	\FPset{averageFirstPlayerFinish}{0}%
+	\FPeval{averageFirstPlayerFinish}{round(\average,2)}%
+	\xdef\averageFirstPlayerFinish{\averageFirstPlayerFinish}\relax%
+	% Average Finish Position for Second Player
+	\DTLmeanforcolumn{#1}{SecondPlayerFinish}{\average}%
+	\FPset{averageSecondPlayerFinish}{0}%
+	\FPeval{averageSecondPlayerFinish}{round(\average,2)}%
+	\xdef\averageSecondPlayerFinish{\averageSecondPlayerFinish}\relax%
+	% Average Finish Position for Third Player
+	\DTLmeanforcolumn{#1}{ThirdPlayerFinish}{\average}%
+	\FPset{averageThirdPlayerFinish}{0}%
+	\FPeval{averageThirdPlayerFinish}{round(\average,2)}%
+	\xdef\averageThirdPlayerFinish{\averageThirdPlayerFinish}\relax%
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------- 4 Player Average Finish Position Calculation -------------------------- %
+\newcommand{\calculateFourPlayerAverageFinishPositions}[1]{
+	% Average Finish Position for Self
+	\DTLmeanforcolumn{#1}{SelfFinishPosition}{\average}%
+	\FPset{averageSelfFinishPosition}{0}%
+	\FPeval{averageSelfFinishPosition}{round(\average,2)}%
+	\xdef\averageSelfFinishPosition{\averageSelfFinishPosition}\relax%
+	% Average Finish Position for First Player
+	\DTLmeanforcolumn{#1}{FirstPlayerFinish}{\average}%
+	\FPset{averageFirstPlayerFinish}{0}%
+	\FPeval{averageFirstPlayerFinish}{round(\average,2)}%
+	\xdef\averageFirstPlayerFinish{\averageFirstPlayerFinish}\relax%
+	% Average Finish Position for Second Player
+	\DTLmeanforcolumn{#1}{SecondPlayerFinish}{\average}%
+	\FPset{averageSecondPlayerFinish}{0}%
+	\FPeval{averageSecondPlayerFinish}{round(\average,2)}%
+	\xdef\averageSecondPlayerFinish{\averageSecondPlayerFinish}\relax%
+	% Average Finish Position for Third Player
+	\DTLmeanforcolumn{#1}{ThirdPlayerFinish}{\average}%
+	\FPset{averageThirdPlayerFinish}{0}%
+	\FPeval{averageThirdPlayerFinish}{round(\average,2)}%
+	\xdef\averageThirdPlayerFinish{\averageThirdPlayerFinish}\relax%
+	% Average Finish Position for Third Player
+	\DTLmeanforcolumn{#1}{FourthPlayerFinish}{\average}%
+	\FPset{averageFourthPlayerFinish}{0}%
+	\FPeval{averageFourthPlayerFinish}{round(\average,2)}%
+	\xdef\averageFourthPlayerFinish{\averageFourthPlayerFinish}\relax%
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------ Individual Deck Statistics Calculator - General ------------------------ %
+\newcommand{\calculateGeneralDeckStatistics}[4]{
+	\setcounter{entrynumber}{0}%
+	
+	\setcounter{deckwinnumber}{0}%
+	\setcounter{decklosenumber}{0}%
+	
+	\setcounter{deckshortgamenumber}{0}%
+	\setcounter{deckmidgamenumber}{0}%
+	\setcounter{decklonggamenumber}{0}%
+	\setcounter{deckverylonggamenumber}{0}%
+	
+	\setcounter{deckwinhponumber}{0}%
+	\setcounter{deckwinpoisonnumber}{0}%
+	\setcounter{deckwindeckoutnumber}{0}%
+	\setcounter{deckwincardeffectnumber}{0}%
+	\setcounter{deckwincommanderdamagenumber}{0}%
+	
+	\setcounter{decklosehponumber}{0}%
+	\setcounter{decklosepoisonnumber}{0}%
+	\setcounter{decklosedeckoutnumber}{0}%
+	\setcounter{decklosecardeffectnumber}{0}%
+	\setcounter{decklosecommanderdamagenumber}{0}%
+	
+	\setcounter{winnercolorlessnumber}{0}%
+	\setcounter{winnerwhitenumber}{0}%
+	\setcounter{winnerbluenumber}{0}%
+	\setcounter{winnerblacknumber}{0}%
+	\setcounter{winnerrednumber}{0}%
+	\setcounter{winnergreennumber}{0}%
+	
+	\setcounter{deckobviousproblemsnumber}{0}%
+	\setcounter{deckopmanascrewnumber}{0}%
+	\setcounter{deckopmanafloodnumber}{0}%
+	\setcounter{deckopcarddrawnumber}{0}%
+	\setcounter{deckoplackofresponsesnumber}{0}%
+	\setcounter{deckophighcmcnumber}{0}%
+	\setcounter{deckoptargetingnumber}{0}%
+	\setcounter{deckopmisplaysnumber}{0}%
+	
+	\setcounter{deckmcmanascrewnumber}{0}%
+	\setcounter{deckmcmanafloodnumber}{0}%
+	\setcounter{deckmcbadmanacurvenumber}{0}%
+	\setcounter{deckmcactionlacknumber}{0}%
+	\setcounter{deckmcdeckspecificnumber}{0}%
+	
+	\FPset{deckTotalMulliganNumber}{0}
+
+	\ifthenelse{\equal{#2}{}}{}{\countOccurences{#2}{#1}}%
+	\ifthenelse{\equal{#3}{}}{}{\countOccurences{#3}{#1}}%
+	\ifthenelse{\equal{#4}{}}{}{\countOccurences{#4}{#1}}%
+	
+	\ifthenelse{\equal{\theentrynumber}{0}}{\stepcounter{entrynumber}}{}%
+	\ifthenelse{\equal{\thedeckobviousproblemsnumber}{0}}{\stepcounter{deckobviousproblemsnumber}}{}%
+	\ifthenelse{\equal{\deckTotalMulliganNumber}{0}}{\FPset{deckTotalMulliganNumber}{1}}{}%
+	
+	\xdef\deckTotalMulliganNumber{\deckTotalMulliganNumber}\relax%
+	
+	% Win Percentage
+	\FPset{deckWinNumberPercentage}{0}%
+	\FPeval{deckWinNumberPercentage}{round(\thedeckwinnumber/\theentrynumber*100,2)}%
+	\xdef\deckWinNumberPercentage{\deckWinNumberPercentage}\relax%
+	% Lose Percentage
+	\FPset{deckLoseNumberPercentage}{0}%
+	\FPeval{deckLoseNumberPercentage}{round(\thedecklosenumber/\theentrynumber*100,2)}%
+	\xdef\deckLoseNumberPercentage{\deckLoseNumberPercentage}\relax%
+	
+	% Short Game Percentage
+	\FPset{deckShortGamePercentage}{0}%
+	\FPeval{deckShortGamePercentage}{round(\thedeckshortgamenumber/\theentrynumber*100,2)}%
+	\xdef\deckShortGamePercentage{\deckShortGamePercentage}\relax%
+	% Mid Game Percentage
+	\FPset{deckMidGamePercentage}{0}%
+	\FPeval{deckMidGamePercentage}{round(\thedeckmidgamenumber/\theentrynumber*100,2)}%
+	\xdef\deckMidGamePercentage{\deckMidGamePercentage}\relax%
+	% Long Game Percentage
+	\FPset{deckLongGamePercentage}{0}%
+	\FPeval{deckLongGamePercentage}{round(\thedecklonggamenumber/\theentrynumber*100,2)}%
+	\xdef\deckLongGamePercentage{\deckLongGamePercentage}\relax%
+	% Very Long Game Percentage
+	\FPset{deckVeryLongGamePercentage}{0}%
+	\FPeval{deckVeryLongGamePercentage}{round(\thedeckverylonggamenumber/\theentrynumber*100,2)}%
+	\xdef\deckVeryLongGamePercentage{\deckVeryLongGamePercentage}\relax%
+	
+	\ifthenelse{\equal{\thedeckwinnumber}{0}}{\stepcounter{deckwinnumber}}{}%
+	\ifthenelse{\equal{\thedecklosenumber}{0}}{\stepcounter{decklosenumber}}{}%
+	
+	% Win Condition: HP0, Poison, DeckOut, CardEffect, CommanderDamage
+	% Hit Points 0
+	\FPset{deckWinHPOPercentage}{0}%
+	\FPeval{deckWinHPOPercentage}{round(\thedeckwinhponumber/\thedeckwinnumber*100,2)}%
+	\xdef\deckWinHPOPercentage{\deckWinHPOPercentage}\relax%
+	% Poison
+	\FPset{deckWinPoisonPercentage}{0}%
+	\FPeval{deckWinPoisonPercentage}{round(\thedeckwinpoisonnumber/\thedeckwinnumber*100,2)}%
+	\xdef\deckWinPoisonPercentage{\deckWinPoisonPercentage}\relax%
+	% DeckOut
+	\FPset{deckWinDeckOutPercentage}{0}%
+	\FPeval{deckWinDeckOutPercentage}{round(\thedeckwindeckoutnumber/\thedeckwinnumber*100,2)}%
+	\xdef\deckWinDeckOutPercentage{\deckWinDeckOutPercentage}\relax%
+	% CardEffect
+	\FPset{deckWinCardEffectPercentage}{0}%
+	\FPeval{deckWinCardEffectPercentage}{round(\thedeckwincardeffectnumber/\thedeckwinnumber*100,2)}%
+	\xdef\deckWinCardEffectPercentage{\deckWinCardEffectPercentage}\relax%
+	% CommanderDamage
+	\FPset{deckWinCommanderDamagePercentage}{0}%
+	\FPeval{deckWinCommanderDamagePercentage}{round(\thedeckwincommanderdamagenumber/\thedeckwinnumber*100,2)}%
+	\xdef\deckWinCommanderDamagePercentage{\deckWinCommanderDamagePercentage}\relax%
+	
+	% Lose Condition: HP0, Poison, DeckOut, CardEffect, CommanderDamage
+	% Hit Points 0
+	\FPset{deckLoseHPOPercentage}{0}%
+	\FPeval{deckLoseHPOPercentage}{round(\thedecklosehponumber/\thedecklosenumber*100,2)}%
+	\xdef\deckLoseHPOPercentage{\deckLoseHPOPercentage}\relax%
+	% Poison
+	\FPset{deckLosePoisonPercentage}{0}%
+	\FPeval{deckLosePoisonPercentage}{round(\thedecklosepoisonnumber/\thedecklosenumber*100,2)}%
+	\xdef\deckLosePoisonPercentage{\deckLosePoisonPercentage}\relax%
+	% DeckOut
+	\FPset{deckLoseDeckOutPercentage}{0}%
+	\FPeval{deckLoseDeckOutPercentage}{round(\thedecklosedeckoutnumber/\thedecklosenumber*100,2)}%
+	\xdef\deckLoseDeckOutPercentage{\deckLoseDeckOutPercentage}\relax%
+	% CardEffect
+	\FPset{deckLoseCardEffectPercentage}{0}%
+	\FPeval{deckLoseCardEffectPercentage}{round(\thedecklosecardeffectnumber/\thedecklosenumber*100,2)}%
+	\xdef\deckLoseCardEffectPercentage{\deckLoseCardEffectPercentage}\relax%
+	% CommanderDamage
+	\FPset{deckLoseCommanderDamagePercentage}{0}%
+	\FPeval{deckLoseCommanderDamagePercentage}{round(\thedecklosecommanderdamagenumber/\thedecklosenumber*100,2)}%
+	\xdef\deckLoseCommanderDamagePercentage{\deckLoseCommanderDamagePercentage}\relax%
+	
+	% Obvious Problems: ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays
+	% ManaScrew
+	\FPset{deckOPManaScrewPercentage}{0}%
+	\FPeval{deckOPManaScrewPercentage}{round(\thedeckopmanascrewnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPManaScrewPercentage{\deckOPManaScrewPercentage}\relax%
+	% ManaFlood
+	\FPset{deckOPManaFloodPercentage}{0}%
+	\FPeval{deckOPManaFloodPercentage}{round(\thedeckopmanafloodnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPManaFloodPercentage{\deckOPManaFloodPercentage}\relax%
+	% CardDraw
+	\FPset{deckOPCardDrawPercentage}{0}%
+	\FPeval{deckOPCardDrawPercentage}{round(\thedeckopcarddrawnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPCardDrawPercentage{\deckOPCardDrawPercentage}\relax%
+	% LackOfResponses
+	\FPset{deckOPLackOfResponsesPercentage}{0}%
+	\FPeval{deckOPLackOfResponsesPercentage}{round(\thedeckoplackofresponsesnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPLackOfResponsesPercentage{\deckOPLackOfResponsesPercentage}\relax%
+	% HighCMC
+	\FPset{deckOPHighCMCPercentage}{0}%
+	\FPeval{deckOPHighCMCPercentage}{round(\thedeckophighcmcnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPHighCMCPercentage{\deckOPHighCMCPercentage}\relax%
+	% Targeting
+	\FPset{deckOPTargetingPercentage}{0}%
+	\FPeval{deckOPTargetingPercentage}{round(\thedeckoptargetingnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPTargetingPercentage{\deckOPTargetingPercentage}\relax%
+	% Misplays
+	\FPset{deckOPMisplaysPercentage}{0}%
+	\FPeval{deckOPMisplaysPercentage}{round(\thedeckopmisplaysnumber/\thedeckobviousproblemsnumber*100,2)}%
+	\xdef\deckOPMisplaysPercentage{\deckOPMisplaysPercentage}\relax%
+	
+	% Mulligan Causes: ManaScrew, ManaFlood, BadManaCurve, ActionLack, DeckSpecific
+	% ManaScrew
+	\FPset{deckMCManaScrewPercentage}{0}%
+	\FPeval{deckMCManaScrewPercentage}{round(\thedeckmcmanascrewnumber/deckTotalMulliganNumber*100,2)}%
+	\xdef\deckMCManaScrewPercentage{\deckMCManaScrewPercentage}\relax%
+	% ManaFlood
+	\FPset{deckMCManaFloodPercentage}{0}%
+	\FPeval{deckMCManaFloodPercentage}{round(\thedeckmcmanafloodnumber/deckTotalMulliganNumber*100,2)}%
+	\xdef\deckMCManaFloodPercentage{\deckMCManaFloodPercentage}\relax%
+	% BadManaCurve
+	\FPset{deckMCBadManaCurvePercentage}{0}%
+	\FPeval{deckMCBadManaCurvePercentage}{round(\thedeckmcbadmanacurvenumber/deckTotalMulliganNumber*100,2)}%
+	\xdef\deckMCBadManaCurvePercentage{\deckMCBadManaCurvePercentage}\relax%
+	% ActionLack
+	\FPset{deckMCActionLackPercentage}{0}%
+	\FPeval{deckMCActionLackPercentage}{round(\thedeckmcactionlacknumber/deckTotalMulliganNumber*100,2)}%
+	\xdef\deckMCActionLackPercentage{\deckMCActionLackPercentage}\relax%
+	% DeckSpecific
+	\FPset{deckMCDeckSpecificPercentage}{0}%
+	\FPeval{deckMCDeckSpecificPercentage}{round(\thedeckmcdeckspecificnumber/deckTotalMulliganNumber*100,2)}%
+	\xdef\deckMCDeckSpecificPercentage{\deckMCDeckSpecificPercentage}\relax%
+}
+\newcommand{\countOccurences}[2]{%
+	\DTLforeach{#1}{\deckname=DeckName, \winorlose=WinOrLose, \wincondition=WinCondition, \turnnumber=TurnNumber, \colidentity=WinnerColorIdentity, \obviousproblem=ObviousProblems, \mulligannumber=MulliganNumber, \mulligancauses=MulliganCause}{%
+		\ifthenelse{\equal{\deckname}{#2}}{%
+			\stepcounter{entrynumber}%
+			
+			\ifthenelse{\equal{\winorlose}{WIN}}{%
+				\stepcounter{deckwinnumber}%
+				% HP0, Poison, DeckOut, CardEffect, CommanderDamage
+				\ifthenelse{\equal{\wincondition}{HP0}}{\stepcounter{deckwinhponumber}}{}%
+				\ifthenelse{\equal{\wincondition}{Poison}}{\stepcounter{deckwinpoisonnumber}}{}%
+				\ifthenelse{\equal{\wincondition}{DeckOut}}{\stepcounter{deckwindeckoutnumber}}{}%
+				\ifthenelse{\equal{\wincondition}{CardEffect}}{\stepcounter{deckwincardeffectnumber}}{}%
+				\ifthenelse{\equal{\wincondition}{CommanderDamage}}{\stepcounter{deckwincommanderdamagenumber}}{}%
+			}{%
+				\stepcounter{decklosenumber}%
+				% HP0, Poison, DeckOut, CardEffect, CommanderDamage
+				\ifthenelse{\equal{\wincondition}{HP0}}{\stepcounter{decklosehponumber}}{}%
+				\ifthenelse{\equal{\wincondition}{Poison}}{\stepcounter{decklosepoisonnumber}}{}%
+				\ifthenelse{\equal{\wincondition}{DeckOut}}{\stepcounter{decklosedeckoutnumber}}{}%
+				\ifthenelse{\equal{\wincondition}{CardEffect}}{\stepcounter{decklosecardeffectnumber}}{}%
+				\ifthenelse{\equal{\wincondition}{CommanderDamage}}{\stepcounter{decklosecommanderdamagenumber}}{}%
+				
+				\checkCharacter{\colidentity}
+			}%
+			
+			\ifthenelse{\turnnumber<\shortgamelength}{%
+				\stepcounter{deckshortgamenumber}%
+			}{%
+				\ifthenelse{\turnnumber<\midgamelength}{%
+					\stepcounter{deckmidgamenumber}
+				}{%
+					\ifthenelse{\turnnumber<\longgamelength}{%
+						\stepcounter{decklonggamenumber}%
+					}{%
+						\stepcounter{deckverylonggamenumber}%
+					}%
+				}%
+			}%
+			
+			\ifthenelse{\equal{\obviousproblem}{ManaScrew}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckopmanascrewnumber}}{}%
+			\ifthenelse{\equal{\obviousproblem}{ManaFlood}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckopmanafloodnumber}}{}%
+			\ifthenelse{\equal{\obviousproblem}{CardDraw}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckopcarddrawnumber}}{}%
+			\ifthenelse{\equal{\obviousproblem}{LackOfResponses}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckoplackofresponsesnumber}}{}%
+			\ifthenelse{\equal{\obviousproblem}{HighCMC}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckophighcmcnumber}}{}%
+			\ifthenelse{\equal{\obviousproblem}{Targeting}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckoptargetingnumber}}{}%
+			\ifthenelse{\equal{\obviousproblem}{Misplays}}{\stepcounter{deckobviousproblemsnumber}\stepcounter{deckopmisplaysnumber}}{}%
+			
+			\ifthenelse{\mulligannumber>0}{%
+				\FPeval{deckTotalMulliganNumber}{clip(deckTotalMulliganNumber + \mulligannumber)}%
+				
+				\IfSubStr{\mulligancauses}{ManaScrew}{\stepcounter{deckmcmanascrewnumber}}{}%
+				\IfSubStr{\mulligancauses}{ManaFlood}{\stepcounter{deckmcmanafloodnumber}}{}%
+				\IfSubStr{\mulligancauses}{BadManaCurve}{\stepcounter{deckmcbadmanacurvenumber}}{}%
+				\IfSubStr{\mulligancauses}{ActionLack}{\stepcounter{deckmcactionlacknumber}}{}%
+				\IfSubStr{\mulligancauses}{DeckSpecific}{\stepcounter{deckmcdeckspecificnumber}}{}%
+			}{}%
+		}{}%
+	}%
+}%
+\newcommand{\checkCharacter}[1]{%
+	\IfSubStr{#1}{C}{\stepcounter{winnercolorlessnumber}}{}%
+	\IfSubStr{#1}{W}{\stepcounter{winnerwhitenumber}}{}%
+	\IfSubStr{#1}{U}{\stepcounter{winnerbluenumber}}{}%
+	\IfSubStr{#1}{B}{\stepcounter{winnerblacknumber}}{}%
+	\IfSubStr{#1}{R}{\stepcounter{winnerrednumber}}{}%
+	\IfSubStr{#1}{G}{\stepcounter{winnergreennumber}}{}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------- Individual Deck Statistics Calculator - Specific 1v1 --------------------- %
+\newcommand{\calculateTurnNumberStatistics}[2]{%
+	\FPset{deckMaxTurn}{0}%
+	\FPset{deckMinTurn}{10}%
+	\FPset{deckUpperQuartileTurn}{0}%
+	\FPset{deckLowerQuartileTurn}{0}%
+	\FPset{deckMedianTurn}{0}%
+	\FPset{deckAverageTurn}{0}%
+	
+	\FPset{turnTotal}{0}%
+	
+	\setcounter{entrynumber}{0}%
+	\DTLforeach{#2}{\deckname=DeckName, \turnnumber=TurnNumber}{%
+		\ifthenelse{\equal{\deckname}{#1}}{%
+			\stepcounter{entrynumber}
+			\FPeval{turnTotal}{clip(turnTotal + \turnnumber)}
+		}{}%
+	}%
+	
+	\FPset{previousTurnCount}{0}%
+	\FPset{tempCount}{0}%
+	
+	\ifthenelse{\equal{\theentrynumber}{0}}{}{%
+		\FPeval{deckAverageTurn}{round(turnTotal/\theentrynumber, 2)}
+		
+		\calculateBoxPlotIndices{\theentrynumber}%
+	
+		\DTLsort{TurnNumber}{#2}%
+		
+		\DTLforeach{#2}{\deckname=DeckName, \turnnumber=TurnNumber}{%
+			\ifthenelse{\equal{\deckname}{#1}}{%
+				\FPeval{tempCount}{clip(tempCount + 1)}
+				
+				\ifnum\deckMaxTurn<\turnnumber%
+					\FPset{deckMaxTurn}{\turnnumber}%
+				\fi
+				\ifnum\deckMinTurn>\turnnumber%
+					\FPset{deckMinTurn}{\turnnumber}%
+				\fi
+				
+				% Calculate Lower Quartile
+				\ifdim\tempCount pt<\deckLowerQuartileIndex pt\else
+					\ifdim\deckLowerQuartileTurn pt=0pt%
+						\FPeval{isInteger}{clip(\deckLowerQuartileIndex - round(\deckLowerQuartileIndex,0))}
+						\ifdim\isInteger pt = 0pt
+							\FPset{\deckLowerQuartileTurn}{\turnnumber}
+						\else
+							\FPeval{\deckLowerQuartileTurn}{round((\turnnumber + \previousTurnCount)/ 2, 2)}
+						\fi
+					\fi%
+				\fi%
+				
+				% Calculate Upper Quartile
+				\ifdim\tempCount pt<\deckUpperQuartileIndex pt\else
+					\ifdim\deckUpperQuartileTurn pt=0pt%
+						\FPeval{isInteger}{clip(\deckUpperQuartileIndex - round(\deckUpperQuartileIndex,0))}
+						\ifdim\isInteger pt = 0pt
+							\FPset{\deckUpperQuartileTurn}{\turnnumber}
+						\else
+							\FPeval{\deckUpperQuartileTurn}{round((\turnnumber + \previousTurnCount)/ 2, 2)}
+						\fi
+					\fi%
+				\fi%
+				
+				% Calculate Median
+				\ifdim\tempCount pt<\deckMedianIndex pt\else
+					\ifdim\deckMedianTurn pt=0pt%
+						\FPeval{isInteger}{clip(\deckMedianIndex - round(\deckMedianIndex,0))}
+						\ifdim\isInteger pt = 0pt
+							\FPset{\deckMedianTurn}{\turnnumber}
+						\else
+							\FPeval{\deckMedianTurn}{round((\turnnumber + \previousTurnCount)/ 2, 2)}
+						\fi
+					\fi%
+				\fi%
+				
+				\FPset{previousTurnCount}{\turnnumber}%
+			}{}%
+		}%
+	}%
+	
+	\xdef\deckMaximumTurn{\deckMaxTurn}\relax
+	\xdef\deckMinimumTurn{\deckMinTurn}\relax
+	\xdef\deckLowerQuartileTurn{\deckLowerQuartileTurn}\relax
+	\xdef\deckUpperQuartileTurn{\deckUpperQuartileTurn}\relax
+	\xdef\deckMedianTurn{\deckMedianTurn}\relax
+	\xdef\deckAverageTurn{\deckAverageTurn}\relax
+}%
+\newcommand{\calculateBoxPlotIndices}[1]{%
+	\FPset{medianindex}{0}
+	\FPset{lowerquartileindex}{0}
+	\FPset{upperquartileindex}{0}
+
+	\ifnum#1=1
+		\FPset{medianindex}{1}
+		\FPset{lowerquartileindex}{1}
+		\FPset{upperquartileindex}{1}
+	\fi
+	
+	\ifnum#1>1
+		\FPeval{medianindex}{clip((#1+1)/2)}
+		\FPeval{isInteger}{clip(\medianindex - round(\medianindex,0))}
+		\ifdim\isInteger pt = 0pt
+			\FPeval{npoints}{\medianindex-1}
+		\else
+			\FPeval{lowerindex}{round(\medianindex -1, 0)}
+			\FPset{npoints}{\lowerindex}
+		\fi
+		
+		% Calculate Lower and Upper Quartile Indices
+		\FPeval{lowerquartileindex}{clip((\npoints+1)/2)}
+		\FPeval{upperquartileindex}{clip(#1 - \lowerquartileindex + 1)}
+		
+		\xdef\medianindex{\medianindex}\relax
+		\xdef\lowerquartileindex{\lowerquartileindex}\relax
+		\xdef\upperquartileindex{\upperquartileindex}\relax
+	\fi
+	
+	\xdef\deckMedianIndex{\medianindex}\relax
+	\xdef\deckLowerQuartileIndex{\lowerquartileindex}\relax
+	\xdef\deckUpperQuartileIndex{\upperquartileindex}\relax
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------- Individual Deck Statistics Calculator - Specific 1v1 --------------------- %
+\newcommand{\calculateTwoPlayerSpecificDeckStatistics}[2]{%
+	\setcounter{entrynumber}{0}%
+	
+	\setcounter{deckTwoPlayerFastManaWins}{0}%
+	\setcounter{deckTwoPlayerFastManaLoses}{0}%
+	\setcounter{deckTwoPlayerNoFastManaWins}{0}%
+	\setcounter{deckTwoPlayerNoFastManaLoses}{0}%
+	
+	\setcounter{deckTwoPlayerFirstPlayerWins}{0}%
+	\setcounter{deckTwoPlayerSecondPlayerWins}{0}%
+	
+	\DTLforeach{#2}{\deckname=DeckName, \winorlose=WinOrLose, \fastmana=FastMana}{%
+		\ifthenelse{\equal{\deckname}{#1}}{%
+			\stepcounter{entrynumber}
+			\ifthenelse{\equal{\winorlose}{WIN}}{%
+				\stepcounter{deckTwoPlayerFirstPlayerWins}%
+				\ifthenelse{\equal{\fastmana}{SELF}}{%
+					\stepcounter{deckTwoPlayerFastManaWins}%
+					\stepcounter{deckTwoPlayerNoFastManaLoses}%
+				}{}%
+				\ifthenelse{\equal{\fastmana}{OPP}}{%
+					\stepcounter{deckTwoPlayerNoFastManaWins}%
+					\stepcounter{deckTwoPlayerFastManaLoses}%
+				}{}%
+				\ifthenelse{\equal{\fastmana}{BOTH}}{%
+					\stepcounter{deckTwoPlayerFastManaWins}%
+					\stepcounter{deckTwoPlayerFastManaLoses}%
+				}{}%
+				\ifthenelse{\equal{\fastmana}{NONE}}{%
+					\stepcounter{deckTwoPlayerNoFastManaWins}%
+					\stepcounter{deckTwoPlayerNoFastManaLoses}%
+				}{}%
+			}{%
+				\stepcounter{deckTwoPlayerSecondPlayerWins}%
+				\ifthenelse{\equal{\fastmana}{SELF}}{%
+					\stepcounter{deckTwoPlayerNoFastManaWins}%
+					\stepcounter{deckTwoPlayerFastManaLoses}%
+				}{}%
+				\ifthenelse{\equal{\fastmana}{OPP}}{%
+					\stepcounter{deckTwoPlayerFastManaWins}%
+					\stepcounter{deckTwoPlayerNoFastManaLoses}%
+				}{}%
+				\ifthenelse{\equal{\fastmana}{BOTH}}{%
+					\stepcounter{deckTwoPlayerFastManaWins}%
+					\stepcounter{deckTwoPlayerFastManaLoses}%
+				}{}%
+				\ifthenelse{\equal{\fastmana}{NONE}}{%
+					\stepcounter{deckTwoPlayerNoFastManaLoses}%
+					\stepcounter{deckTwoPlayerNoFastManaWins}%
+				}{}%
+			}%
+		}{}%
+	}%
+	
+	\ifnum\theentrynumber=0
+		\stepcounter{entrynumber}
+	\fi
+	
+	% Fast Mana Wins
+	\FPset{deckTwoPlayerFastManaWinsPercentage}{0}
+	\FPeval{deckTwoPlayerFastManaWinsPercentage}{round(\thedeckTwoPlayerFastManaWins/(2*\theentrynumber)*100,2)}
+	\xdef\deckTwoPlayerFastManaWinsPercentage{\deckTwoPlayerFastManaWinsPercentage}\relax
+	% Fast Mana Loses
+	\FPset{deckTwoPlayerFastManaLosesPercentage}{0}
+	\FPeval{deckTwoPlayerFastManaLosesPercentage}{round(\thedeckTwoPlayerFastManaLoses/(2*\theentrynumber)*100,2)}
+	\xdef\deckTwoPlayerFastManaLosesPercentage{\deckTwoPlayerFastManaLosesPercentage}\relax
+	% No Fast Mana Wins
+	\FPset{deckTwoPlayerNoFastManaWinsPercentage}{0}
+	\FPeval{deckTwoPlayerNoFastManaWinsPercentage}{round(\thedeckTwoPlayerNoFastManaWins/(2*\theentrynumber)*100,2)}
+	\xdef\deckTwoPlayerNoFastManaWinsPercentage{\deckTwoPlayerNoFastManaWinsPercentage}\relax
+	% No Fast Mana Loses
+	\FPset{deckTwoPlayerNoFastManaLosesPercentage}{0}
+	\FPeval{deckTwoPlayerNoFastManaLosesPercentage}{round(\thedeckTwoPlayerNoFastManaLoses/(2*\theentrynumber)*100,2)}
+	\xdef\deckTwoPlayerNoFastManaLosesPercentage{\deckTwoPlayerNoFastManaLosesPercentage}\relax
+	
+	% First Player Wins
+	\FPset{deckTwoPlayerFirstPlayerWinsPercentage}{0}%
+	\FPeval{deckTwoPlayerFirstPlayerWinsPercentage}{round(\thedeckTwoPlayerFirstPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckTwoPlayerFirstPlayerWinsPercentage{\deckTwoPlayerFirstPlayerWinsPercentage}\relax%
+	% Second Player Wins
+	\FPset{deckTwoPlayerSecondPlayerWinsPercentage}{0}%
+	\FPeval{deckTwoPlayerSecondPlayerWinsPercentage}{round(\thedeckTwoPlayerSecondPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckTwoPlayerSecondPlayerWinsPercentage{\deckTwoPlayerSecondPlayerWinsPercentage}\relax%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------- Individual Deck Statistics Calculator - Specific 3 Player ------------------ %
+\newcommand{\calculateThreePlayerSpecificDeckStatistics}[2]{%
+	\setcounter{entrynumber}{0}%
+	
+	\setcounter{deckThreePlayerFastManaWins}{0}%
+	\setcounter{deckThreePlayerFastManaLoses}{0}%
+	\setcounter{deckThreePlayerNoFastManaWins}{0}%
+	\setcounter{deckThreePlayerNoFastManaLoses}{0}%
+	
+	\setcounter{deckThreePlayerFirstPlayerWins}{0}%
+	\setcounter{deckThreePlayerSecondPlayerWins}{0}%
+	\setcounter{deckThreePlayerThirdPlayerWins}{0}%
+	
+	\FPset{totalSelfFinish}{0}%
+	
+	\DTLforeach{#2}{\deckname=DeckName, \firstplayerfinish=FirstPlayerFinish, \secondplayerfinish=SecondPlayerFinish, \thirdplayerfinish=ThirdPlayerFinish, \firstplayerfastmana=FirstPlayerFastMana, \secondplayerfastmana=SecondPlayerFastMana, \thirdplayerfastmana=ThirdPlayerFastMana, \selffinish=SelfFinishPosition}{%
+		\ifthenelse{\equal{\deckname}{#1}}{%
+			\stepcounter{entrynumber}
+			\FPeval{totalSelfFinish}{totalSelfFinish + \selffinish}
+			\ifthenelse{\equal{\firstplayerfinish}{1}}{%
+				\stepcounter{deckThreePlayerFirstPlayerWins}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+			}{}%
+			\ifthenelse{\equal{\secondplayerfinish}{1}}{%
+				\stepcounter{deckThreePlayerSecondPlayerWins}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+			}{}%
+			\ifthenelse{\equal{\thirdplayerfinish}{1}}{%
+				\stepcounter{deckThreePlayerThirdPlayerWins}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+			}{}%
+		}{}%
+	}%
+	
+	\ifnum\theentrynumber=0
+		\stepcounter{entrynumber}
+	\fi
+	
+	% Average Self Finish Position
+	\FPset{deckThreePlayerAverageSelfFinishPosition}{0}
+	\FPeval{deckThreePlayerAverageSelfFinishPosition}{round(totalSelfFinish/\theentrynumber,2)}
+	\xdef\deckThreePlayerAverageSelfFinishPosition{\deckThreePlayerAverageSelfFinishPosition}\relax
+	
+	% Fast Mana Wins
+	\FPset{deckThreePlayerFastManaWinsPercentage}{0}
+	\FPeval{deckThreePlayerFastManaWinsPercentage}{round(\thedeckThreePlayerFastManaWins/(3*\theentrynumber)*100,2)}
+	\xdef\deckThreePlayerFastManaWinsPercentage{\deckThreePlayerFastManaWinsPercentage}\relax
+	% Fast Mana Loses
+	\FPset{deckThreePlayerFastManaLosesPercentage}{0}
+	\FPeval{deckThreePlayerFastManaLosesPercentage}{round(\thedeckThreePlayerFastManaLoses/(3*\theentrynumber)*100,2)}
+	\xdef\deckThreePlayerFastManaLosesPercentage{\deckThreePlayerFastManaLosesPercentage}\relax
+	% No Fast Mana Wins
+	\FPset{deckThreePlayerNoFastManaWinsPercentage}{0}
+	\FPeval{deckThreePlayerNoFastManaWinsPercentage}{round(\thedeckThreePlayerNoFastManaWins/(3*\theentrynumber)*100,2)}
+	\xdef\deckThreePlayerNoFastManaWinsPercentage{\deckThreePlayerNoFastManaWinsPercentage}\relax
+	% No Fast Mana Loses
+	\FPset{deckThreePlayerNoFastManaLosesPercentage}{0}
+	\FPeval{deckThreePlayerNoFastManaLosesPercentage}{round(\thedeckThreePlayerNoFastManaLoses/(3*\theentrynumber)*100,2)}
+	\xdef\deckThreePlayerNoFastManaLosesPercentage{\deckThreePlayerNoFastManaLosesPercentage}\relax
+	
+	% First Player Wins
+	\FPset{deckThreePlayerFirstPlayerWinsPercentage}{0}%
+	\FPeval{deckThreePlayerFirstPlayerWinsPercentage}{round(\thedeckThreePlayerFirstPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckThreePlayerFirstPlayerWinsPercentage{\deckThreePlayerFirstPlayerWinsPercentage}\relax%
+	% Second Player Wins
+	\FPset{deckThreePlayerSecondPlayerWinsPercentage}{0}%
+	\FPeval{deckThreePlayerSecondPlayerWinsPercentage}{round(\thedeckThreePlayerSecondPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckThreePlayerSecondPlayerWinsPercentage{\deckThreePlayerSecondPlayerWinsPercentage}\relax%
+	% Third Player Wins
+	\FPset{deckThreePlayerThirdPlayerWinsPercentage}{0}%
+	\FPeval{deckThreePlayerThirdPlayerWinsPercentage}{round(\thedeckThreePlayerThirdPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckThreePlayerThirdPlayerWinsPercentage{\deckThreePlayerThirdPlayerWinsPercentage}\relax%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------- Individual Deck Statistics Calculator - Specific 4 Player ------------------ %
+\newcommand{\calculateFourPlayerSpecificDeckStatistics}[2]{%
+	\setcounter{entrynumber}{0}%
+	
+	\setcounter{deckFourPlayerFastManaWins}{0}%
+	\setcounter{deckFourPlayerFastManaLoses}{0}%
+	\setcounter{deckFourPlayerNoFastManaWins}{0}%
+	\setcounter{deckFourPlayerNoFastManaLoses}{0}%
+	
+	\setcounter{deckFourPlayerFirstPlayerWins}{0}%
+	\setcounter{deckFourPlayerSecondPlayerWins}{0}%
+	\setcounter{deckFourPlayerThirdPlayerWins}{0}%
+	\setcounter{deckFourPlayerFourthPlayerWins}{0}%
+	
+	\FPset{totalSelfFinish}{0}%
+	
+	\DTLforeach{#2}{\deckname=DeckName, \firstplayerfinish=FirstPlayerFinish, \secondplayerfinish=SecondPlayerFinish, \thirdplayerfinish=ThirdPlayerFinish, \fourthplayerfinish=FourthPlayerFinish, \firstplayerfastmana=FirstPlayerFastMana, \secondplayerfastmana=SecondPlayerFastMana, \thirdplayerfastmana=ThirdPlayerFastMana, \fourthplayerfastmana=FourthPlayerFastMana, \selffinish=SelfFinishPosition}{%
+		\ifthenelse{\equal{\deckname}{#1}}{%
+			\stepcounter{entrynumber}
+			\FPeval{totalSelfFinish}{totalSelfFinish + \selffinish}
+			\ifthenelse{\equal{\firstplayerfinish}{1}}{%
+				\stepcounter{deckFourPlayerFirstPlayerWins}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+			}{}%
+			\ifthenelse{\equal{\secondplayerfinish}{1}}{%
+				\stepcounter{deckFourPlayerSecondPlayerWins}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+			}{}%
+			\ifthenelse{\equal{\thirdplayerfinish}{1}}{%
+				\stepcounter{deckFourPlayerThirdPlayerWins}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+			}{}%
+			\ifthenelse{\equal{\fourthplayerfinish}{1}}{%
+				\stepcounter{deckFourPlayerFourthPlayerWins}%
+				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+			}{}%
+		}{}%
+	}%
+	
+	\ifnum\theentrynumber=0
+		\stepcounter{entrynumber}
+	\fi
+	
+	% Average Self Finish Position
+	\FPset{deckFourPlayerAverageSelfFinishPosition}{0}
+	\FPeval{deckFourPlayerAverageSelfFinishPosition}{round(totalSelfFinish/\theentrynumber,2)}
+	\xdef\deckFourPlayerAverageSelfFinishPosition{\deckFourPlayerAverageSelfFinishPosition}\relax
+	
+	% Fast Mana Wins
+	\FPset{deckFourPlayerFastManaWinsPercentage}{0}
+	\FPeval{deckFourPlayerFastManaWinsPercentage}{round(\thedeckFourPlayerFastManaWins/(4*\theentrynumber)*100,2)}
+	\xdef\deckFourPlayerFastManaWinsPercentage{\deckFourPlayerFastManaWinsPercentage}\relax
+	% Fast Mana Loses
+	\FPset{deckFourPlayerFastManaLosesPercentage}{0}
+	\FPeval{deckFourPlayerFastManaLosesPercentage}{round(\thedeckFourPlayerFastManaLoses/(4*\theentrynumber)*100,2)}
+	\xdef\deckFourPlayerFastManaLosesPercentage{\deckFourPlayerFastManaLosesPercentage}\relax
+	% No Fast Mana Wins
+	\FPset{deckFourPlayerNoFastManaWinsPercentage}{0}
+	\FPeval{deckFourPlayerNoFastManaWinsPercentage}{round(\thedeckFourPlayerNoFastManaWins/(4*\theentrynumber)*100,2)}
+	\xdef\deckFourPlayerNoFastManaWinsPercentage{\deckFourPlayerNoFastManaWinsPercentage}\relax
+	% No Fast Mana Loses
+	\FPset{deckFourPlayerNoFastManaLosesPercentage}{0}
+	\FPeval{deckFourPlayerNoFastManaLosesPercentage}{round(\thedeckFourPlayerNoFastManaLoses/(4*\theentrynumber)*100,2)}
+	\xdef\deckFourPlayerNoFastManaLosesPercentage{\deckFourPlayerNoFastManaLosesPercentage}\relax
+	
+	% First Player Wins
+	\FPset{deckFourPlayerFirstPlayerWinsPercentage}{0}%
+	\FPeval{deckFourPlayerFirstPlayerWinsPercentage}{round(\thedeckFourPlayerFirstPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckFourPlayerFirstPlayerWinsPercentage{\deckFourPlayerFirstPlayerWinsPercentage}\relax%
+	% Second Player Wins
+	\FPset{deckFourPlayerSecondPlayerWinsPercentage}{0}%
+	\FPeval{deckFourPlayerSecondPlayerWinsPercentage}{round(\thedeckFourPlayerSecondPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckFourPlayerSecondPlayerWinsPercentage{\deckFourPlayerSecondPlayerWinsPercentage}\relax%
+	% Third Player Wins
+	\FPset{deckFourPlayerThirdPlayerWinsPercentage}{0}%
+	\FPeval{deckFourPlayerThirdPlayerWinsPercentage}{round(\thedeckFourPlayerThirdPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckFourPlayerThirdPlayerWinsPercentage{\deckFourPlayerThirdPlayerWinsPercentage}\relax%
+	% Fourth Player Wins
+	\FPset{deckFourPlayerFourthPlayerWinsPercentage}{0}%
+	\FPeval{deckFourPlayerFourthPlayerWinsPercentage}{round(\thedeckFourPlayerFourthPlayerWins/\theentrynumber*100,2)}%
+	\xdef\deckFourPlayerFourthPlayerWinsPercentage{\deckFourPlayerFourthPlayerWinsPercentage}\relax%
+}%

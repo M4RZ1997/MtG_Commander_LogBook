@@ -42,6 +42,7 @@
 	\xdef\coloridentity{#2}
 }
 \newcommand{\setColorIdentity}[2]{
+	\ifthenelse{\equal{#2}{C}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{C}}{}
 	\ifthenelse{\equal{#2}{W}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{W}}{}
 	\ifthenelse{\equal{#2}{U}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{U}}{}
 	\ifthenelse{\equal{#2}{B}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{B}}{}
@@ -53,7 +54,7 @@
 	\ifthenelse{\equal{#2}{WR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WR}}{}
 	\ifthenelse{\equal{#2}{WG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{WG}}{}
 	\ifthenelse{\equal{#2}{UB}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UB}}{}
-	\ifthenelse{\equal{#2}{UR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UG}}{}
+	\ifthenelse{\equal{#2}{UR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UR}}{}
 	\ifthenelse{\equal{#2}{UG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{UG}}{}
 	\ifthenelse{\equal{#2}{BR}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BR}}{}
 	\ifthenelse{\equal{#2}{BG}}{\DTLnewdbentry{#1}{WinnerColorIdentity}{BG}}{}
@@ -80,7 +81,7 @@
 }
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
-% ------------------------------ Set Player Start/Finish Correlation ------------------------------ %
+% ----------------------------- Set 3 Player Start/Finish Correlation ----------------------------- %
 \newcommand{\setThreePlayerFinishPosition}[2]{
 	\edef\temp{#2}%
 	\foreach \x/\y in \temp {%
@@ -88,12 +89,12 @@
 		\xdef\finishposition{\y}
 		\ifthenelse{\equal{\start}{SELF}}{%
 			\ifnum\finishposition=1%
-				\DTLnewdbentry{#1}{SelfStartPosition}{1}%
+				\DTLnewdbentry{#1}{SelfFinishPosition}{1}%
 			\else%
 				\ifnum\finishposition=2%
-					\DTLnewdbentry{#1}{SelfStartPosition}{2}%
+					\DTLnewdbentry{#1}{SelfFinishPosition}{2}%
 				\else%
-					\DTLnewdbentry{#1}{SelfStartPosition}{3}%
+					\DTLnewdbentry{#1}{SelfFinishPosition}{3}%
 				\fi%
 			\fi%
 		}{%
@@ -135,11 +136,11 @@
 }%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
-% ------------------------------ Set Player Start/Finish Correlation ------------------------------ %
+% ------------------------------------ Set 3 Player Fast Mana ------------------------------------- %
 \newcommand{\setThreePlayerFastMana}[2]{%
 	\expandafter\def\expandafter\temp\expandafter{#2}%
 	\edef\temp{#2} % Store the argument in a temporary macro
-	\expandafter\splitFastMana\temp\relax % Call the splitInput function
+	\expandafter\splitThreePlayerFastMana\temp\relax % Call the splitInput function
 	\ifthenelse{\equal{\firstfastmana}{YES}}{%
 		\DTLnewdbentry{#1}{FirstPlayerFastMana}{YES}%
 	}{%
@@ -156,8 +157,128 @@
 		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{NO}%
 	}
 }%
-\def\splitFastMana#1/#2/#3\relax{%
+\def\splitThreePlayerFastMana#1/#2/#3\relax{%
 	\xdef\firstfastmana{#1}%
 	\xdef\secondfastmana{#2}%
 	\xdef\thirdfastmana{#3}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------- Set 4 Player Start/Finish Correlation ----------------------------- %
+\newcommand{\setFourPlayerFinishPosition}[2]{
+	\edef\temp{#2}%
+	\foreach \x/\y in \temp {%
+		\xdef\start{\x}
+		\xdef\finishposition{\y}
+		\ifthenelse{\equal{\start}{SELF}}{%
+			\ifnum\finishposition=1%
+				\DTLnewdbentry{#1}{SelfFinishPosition}{1}%
+			\else%
+				\ifnum\finishposition=2%
+					\DTLnewdbentry{#1}{SelfFinishPosition}{2}%
+				\else%
+					\ifnum\finishposition=3%
+						\DTLnewdbentry{#1}{SelfFinishPosition}{3}%
+					\else%
+						\DTLnewdbentry{#1}{SelfFinishPosition}{4}%
+					\fi%
+				\fi%
+			\fi%
+		}{%
+			\ifnum\start=1%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{FirstPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{FirstPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{FirstPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{FirstPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=2%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{SecondPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{SecondPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{SecondPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{SecondPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=3%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{ThirdPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{ThirdPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{ThirdPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{ThirdPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+			\ifnum\start=4%
+				\ifnum\finishposition=1%
+					\DTLnewdbentry{#1}{FourthPlayerFinish}{1}%
+				\else%
+					\ifnum\finishposition=2%
+						\DTLnewdbentry{#1}{FourthPlayerFinish}{2}%
+					\else%
+						\ifnum\finishposition=3%
+							\DTLnewdbentry{#1}{FourthPlayerFinish}{3}%
+						\else%
+							\DTLnewdbentry{#1}{FourthPlayerFinish}{4}%
+						\fi%
+					\fi%
+				\fi%
+			\fi%
+		}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------ Set 4 Player Fast Mana ------------------------------------- %
+\newcommand{\setFourPlayerFastMana}[2]{%
+	\expandafter\def\expandafter\temp\expandafter{#2}%
+	\edef\temp{#2} % Store the argument in a temporary macro
+	\expandafter\splitFourPlayerFastMana\temp\relax % Call the splitInput function
+	\ifthenelse{\equal{\firstfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{FirstPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\secondfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{SecondPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\thirdfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{ThirdPlayerFastMana}{NO}%
+	}
+	\ifthenelse{\equal{\fourthfastmana}{YES}}{%
+		\DTLnewdbentry{#1}{FourthPlayerFastMana}{YES}%
+	}{%
+		\DTLnewdbentry{#1}{FourthPlayerFastMana}{NO}%
+	}
+}%
+\def\splitFourPlayerFastMana#1/#2/#3/#4\relax{%
+	\xdef\firstfastmana{#1}%
+	\xdef\secondfastmana{#2}%
+	\xdef\thirdfastmana{#3}%
+	\xdef\fourthfastmana{#4}%
 }%
