@@ -962,36 +962,28 @@
 				\stepcounter{deckTwoPlayerFirstPlayerWins}%
 				\ifthenelse{\equal{\fastmana}{SELF}}{%
 					\stepcounter{deckTwoPlayerFastManaWins}%
-					\stepcounter{deckTwoPlayerNoFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{OPP}}{%
 					\stepcounter{deckTwoPlayerNoFastManaWins}%
-					\stepcounter{deckTwoPlayerFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{BOTH}}{%
 					\stepcounter{deckTwoPlayerFastManaWins}%
-					\stepcounter{deckTwoPlayerFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{NONE}}{%
 					\stepcounter{deckTwoPlayerNoFastManaWins}%
-					\stepcounter{deckTwoPlayerNoFastManaLoses}%
 				}{}%
 			}{%
 				\stepcounter{deckTwoPlayerSecondPlayerWins}%
 				\ifthenelse{\equal{\fastmana}{SELF}}{%
-					\stepcounter{deckTwoPlayerNoFastManaWins}%
 					\stepcounter{deckTwoPlayerFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{OPP}}{%
-					\stepcounter{deckTwoPlayerFastManaWins}%
 					\stepcounter{deckTwoPlayerNoFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{BOTH}}{%
-					\stepcounter{deckTwoPlayerFastManaWins}%
 					\stepcounter{deckTwoPlayerFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{NONE}}{%
-					\stepcounter{deckTwoPlayerNoFastManaLoses}%
 					\stepcounter{deckTwoPlayerNoFastManaWins}%
 				}{}%
 			}%
@@ -1004,19 +996,19 @@
 	
 	% Fast Mana Wins
 	\FPset{deckTwoPlayerFastManaWinsPercentage}{0}
-	\FPeval{deckTwoPlayerFastManaWinsPercentage}{round(\thedeckTwoPlayerFastManaWins/(2*\theentrynumber)*100,2)}
+	\FPeval{deckTwoPlayerFastManaWinsPercentage}{round(\thedeckTwoPlayerFastManaWins/\theentrynumber*100,2)}
 	\xdef\deckTwoPlayerFastManaWinsPercentage{\deckTwoPlayerFastManaWinsPercentage}\relax
 	% Fast Mana Loses
 	\FPset{deckTwoPlayerFastManaLosesPercentage}{0}
-	\FPeval{deckTwoPlayerFastManaLosesPercentage}{round(\thedeckTwoPlayerFastManaLoses/(2*\theentrynumber)*100,2)}
+	\FPeval{deckTwoPlayerFastManaLosesPercentage}{round(\thedeckTwoPlayerFastManaLoses/\theentrynumber*100,2)}
 	\xdef\deckTwoPlayerFastManaLosesPercentage{\deckTwoPlayerFastManaLosesPercentage}\relax
 	% No Fast Mana Wins
 	\FPset{deckTwoPlayerNoFastManaWinsPercentage}{0}
-	\FPeval{deckTwoPlayerNoFastManaWinsPercentage}{round(\thedeckTwoPlayerNoFastManaWins/(2*\theentrynumber)*100,2)}
+	\FPeval{deckTwoPlayerNoFastManaWinsPercentage}{round(\thedeckTwoPlayerNoFastManaWins/\theentrynumber*100,2)}
 	\xdef\deckTwoPlayerNoFastManaWinsPercentage{\deckTwoPlayerNoFastManaWinsPercentage}\relax
 	% No Fast Mana Loses
 	\FPset{deckTwoPlayerNoFastManaLosesPercentage}{0}
-	\FPeval{deckTwoPlayerNoFastManaLosesPercentage}{round(\thedeckTwoPlayerNoFastManaLoses/(2*\theentrynumber)*100,2)}
+	\FPeval{deckTwoPlayerNoFastManaLosesPercentage}{round(\thedeckTwoPlayerNoFastManaLoses/\theentrynumber*100,2)}
 	\xdef\deckTwoPlayerNoFastManaLosesPercentage{\deckTwoPlayerNoFastManaLosesPercentage}\relax
 	
 	% First Player Wins
@@ -1052,19 +1044,19 @@
 			\ifthenelse{\equal{\firstplayerfinish}{1}}{%
 				\stepcounter{deckThreePlayerFirstPlayerWins}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
 			}{}%
 			\ifthenelse{\equal{\secondplayerfinish}{1}}{%
 				\stepcounter{deckThreePlayerSecondPlayerWins}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
 			}{}%
 			\ifthenelse{\equal{\thirdplayerfinish}{1}}{%
 				\stepcounter{deckThreePlayerThirdPlayerWins}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
 			}{}%
 		}{}%
@@ -1081,19 +1073,19 @@
 	
 	% Fast Mana Wins
 	\FPset{deckThreePlayerFastManaWinsPercentage}{0}
-	\FPeval{deckThreePlayerFastManaWinsPercentage}{round(\thedeckThreePlayerFastManaWins/(3*\theentrynumber)*100,2)}
+	\FPeval{deckThreePlayerFastManaWinsPercentage}{round(\thedeckThreePlayerFastManaWins/\theentrynumber*100,2)}
 	\xdef\deckThreePlayerFastManaWinsPercentage{\deckThreePlayerFastManaWinsPercentage}\relax
 	% Fast Mana Loses
 	\FPset{deckThreePlayerFastManaLosesPercentage}{0}
-	\FPeval{deckThreePlayerFastManaLosesPercentage}{round(\thedeckThreePlayerFastManaLoses/(3*\theentrynumber)*100,2)}
+	\FPeval{deckThreePlayerFastManaLosesPercentage}{round(\thedeckThreePlayerFastManaLoses/\theentrynumber*100,2)}
 	\xdef\deckThreePlayerFastManaLosesPercentage{\deckThreePlayerFastManaLosesPercentage}\relax
 	% No Fast Mana Wins
 	\FPset{deckThreePlayerNoFastManaWinsPercentage}{0}
-	\FPeval{deckThreePlayerNoFastManaWinsPercentage}{round(\thedeckThreePlayerNoFastManaWins/(3*\theentrynumber)*100,2)}
+	\FPeval{deckThreePlayerNoFastManaWinsPercentage}{round(\thedeckThreePlayerNoFastManaWins/\theentrynumber*100,2)}
 	\xdef\deckThreePlayerNoFastManaWinsPercentage{\deckThreePlayerNoFastManaWinsPercentage}\relax
 	% No Fast Mana Loses
 	\FPset{deckThreePlayerNoFastManaLosesPercentage}{0}
-	\FPeval{deckThreePlayerNoFastManaLosesPercentage}{round(\thedeckThreePlayerNoFastManaLoses/(3*\theentrynumber)*100,2)}
+	\FPeval{deckThreePlayerNoFastManaLosesPercentage}{round(\thedeckThreePlayerNoFastManaLoses/\theentrynumber*100,2)}
 	\xdef\deckThreePlayerNoFastManaLosesPercentage{\deckThreePlayerNoFastManaLosesPercentage}\relax
 	
 	% First Player Wins
@@ -1134,30 +1126,30 @@
 			\ifthenelse{\equal{\firstplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerFirstPlayerWins}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
 			}{}%
 			\ifthenelse{\equal{\secondplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerSecondPlayerWins}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
 			}{}%
 			\ifthenelse{\equal{\thirdplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerThirdPlayerWins}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
 			}{}%
 			\ifthenelse{\equal{\fourthplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerFourthPlayerWins}%
-				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
 				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
 			}{}%
 		}{}%
 	}%
@@ -1173,19 +1165,19 @@
 	
 	% Fast Mana Wins
 	\FPset{deckFourPlayerFastManaWinsPercentage}{0}
-	\FPeval{deckFourPlayerFastManaWinsPercentage}{round(\thedeckFourPlayerFastManaWins/(4*\theentrynumber)*100,2)}
+	\FPeval{deckFourPlayerFastManaWinsPercentage}{round(\thedeckFourPlayerFastManaWins/\theentrynumber*100,2)}
 	\xdef\deckFourPlayerFastManaWinsPercentage{\deckFourPlayerFastManaWinsPercentage}\relax
 	% Fast Mana Loses
 	\FPset{deckFourPlayerFastManaLosesPercentage}{0}
-	\FPeval{deckFourPlayerFastManaLosesPercentage}{round(\thedeckFourPlayerFastManaLoses/(4*\theentrynumber)*100,2)}
+	\FPeval{deckFourPlayerFastManaLosesPercentage}{round(\thedeckFourPlayerFastManaLoses/\theentrynumber*100,2)}
 	\xdef\deckFourPlayerFastManaLosesPercentage{\deckFourPlayerFastManaLosesPercentage}\relax
 	% No Fast Mana Wins
 	\FPset{deckFourPlayerNoFastManaWinsPercentage}{0}
-	\FPeval{deckFourPlayerNoFastManaWinsPercentage}{round(\thedeckFourPlayerNoFastManaWins/(4*\theentrynumber)*100,2)}
+	\FPeval{deckFourPlayerNoFastManaWinsPercentage}{round(\thedeckFourPlayerNoFastManaWins/\theentrynumber*100,2)}
 	\xdef\deckFourPlayerNoFastManaWinsPercentage{\deckFourPlayerNoFastManaWinsPercentage}\relax
 	% No Fast Mana Loses
 	\FPset{deckFourPlayerNoFastManaLosesPercentage}{0}
-	\FPeval{deckFourPlayerNoFastManaLosesPercentage}{round(\thedeckFourPlayerNoFastManaLoses/(4*\theentrynumber)*100,2)}
+	\FPeval{deckFourPlayerNoFastManaLosesPercentage}{round(\thedeckFourPlayerNoFastManaLoses/\theentrynumber*100,2)}
 	\xdef\deckFourPlayerNoFastManaLosesPercentage{\deckFourPlayerNoFastManaLosesPercentage}\relax
 	
 	% First Player Wins
