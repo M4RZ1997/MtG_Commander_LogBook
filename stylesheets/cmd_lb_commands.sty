@@ -955,11 +955,15 @@
 	\setcounter{deckTwoPlayerFirstPlayerWins}{0}%
 	\setcounter{deckTwoPlayerSecondPlayerWins}{0}%
 	
-	\DTLforeach{#2}{\deckname=DeckName, \winorlose=WinOrLose, \fastmana=FastMana}{%
+	\DTLforeach{#2}{\deckname=DeckName, \winorlose=WinOrLose, \playerstart=PlayerStart, \fastmana=FastMana}{%
 		\ifthenelse{\equal{\deckname}{#1}}{%
 			\stepcounter{entrynumber}
 			\ifthenelse{\equal{\winorlose}{WIN}}{%
-				\stepcounter{deckTwoPlayerFirstPlayerWins}%
+				\ifthenelse{\equal{\playerstart}{SELF}}{%
+					\stepcounter{deckTwoPlayerFirstPlayerWins}%
+				}{%
+					\stepcounter{deckTwoPlayerSecondPlayerWins}%
+				}%
 				\ifthenelse{\equal{\fastmana}{SELF}}{%
 					\stepcounter{deckTwoPlayerFastManaWins}%
 				}{}%
@@ -973,7 +977,11 @@
 					\stepcounter{deckTwoPlayerNoFastManaWins}%
 				}{}%
 			}{%
-				\stepcounter{deckTwoPlayerSecondPlayerWins}%
+				\ifthenelse{\equal{\playerstart}{SELF}}{%
+					\stepcounter{deckTwoPlayerSecondPlayerWins}%
+				}{%
+					\stepcounter{deckTwoPlayerFirstPlayerWins}%
+				}%
 				\ifthenelse{\equal{\fastmana}{SELF}}{%
 					\stepcounter{deckTwoPlayerFastManaLoses}%
 				}{}%
