@@ -819,10 +819,10 @@
 }%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
-% ---------------------- Individual Deck Statistics Calculator - Specific 1v1 --------------------- %
+% ------------------------- Individual Deck Turn-Number Boxplot Calculator ------------------------ %
 \newcommand{\calculateTurnNumberStatistics}[2]{%
 	\FPset{deckMaxTurn}{0}%
-	\FPset{deckMinTurn}{10}%
+	\FPset{deckMinTurn}{100}%
 	\FPset{deckUpperQuartileTurn}{0}%
 	\FPset{deckLowerQuartileTurn}{0}%
 	\FPset{deckMedianTurn}{0}%
@@ -992,7 +992,7 @@
 					\stepcounter{deckTwoPlayerFastManaLoses}%
 				}{}%
 				\ifthenelse{\equal{\fastmana}{NONE}}{%
-					\stepcounter{deckTwoPlayerNoFastManaWins}%
+					\stepcounter{deckTwoPlayerNoFastManaLoses}%
 				}{}%
 			}%
 		}{}%
@@ -1051,21 +1051,42 @@
 			\FPeval{totalSelfFinish}{totalSelfFinish + \selffinish}
 			\ifthenelse{\equal{\firstplayerfinish}{1}}{%
 				\stepcounter{deckThreePlayerFirstPlayerWins}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\secondplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}
+					}%
+				}%
 			}{}%
 			\ifthenelse{\equal{\secondplayerfinish}{1}}{%
 				\stepcounter{deckThreePlayerSecondPlayerWins}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\firstplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}
+					}%
+				}%
 			}{}%
 			\ifthenelse{\equal{\thirdplayerfinish}{1}}{%
 				\stepcounter{deckThreePlayerThirdPlayerWins}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaWins}}{\stepcounter{deckThreePlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\secondplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckThreePlayerNoFastManaLoses}}
+					}%
+				}%
 			}{}%
 		}{}%
 	}%
@@ -1133,31 +1154,75 @@
 			\FPeval{totalSelfFinish}{totalSelfFinish + \selffinish}
 			\ifthenelse{\equal{\firstplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerFirstPlayerWins}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\secondplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\selffinish}{\thirdplayerfinish}}%
+						{%
+							\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}{%
+							\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}%
+					}%
+				}%
 			}{}%
 			\ifthenelse{\equal{\secondplayerfinish}{1}}{%
-				\stepcounter{deckFourPlayerSecondPlayerWins}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\stepcounter{deckFourPlayerSecondPlayerWins}%				
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\firstplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\selffinish}{\thirdplayerfinish}}%
+						{%
+							\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}{%
+							\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}%
+					}%
+				}%
 			}{}%
 			\ifthenelse{\equal{\thirdplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerThirdPlayerWins}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\firstplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\selffinish}{\secondplayerfinish}}%
+						{%
+							\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}{%
+							\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}%
+					}%
+				}%
 			}{}%
 			\ifthenelse{\equal{\fourthplayerfinish}{1}}{%
 				\stepcounter{deckFourPlayerFourthPlayerWins}%
-%				\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
-%				\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckThreePlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-				\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
-%				\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}%
+				\ifthenelse{\equal{\selffinish}{1}}{%
+					\ifthenelse{\equal{\fourthplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaWins}}{\stepcounter{deckFourPlayerNoFastManaWins}}%
+				}{%
+					\ifthenelse{\equal{\selffinish}{\firstplayerfinish}}%
+					{%
+						\ifthenelse{\equal{\firstplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+					}{%
+						\ifthenelse{\equal{\selffinish}{\secondplayerfinish}}%
+						{%
+							\ifthenelse{\equal{\secondplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}{%
+							\ifthenelse{\equal{\thirdplayerfastmana}{YES}}{\stepcounter{deckFourPlayerFastManaLoses}}{\stepcounter{deckFourPlayerNoFastManaLoses}}
+						}%
+					}%
+				}%
 			}{}%
 		}{}%
 	}%
