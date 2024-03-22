@@ -1,0 +1,234 @@
+% ------------------------------------------------------------------------------------------------- %
+% 				Hybridization - Indominus Rex, Alpha	Marcel Zauder 23/03/2021					%
+% Commander Deck Information Page                                                                   %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+\newpage
+\tocAddDeck{Hybridization}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------- Deck Information --------------------------------------- %
+\DTLgetrowindex{\rowid}{CommanderDecks}{\dtlcolumnindex{CommanderDecks}{DeckName}}{Hybridization}
+\DTLgetvalue{\commandername}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Commander}}
+\renewcommand{\imagename}{Hybridization}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------- Deck  Main-Information Pages --------------------------------- %
+\renewcommand{\fancypagestyleheader}{Hybridization - General}
+\renewcommand{\fancypagestylesubheader}{\commandername}
+
+\begin{tikzpicture}[remember picture,overlay]%
+	\WinLoseStatisticOrnamentOutline
+	\colorMatchUpTurnNumberStatisticOrnamentOutline
+	
+	%\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+\end{tikzpicture}%
+
+% Calculations
+\calculateGeneralDeckStatistics{Hybridization}{LogBook1v1}{LogBook3Player}{LogBook4Player}%
+
+% Win/Lose Statistic
+\frameWinLoseStatistic{\deckWinNumberPercentage}{\deckLoseNumberPercentage}
+
+% Average Finish Position Statistic
+\begin{tikzpicture}
+	\node {};
+\end{tikzpicture}
+
+% Color Match-Up OR Turn Number Statistic
+\frameColorMatchUpStatistic{\thewinnercolorlessnumber}{\thewinnerwhitenumber}{\thewinnerbluenumber}{\thewinnerblacknumber}{\thewinnerrednumber}{\thewinnergreennumber}%
+
+% In-Depth Statistics
+\begin{tikzpicture}[remember picture,overlay]
+	% Deck Banner OR Fast Mana to Win/Lose Frame
+	\frameDeckBanner{\imagename}%
+
+	% Mulligan Reason OR Winners Start Position Frame
+	\frameMulliganReasonsStatistic{\deckMCManaScrewPercentage}{\deckMCManaFloodPercentage}{\deckMCBadManaCurvePercentage}{\deckMCActionLackPercentage}{\deckMCDeckSpecificPercentage}{\deckTotalMulliganNumber}%
+	
+	% Win Condition Frame
+	\frameWinConditionStatistic{\deckWinHPOPercentage}{\deckWinPoisonPercentage}{\deckWinDeckOutPercentage}{\deckWinCardEffectPercentage}{\deckWinCommanderDamagePercentage}%
+	
+	% Lose Condition Frame
+	\frameLoseConditionStatistic{\deckLoseHPOPercentage}{\deckLosePoisonPercentage}{\deckLoseDeckOutPercentage}{\deckLoseCardEffectPercentage}{\deckLoseCommanderDamagePercentage}%
+				
+	% Game Length Frame
+	\frameGameLengthStatistic{\deckShortGamePercentage}{\deckMidGamePercentage}{\deckLongGamePercentage}{\deckVeryLongGamePercentage}%
+	
+	% Obvious Problems Frame
+	\frameObviousProblemsStatistic{\deckOPManaScrewPercentage}{\deckOPManaFloodPercentage}{\deckOPCardDrawPercentage}{\deckOPLackOfResponsesPercentage}{\deckOPHighCMCPercentage}{\deckOPTargetingPercentage}{\deckOPMisplaysPercentage}%
+\end{tikzpicture}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------------- Deck 1v1-Information Pages ---------------------------------- %
+\newpage
+\renewcommand{\fancypagestyleheader}{Hybridization - 1v1}
+
+\begin{tikzpicture}[remember picture,overlay]%
+	\WinLoseStatisticOrnamentOutline
+	\colorMatchUpTurnNumberStatisticOrnamentOutline
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+\end{tikzpicture}%
+
+% Calculations
+\calculateGeneralDeckStatistics{Hybridization}{LogBook1v1}{}{}%
+\calculateTurnNumberStatistics{Hybridization}{LogBook1v1}%
+\calculateTwoPlayerSpecificDeckStatistics{Hybridization}{LogBook1v1}%
+
+% Win/Lose Statistic
+\frameWinLoseStatistic{\deckWinNumberPercentage}{\deckLoseNumberPercentage}
+
+% Average Finish Position Statistic
+\begin{tikzpicture}
+	\node {};
+\end{tikzpicture}
+
+% Color Match-Up OR Turn Number Statistic
+\ifthenelse{\deckMaximumTurn=0}{\xdef\deckMinimumTurn{0}}{}
+\frameTurnNumberStatistic{1}{0}{\deckMinimumTurn}{\deckMaximumTurn}{\deckLowerQuartileTurn}{\deckUpperQuartileTurn}{}{\deckAverageTurn}{\deckMedianTurn}%
+
+% In-Depth Statistics
+\begin{tikzpicture}[remember picture,overlay]
+	% Deck Banner OR Fast Mana to Win/Lose Frame
+	\frameFastManaToWinLoseStatistic{\deckTwoPlayerFastManaWinsPercentage}{\deckTwoPlayerNoFastManaWinsPercentage}{\deckTwoPlayerNoFastManaLosesPercentage}{\deckTwoPlayerFastManaLosesPercentage}%
+	
+	% Mulligan Reason OR Winners Start Position Frame
+	\frameWinnerStartPositionStatistic{\deckTwoPlayerFirstPlayerWinsPercentage}{\deckTwoPlayerSecondPlayerWinsPercentage}{}{}%
+	
+	% Win Condition Frame
+	\frameWinConditionStatistic{\deckWinHPOPercentage}{\deckWinPoisonPercentage}{\deckWinDeckOutPercentage}{\deckWinCardEffectPercentage}{\deckWinCommanderDamagePercentage}%
+	
+	% Lose Condition Frame
+	\frameLoseConditionStatistic{\deckLoseHPOPercentage}{\deckLosePoisonPercentage}{\deckLoseDeckOutPercentage}{\deckLoseCardEffectPercentage}{\deckLoseCommanderDamagePercentage}%
+				
+	% Game Length Frame
+	\frameGameLengthStatistic{\deckShortGamePercentage}{\deckMidGamePercentage}{\deckLongGamePercentage}{\deckVeryLongGamePercentage}%
+	
+	% Obvious Problems Frame
+	\frameObviousProblemsStatistic{\deckOPManaScrewPercentage}{\deckOPManaFloodPercentage}{\deckOPCardDrawPercentage}{\deckOPLackOfResponsesPercentage}{\deckOPHighCMCPercentage}{\deckOPTargetingPercentage}{\deckOPMisplaysPercentage}%
+\end{tikzpicture}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------- Deck 3-Player-Information Pages -------------------------------- %
+\newpage
+\renewcommand{\fancypagestyleheader}{Hybridization - 3 Player}
+
+\begin{tikzpicture}[remember picture,overlay]%
+	\WinLoseStatisticOrnamentOutline
+	\colorMatchUpTurnNumberStatisticOrnamentOutline
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+\end{tikzpicture}%
+
+% Calculations
+\calculateGeneralDeckStatistics{Hybridization}{LogBook3Player}{}{}%
+\calculateTurnNumberStatistics{Hybridization}{LogBook3Player}%
+\calculateThreePlayerSpecificDeckStatistics{Hybridization}{LogBook3Player}%
+
+% Win/Lose Statistic
+\frameWinLoseStatistic{\deckWinNumberPercentage}{\deckLoseNumberPercentage}
+
+% Average Finish Position Statistic
+\frameAverageFinishPositionStatistic{\deckThreePlayerAverageSelfFinishPosition}{}{}{}{}
+
+% Color Match-Up OR Turn Number Statistic
+\ifthenelse{\deckMaximumTurn=0}{\xdef\deckMinimumTurn{0}}{}
+\frameTurnNumberStatistic{1}{0}{\deckMinimumTurn}{\deckMaximumTurn}{\deckLowerQuartileTurn}{\deckUpperQuartileTurn}{\deckFirstKillAverageTurn}{\deckAverageTurn}{\deckMedianTurn}%
+
+% In-Depth Statistics
+\begin{tikzpicture}[remember picture,overlay]
+	% Deck Banner OR Fast Mana to Win/Lose Frame
+	\frameFastManaToWinLoseStatistic{\deckThreePlayerFastManaWinsPercentage}{\deckThreePlayerNoFastManaWinsPercentage}{\deckThreePlayerNoFastManaLosesPercentage}{\deckThreePlayerFastManaLosesPercentage}%
+	
+	% Mulligan Reason OR Winners Start Position Frame
+	\frameWinnerStartPositionStatistic{\deckThreePlayerFirstPlayerWinsPercentage}{\deckThreePlayerSecondPlayerWinsPercentage}{\deckThreePlayerThirdPlayerWinsPercentage}{}%
+	
+	% Win Condition Frame
+	\frameWinConditionStatistic{\deckWinHPOPercentage}{\deckWinPoisonPercentage}{\deckWinDeckOutPercentage}{\deckWinCardEffectPercentage}{\deckWinCommanderDamagePercentage}%
+	
+	% Lose Condition Frame
+	\frameLoseConditionStatistic{\deckLoseHPOPercentage}{\deckLosePoisonPercentage}{\deckLoseDeckOutPercentage}{\deckLoseCardEffectPercentage}{\deckLoseCommanderDamagePercentage}%
+				
+	% Game Length Frame
+	\frameGameLengthStatistic{\deckShortGamePercentage}{\deckMidGamePercentage}{\deckLongGamePercentage}{\deckVeryLongGamePercentage}%
+	
+	% Obvious Problems Frame
+	\frameObviousProblemsStatistic{\deckOPManaScrewPercentage}{\deckOPManaFloodPercentage}{\deckOPCardDrawPercentage}{\deckOPLackOfResponsesPercentage}{\deckOPHighCMCPercentage}{\deckOPTargetingPercentage}{\deckOPMisplaysPercentage}%
+\end{tikzpicture}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------- Deck 4-Player-Information Pages -------------------------------- %
+\newpage
+\renewcommand{\fancypagestyleheader}{Hybridization - 4 Player}
+
+\begin{tikzpicture}[remember picture,overlay]%
+	\WinLoseStatisticOrnamentOutline
+	\colorMatchUpTurnNumberStatisticOrnamentOutline
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+	
+	\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+	\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+\end{tikzpicture}%
+
+% Calculations
+\calculateGeneralDeckStatistics{Hybridization}{LogBook4Player}{}{}%
+\calculateTurnNumberStatistics{Hybridization}{LogBook4Player}%
+\calculateFourPlayerSpecificDeckStatistics{Hybridization}{LogBook4Player}%
+
+% Win/Lose Statistic
+\frameWinLoseStatistic{\deckWinNumberPercentage}{\deckLoseNumberPercentage}
+
+% Average Finish Position Statistic
+\frameAverageFinishPositionStatistic{\deckFourPlayerAverageSelfFinishPosition}{}{}{}{}
+
+% Color Match-Up OR Turn Number Statistic
+\ifthenelse{\deckMaximumTurn=0}{\xdef\deckMinimumTurn{0}}{}
+\frameTurnNumberStatistic{1}{0}{\deckMinimumTurn}{\deckMaximumTurn}{\deckLowerQuartileTurn}{\deckUpperQuartileTurn}{\deckFirstKillAverageTurn}{\deckAverageTurn}{\deckMedianTurn}%
+
+% In-Depth Statistics
+\begin{tikzpicture}[remember picture,overlay]
+	% Deck Banner OR Fast Mana to Win/Lose Frame
+	\frameFastManaToWinLoseStatistic{\deckFourPlayerFastManaWinsPercentage}{\deckFourPlayerNoFastManaWinsPercentage}{\deckFourPlayerNoFastManaLosesPercentage}{\deckFourPlayerFastManaLosesPercentage}%
+	
+	% Mulligan Reason OR Winners Start Position Frame
+	\frameWinnerStartPositionStatistic{\deckFourPlayerFirstPlayerWinsPercentage}{\deckFourPlayerSecondPlayerWinsPercentage}{\deckFourPlayerThirdPlayerWinsPercentage}{\deckFourPlayerFourthPlayerWinsPercentage}%
+	
+	% Win Condition Frame
+	\frameWinConditionStatistic{\deckWinHPOPercentage}{\deckWinPoisonPercentage}{\deckWinDeckOutPercentage}{\deckWinCardEffectPercentage}{\deckWinCommanderDamagePercentage}%
+	
+	% Lose Condition Frame
+	\frameLoseConditionStatistic{\deckLoseHPOPercentage}{\deckLosePoisonPercentage}{\deckLoseDeckOutPercentage}{\deckLoseCardEffectPercentage}{\deckLoseCommanderDamagePercentage}%
+				
+	% Game Length Frame
+	\frameGameLengthStatistic{\deckShortGamePercentage}{\deckMidGamePercentage}{\deckLongGamePercentage}{\deckVeryLongGamePercentage}%
+	
+	% Obvious Problems Frame
+	\frameObviousProblemsStatistic{\deckOPManaScrewPercentage}{\deckOPManaFloodPercentage}{\deckOPCardDrawPercentage}{\deckOPLackOfResponsesPercentage}{\deckOPHighCMCPercentage}{\deckOPTargetingPercentage}{\deckOPMisplaysPercentage}%
+\end{tikzpicture}

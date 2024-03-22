@@ -6,16 +6,17 @@
 	\setWinOrLose{LogBook4Player}{#2}%
 	\setFourPlayerFinishPosition{LogBook4Player}{#3}%
 	\setFourPlayerFastMana{LogBook4Player}{#4}%
-	\DTLnewdbentry{LogBook4Player}{TurnNumber}{#5}%
+	%\DTLnewdbentry{LogBook4Player}{TurnNumber}{#5}%
+	\setFirstKillAndTurnNumber{LogBook4Player}#5
 	\conditionalSet{\listWinConditions}{LogBook4Player}{WinCondition}{#6}%
 	\DTLnewdbentry{LogBook4Player}{MulliganNumber}{#7}%
 	\conditionalSet{\listMulliganCauses}{LogBook4Player}{MulliganCause}{#8}%
 	\conditionalSet{\listObviousProblems}{LogBook4Player}{ObviousProblems}{#9}%
 }
 
-\addfourplayerentry{Arachnophobia}{LOSE/UG}{SELF/3,1/3,2/1,3/4,4/2}{NO/NO/NO/NO}{17}{HP0}{0}{None}{CardDraw}%
-\addfourplayerentry{Strength IS Relative}{LOSE/R}{SELF/2,1/1,2/3,3/2,4/4}{NO/NO/NO/NO}{9}{HP0}{1}{ManaFlood}{None}%
-\addfourplayerentry{Burning Heavens}{LOSE/UG}{SELF/2,1/1,2/4,3/3,4/2}{NO/NO/NO/NO}{15}{HP0}{0}{None}{Targeting}%
+\addfourplayerentry{Arachnophobia}{LOSE/UG}{SELF/3,1/3,2/1,3/4,4/2}{NO/NO/NO/NO}{{17}{17}}{HP0}{0}{None}{CardDraw}%
+\addfourplayerentry{Strength IS Relative}{LOSE/R}{SELF/2,1/1,2/3,3/2,4/4}{NO/NO/NO/NO}{{3}{9}}{HP0}{1}{ManaFlood}{None}%
+\addfourplayerentry{Burning Heavens}{LOSE/UG}{SELF/2,1/1,2/4,3/3,4/2}{NO/NO/NO/NO}{{12}{15}}{HP0}{0}{None}{Targeting}%
 %\addsingleplayerentry{Burning Heavens}{WIN}{SELF}{NONE}{4}{HP0}{1}{ManaScrew}{None}%
 %\addsingleplayerentry{Hiding Ninjas}{WIN}{OPP}{SELF}{8}{Poison}{0}{None}{None}%
 % Test

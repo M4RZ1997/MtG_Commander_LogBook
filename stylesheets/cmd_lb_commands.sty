@@ -132,8 +132,11 @@
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------- Print only non-zero Values in Pie-Chart ---------------------------- %
-\def\printonlypositive#1{\scriptsize{\ifdim#1pt>0pt
-	#1~\%
+\def\printonlypositive#1{\scriptsize{\ifdim#1pt>9pt
+	#1\%
+\fi}}
+\def\printonlypositiveHuge#1{\Huge{\ifdim#1pt>9pt
+	#1\%
 \fi}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -827,14 +830,17 @@
 	\FPset{deckLowerQuartileTurn}{0}%
 	\FPset{deckMedianTurn}{0}%
 	\FPset{deckAverageTurn}{0}%
+	\FPset{deckFirstKillAverageTurn}{0}%
 	
 	\FPset{turnTotal}{0}%
+	\FPset{firstKillTurnTotal}{0}%
 	
 	\setcounter{entrynumber}{0}%
-	\DTLforeach{#2}{\deckname=DeckName, \turnnumber=TurnNumber}{%
+	\DTLforeach{#2}{\deckname=DeckName, \turnnumber=TurnNumber, \firstkillturn=FirstKillTurn}{%
 		\ifthenelse{\equal{\deckname}{#1}}{%
 			\stepcounter{entrynumber}
 			\FPeval{turnTotal}{clip(turnTotal + \turnnumber)}
+			\FPeval{firstKillTurnTotal}{clip(firstKillTurnTotal + \firstkillturn)}
 		}{}%
 	}%
 	
@@ -843,6 +849,7 @@
 	
 	\ifthenelse{\equal{\theentrynumber}{0}}{}{%
 		\FPeval{deckAverageTurn}{round(turnTotal/\theentrynumber, 2)}
+		\FPeval{deckFirstKillAverageTurn}{round(firstKillTurnTotal/\theentrynumber, 2)}
 		
 		\calculateBoxPlotIndices{\theentrynumber}%
 	
@@ -906,6 +913,7 @@
 	\xdef\deckUpperQuartileTurn{\deckUpperQuartileTurn}\relax
 	\xdef\deckMedianTurn{\deckMedianTurn}\relax
 	\xdef\deckAverageTurn{\deckAverageTurn}\relax
+	\xdef\deckFirstKillAverageTurn{\deckFirstKillAverageTurn}\relax
 }%
 \newcommand{\calculateBoxPlotIndices}[1]{%
 	\FPset{medianindex}{0}

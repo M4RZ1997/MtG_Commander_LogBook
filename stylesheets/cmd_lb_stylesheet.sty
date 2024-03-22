@@ -18,28 +18,32 @@
 \usepackage{hyperref}
 \usepackage{datatool} % for database
 \usepackage{xstring}
+
+\usepackage{fontspec}
+\usepackage{anyfontsize}
+\usepackage{tocloft}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------------------- Geometry -------------------------------------------- %
 \newgeometry{
-	hmargin=2.5cm,
-	bottom=25mm,
-	height=150mm,
+	hmargin = 2.5cm,
+	bottom = 25mm,
+	height = 150mm,
 	includehead,
-	headsep = 30pt,
-	textheight= 630pt
+	top = 50pt,
+	headsep = 50pt,
+	textheight = 675pt,
+	textwidth = 1000pt,
+	marginparwidth = 50pt
 }
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % --------------------------------------------- Math ---------------------------------------------- %
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{scalerel}
 \usepackage{xfp}
 \usepackage[np, autolanguage]{numprint}
-% ------------------------------------------------------------------------------------------------- %
-% ################################################################################################# %
-% --------------------------------------- Computer Science ---------------------------------------- %
-\usepackage{minted} % nice code snippet preview; NEEDS PYTHON pygmentize package
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % -------------------------------------------- Tables --------------------------------------------- %
@@ -47,6 +51,8 @@
 \usepackage{pgfplotstable}
 \usepackage{multirow}
 \usepackage{array, boldline, makecell, booktabs}
+
+\usepackage{multicol}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------------------- PGF/Tikz-Plots ----------------------------------------- %
@@ -56,6 +62,9 @@
 \usetikzlibrary{shapes.geometric, arrows}
 \usetikzlibrary{calc}
 \usepackage{pgf-pie}
+
+\usepackage{pstricks}
+\usepackage{pst-plot,pstricks-add}
 
 % ## Nice Arrow ## %
 \tikzstyle{arrow} = [thick,->,>=stealth]
@@ -67,12 +76,78 @@
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------------------ Page Style ------------------------------------------- %
+% Positions (paperwidth=1195pt, paperheight=845pt)
+\tikzset{
+  posBattlefieldStyle/.style={%
+	xshift=-170pt,%-0.1425\paperwidth,%
+	yshift=80.625pt,%0.125\paperheight-25pt%
+  },%
+  posLandsStyle/.style={%
+	xshift=-170pt,%-0.1425\paperwidth,%
+	yshift=-251.0375,%-0.2675\paperheight-25pt%
+  },%
+  posCommanderLeftStyle/.style={%
+	xshift=260pt,%0.2175\paperwidth,%
+	yshift=196.8125,%0.2625\paperheight-25pt%
+  },%
+  posCommanderRightStyle/.style={%
+	xshift=427pt,%0.3575\paperwidth,%
+	yshift=196.8125,%0.2625\paperheight-25pt%
+  },%
+  posLibraryStyle/.style={%
+	xshift=260pt,%0.2175\paperwidth,%
+	yshift=-25pt,%
+  },%
+  posGraveyardStyle/.style={%
+	xshift=427pt,%0.3575\paperwidth,%
+	yshift=-25pt,%
+  },%
+  posExtrasStyle/.style={%
+	xshift=260pt,%0.2175\paperwidth,%
+	yshift=-246.8125,%-0.2625\paperheight-25pt%
+  },%
+  posExileStyle/.style={%
+	xshift=427pt,%0.3575\paperwidth,%
+	yshift=-246.8125,%-0.2625\paperheight-25pt%
+  }%
+}
+
+% Colors
+\newcommand{\sectionColour}{darkgray}%
+\newcommand{\sectionOpacity}{0.8}%
+
+% Header
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyheadoffset{0pt}
-\renewcommand{\headrulewidth}{0.4pt}
-\fancyfoot[C]{\thepage}
-\renewcommand{\footrulewidth}{0.4pt}
+
+\newcommand{\fancypagestyleheader}{Magic the Gathering: Commander Logbook}
+\newcommand{\fancypagestylesubheader}{}
+%\fancyheadoffset{0pt}
+
+\renewcommand*{\headrulewidth}{0pt} % no rule for header
+\renewcommand*{\footrulewidth}{0pt} % no rule for footer
+
+\fancyhf {} % clear all headers and footers
+
+% Header is used to include the page background
+\fancyhead{
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{images/wood_texture.jpg}};
+		
+		\begin{scope}
+			\node[yshift=-25pt, inner sep=0pt, minimum width=0.9\paperwidth, minimum height=0.825\paperheight, rounded corners=25pt, path picture={
+				\node at (path picture bounding box.center) {\includegraphics[height=0.825\paperheight]{images/playmat_background.jpg}};
+  			}] at (current page.center) {};
+		\end{scope}
+  		
+		\node[anchor=north west, text width=\paperwidth, align=left, font=\Huge, inner sep=1cm] at (current page.north west) {\shadowfyClassName{\fancypagestyleheader}};
+		\ifx&\fancypagestylesubheader&\else%
+			\node[anchor=north west, text width=\paperwidth, align=left, font=\Huge, inner sep=1cm, xshift=40pt, yshift=-43pt] at (current page.north west) {\shadowfy{\fancypagestylesubheader}};
+		\fi
+   \end{tikzpicture}
+}
+%\fancyfoot[C]{\thepage}
+%\renewcommand{\footrulewidth}{0.4pt}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------------------- MARZColor ------------------------------------------- %
@@ -93,184 +168,23 @@
 
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
-% ---------------------------------------- New Commands ------------------------------------------- %
+% ---------------------------------- Secondary Table-of-Contents ---------------------------------- %
+\newlistof{secondContents}{stoc}{}
+\newcounter{NoToCEntries}
+\setcounter{NoToCEntries}{0}
 
-% #### New Column-Types for Tabulars #### %
-%\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}} % Middle-Top
-%\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}} % Middle-Middle
-% ####################################### %
-
-% ######## Portfolio DataBase ######## %
-\newcommand*{\addoldportfolioentry}[9]{%
-  \DTLnewrow{oldportfolioentry}%
-  \DTLnewdbentry{oldportfolioentry}{Name}{#1}%
-  \DTLnewdbentry{oldportfolioentry}{Wkn}{#2}%
-  \DTLnewdbentry{oldportfolioentry}{EntryPrice}{#3}%
-  \DTLnewdbentry{oldportfolioentry}{Amount}{#4}%
-  \DTLnewdbentry{oldportfolioentry}{InitialTotal}{\fpeval{round(#3*#4,2)}}%
-  \DTLnewdbentry{oldportfolioentry}{JanuaryPrice}{#5}%
-  \DTLnewdbentry{oldportfolioentry}{FebruaryPrice}{#6}%
-  \DTLnewdbentry{oldportfolioentry}{MarchPrice}{#7}%
-  \DTLnewdbentry{oldportfolioentry}{AprilPrice}{#8}%
-  \DTLnewdbentry{oldportfolioentry}{MayPrice}{#9}%
-}
-\newcommand{\secaddoldportfolioentry}[7]{
-  \DTLnewdbentry{oldportfolioentry}{JunePrice}{#1}%
-  \DTLnewdbentry{oldportfolioentry}{JulyPrice}{#2}%
-  \DTLnewdbentry{oldportfolioentry}{AugustPrice}{#3}%
-  \DTLnewdbentry{oldportfolioentry}{SeptemberPrice}{#4}%
-  \DTLnewdbentry{oldportfolioentry}{OctoberPrice}{#5}%
-  \DTLnewdbentry{oldportfolioentry}{NovemberPrice}{#6}%
-  \DTLnewdbentry{oldportfolioentry}{DecemberPrice}{#7}%
-}
-
-% ######## Portfolio DataBase ######## %
-\newcommand*{\addportfolioentry}[4]{%
-  \DTLnewrow{portfolioentry}%
-  \DTLnewdbentry{portfolioentry}{Name}{#1}%
-  \DTLnewdbentry{portfolioentry}{Wkn}{#2}%
-  \DTLnewdbentry{portfolioentry}{EntryPrice}{#3}%
-  \DTLnewdbentry{portfolioentry}{Amount}{#4}%
-  \DTLnewdbentry{portfolioentry}{InitialTotal}{\fpeval{round(#3*#4,2)}}%
-  \DTLnewdbentry{portfolioentry}{JanuaryPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{FebruaryPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{MarchPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{AprilPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{MayPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{JunePrice}{0}%
-  \DTLnewdbentry{portfolioentry}{JulyPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{AugustPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{SeptemberPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{OctoberPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{NovemberPrice}{0}%
-  \DTLnewdbentry{portfolioentry}{DecemberPrice}{0}%
-}
-
-\newcommand*\dtlupdatecounterincurrentrow
-  {\dtlupdateentryincurrentrow{counter}}
-
-% Update single value with key WKN
-\newcommand*{\updateportfolioentry}[3]{
-	\dtlgetrowforvalue{portfolioentry}{\dtlcolumnindex{portfolioentry}{Wkn}}{#1}
-	\dtlreplaceentryincurrentrow{#3}{\dtlcolumnindex{portfolioentry}{#2}}
-	\dtlrecombine
-}
-
-
-% Update all
-\newcommand*{\updateallentries}[6]{
-	\ifx&#2&\else\updateportfolioentry{A1C5E7}{#1}{#2}\fi
-	\ifx&#3&\else\updateportfolioentry{A113FM}{#1}{#3}\fi
-	\ifx&#4&\else\updateportfolioentry{DBX0BT}{#1}{#4}\fi
-	\ifx&#5&\else\updateportfolioentry{LYX0GH}{#1}{#5}\fi
-	\ifx&#6&\else\updateportfolioentry{LYX01X}{#1}{#6}\fi
-}
-
-% Calculate Percentages
-\newcommand{\calculatePercentages}[2]{
-	\DTLforeach*{portfolioentry}{\thisWKN=Wkn, \thisAmount=Amount, \thisNewPrice=#2}{
-		\ifnum\value{DTLrowi}=1 {
-			\FPset{percentageone}{0}
-			\FPeval{percentageone}{round((\thisAmount*\thisNewPrice)/#1*100,2)}
-			\xdef\percentageone{\percentageone}\relax
-			\renewcommand{\nameone}{\thisWKN}
-			\xdef\nameone{\nameone}\relax
-		}\fi
-		\ifnum\value{DTLrowi}=2 {
-			\FPset{percentagetwo}{0}
-			\FPeval{percentagetwo}{round((\thisAmount*\thisNewPrice)/#1*100,2)}
-			\xdef\percentagetwo{\percentagetwo}\relax
-			\renewcommand{\nametwo}{\thisWKN}
-			\xdef\nametwo{\nametwo}\relax
-		}\fi
-		\ifnum\value{DTLrowi}=3 {
-			\FPset{percentagethree}{0}
-			\FPeval{percentagethree}{round((\thisAmount*\thisNewPrice)/#1*100,2)}
-			\xdef\percentagethree{\percentagethree}\relax
-			\renewcommand{\namethree}{\thisWKN}
-			\xdef\namethree{\namethree}\relax
-		}\fi
-		\ifnum\value{DTLrowi}=4 {
-			\FPset{percentagefour}{0}
-			\FPeval{percentagefour}{round((\thisAmount*\thisNewPrice)/#1*100,2)}
-			\xdef\percentagefour{\percentagefour}\relax
-			\renewcommand{\namefour}{\thisWKN}
-			\xdef\namefour{\namefour}\relax
-		}\fi
-		\ifnum\value{DTLrowi}=5 {
-			\FPset{percentagefive}{0}
-			\FPeval{percentagefive}{round((\thisAmount*\thisNewPrice)/#1*100,2)}
-			\xdef\percentagefive{\percentagefive}\relax
-			\renewcommand{\namefive}{\thisWKN}
-			\xdef\namefive{\namefive}\relax
-		}\fi
-	}
-}
-% ####################################### %
-\newcommand{\calculatetotal}[2]{
-	\FPset{\temp}{0}
-	\DTLforeach*{portfolioentry}{\thisWKN=Wkn, \thisAmount=Amount, \thisNewPrice=#1}{
-		\FPeval{temp}{temp+(\thisNewPrice*\thisAmount)}
-		\xdef#2{\temp}
-	}
-}
-
-% ####################################### %
-\newcommand{\accumulatetotals}{
-	\FPset{\accinitialPrice}{0}
-	\FPset{\accjanuaryPrice}{0}
-	\FPset{\accfebruaryPrice}{0}
-	\FPset{\accmarchPrice}{0}
-	\FPset{\accaprilPrice}{0}
-	\FPset{\accmayPrice}{0}
-	\FPset{\accjunePrice}{0}
-	\FPset{\accjulyPrice}{0}
-	\FPset{\accaugustPrice}{0}
-	\FPset{\accseptemberPrice}{0}
-	\FPset{\accoctoberPrice}{0}
-	\FPset{\accnovemberPrice}{0}
-	\FPset{\accdecemberPrice}{0}
-	
-	\foreach \x in {1,...,5}
-    		\loadprices{oldportfolioentry}{\x}
-    		\DTLgetvalue{\amount}{oldportfolioentry}{\x}{\dtlcolumnindex{oldportfolioentry}{Amount}}
-    		\FPeval{\accinitialPrice}{\accinitialPrice + \initialPrice * \amount}
-    		\xdef\accinitialPrice{\accinitialPrice}
-    		\FPeval{\accjanuaryPrice}{\accjanuaryPrice + \januaryPrice * \amount}
-    		\xdef\accjanuaryPrice{\accjanuaryPrice}
-    		\FPeval{\accfebruaryPrice}{\accfebruaryPrice + \februaryPrice * \amount}
-    		\xdef\accfebruaryPrice{\accfebruaryPrice}
-    		\FPeval{\accmarchPrice}{\accmarchPrice + \marchPrice * \amount}
-    		\xdef\accmarchPrice{\accmarchPrice}
-    		\FPeval{\accaprilPrice}{\accaprilPrice + \aprilPrice * \amount}
-    		\xdef\accaprilPrice{\accaprilPrice}
-    		\FPeval{\accmayPrice}{\accmayPrice + \mayPrice * \amount}
-    		\xdef\accmayPrice{\accmayPrice}
-    		\FPeval{\accjunePrice}{\accjunePrice + \junePrice * \amount}
-    		\xdef\accjunePrice{\accjunePrice}
-    		\FPeval{\accjulyPrice}{\accjulyPrice + \julyPrice * \amount}
-    		\xdef\accjulyPrice{\accjulyPrice}
-    		\FPeval{\accaugustPrice}{\accaugustPrice + \augustPrice * \amount}
-    		\xdef\accaugustPrice{\accaugustPrice}
-    		\FPeval{\accseptemberPrice}{\accseptemberPrice + \septemberPrice * \amount}
-    		\xdef\accseptemberPrice{\accseptemberPrice}
-    		\FPeval{\accoctoberPrice}{\accoctoberPrice + \octoberPrice * \amount}
-    		\xdef\accoctoberPrice{\accoctoberPrice}
-    		\FPeval{\accnovemberPrice}{\accnovemberPrice + \novemberPrice * \amount}
-    		\xdef\accnovemberPrice{\accnovemberPrice}
-    		\FPeval{\accdecemberPrice}{\accdecemberPrice + \decemberPrice * \amount}
-    		\xdef\accdecemberPrice{\accdecemberPrice};
-}
-
+\newcommand{\tocAddDeck}[1]{%
+	\phantomsection%
+	\ifthenelse{\value{NoToCEntries}<28}{%
+		\addcontentsline{toc}{section}{#1}%
+	}{%
+		\addcontentsline{stoc}{section}{#1}%
+	}%
+	\stepcounter{NoToCEntries}%
+}%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------------------ Variables -------------------------------------------- %
-\def\a1c5e7{1}
-\def\a113fm{2}
-\def\dbx0bt{3}
-\def\lyx0gh{4}
-\def\lyx01x{5}
-
 \newcommand{\Year}[1]{
 	\ifx\xyear\undefined%
 		\newcommand{\tyear}{#1}%

@@ -1,0 +1,717 @@
+% ------------------------------------------------------------------------------------------------- %
+%						cmd_lb_display_commands.sty  Marcel Zauder 23/03/2021						%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------- Variables ------------------------------------------- %
+\newlength{\offsetHeader}
+\newlength{\offsetPie}
+\newlength{\offsetLegend}
+
+\setlength{\offsetHeader}{63.375pt}
+\setlength{\offsetPie}{-85pt}
+\setlength{\offsetLegend}{114.075pt}
+
+\newrgbcolor{outline-color}{0.850 0.764 0.466}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ Win/Lose Statistic Ornament Outline ------------------------------ %
+\newcommand{\WinLoseStatisticOrnamentOutline}{%
+	\begin{scope}
+		\clip ($(current page.center) + (-500pt, -132pt)$) rectangle ++(0.550\paperwidth,0.515\paperheight);
+		\clip ($(current page.center) + (-500pt, -132pt)$) -- ++(0,418pt) arc[start angle=-70, end angle=0, radius=1] -- ++(620pt,0) arc[start angle=180, end angle=250, radius=1] -- ++(0,-418pt) -- ++(-15pt,0) arc[start angle=30, end angle=90, radius=0.5] arc[start angle=90, end angle=150, radius=0.7] -- ++(-570pt,0) arc[start angle=30, end angle=90, radius=0.7] arc[start angle=90, end angle=150, radius=0.5] -- cycle;
+		% Fill the clipped area
+		% Replace \sectionColour and \sectionOpacity with actual values or definitions
+		\fill[\sectionColour, fill opacity=\sectionOpacity] ($(current page.center) + (-500pt, -132pt)$) rectangle ++(0.550\paperwidth,0.515\paperheight);
+	\end{scope}
+	\node[xshift=340pt, yshift=-1440pt] {%
+		\psset{xunit=3pt,yunit=5.35pt,runit=0.5pt}%
+		\begin{pspicture}(816,1056){%
+			\pscustom[linestyle=none,fillstyle=solid,fillcolor=outline-color]
+			{
+				\newpath
+				\moveto(517.49145373,795.86042371)
+				\curveto(515.97012043,796.12509660)(512.0247872,797.10304051)(512.0247872,798.43388159)
+				\lineto(512.0247872,798.80771336)
+				\lineto(303.9767924,798.80771336)
+				\lineto(303.9767924,798.43388159)
+				\curveto(303.9767924,797.10677883)(300.0287925,796.12584427)(298.50879254,795.86042371)
+				\lineto(298.03945922,795.77892839)
+				\lineto(298.03945922,716.35838209)
+				\lineto(302.5394591,716.36137274)
+				\lineto(302.7314591,716.55352227)
+				\curveto(302.77012576,716.59539143)(303.66745907,717.45445683)(306.04345902,717.63314842)
+				\curveto(306.26879234,717.46641945)(306.60879233,717.35053160)(307.01145899,717.35053160)
+				\curveto(307.40079231,717.35053160)(307.73279231,717.45819515)(307.95945897,717.61595215)
+				\curveto(309.64879226,717.49483066)(311.56212554,717.10155964)(313.68612549,716.40922321)
+				\lineto(313.84079215,716.35838209)
+				\lineto(502.15945411,716.35838209)
+				\lineto(502.31412078,716.40922321)
+				\curveto(504.43812072,717.10155964)(506.35145401,717.49483066)(508.0407873,717.61595215)
+				\curveto(508.26612063,717.45819515)(508.59945395,717.35053160)(508.98745394,717.35053160)
+				\curveto(509.3901206,717.35053160)(509.73145392,717.46641945)(509.95678725,717.63314842)
+				\curveto(512.33278719,717.45445683)(513.22878717,716.59539143)(513.2661205,716.55651293)
+				\lineto(513.45545383,716.35838209)
+				\lineto(517.96078705,716.35838209)
+				\lineto(517.96078705,795.77892839)
+				\closepath
+				\moveto(515.33545378,792.02565746)
+				\curveto(516.04612043,791.32958271)(516.48345375,790.80771356)(516.62745375,790.63201263)
+				\lineto(516.62745375,726.29707343)
+				\curveto(515.76878711,729.74454998)(515.33545378,732.85856859)(515.33545378,735.58679282)
+				\closepath
+				\moveto(510.7554539,798.06004983)
+				\curveto(511.30212055,796.46079753)(515.24345379,795.52023681)(516.62745375,795.23687233)
+				\lineto(516.62745375,792.28285371)
+				\curveto(514.93812046,793.98004993)(511.62878721,796.74191902)(506.96345399,798.06004983)
+				\closepath
+				\moveto(305.24745904,798.06004983)
+				\lineto(309.03545894,798.06004983)
+				\curveto(304.37145906,796.74191902)(301.06212581,793.98004993)(299.37279252,792.28285371)
+				\lineto(299.37279252,795.23687233)
+				\curveto(300.75545915,795.52023681)(304.69945905,796.46079753)(305.24745904,798.06004983)
+				\moveto(299.37279252,790.63201263)
+				\curveto(299.51679251,790.80846123)(299.95412583,791.33033037)(300.66479248,792.02715279)
+				\lineto(300.66479248,735.58679282)
+				\curveto(300.66479248,732.85856859)(300.23145916,729.74454998)(299.37279252,726.29707343)
+				\closepath
+				\moveto(514.21278714,717.10604562)
+				\curveto(513.73412049,717.47165309)(512.46078719,718.22155961)(510.03545392,718.38380260)
+				\curveto(509.82078725,718.58866241)(509.4421206,718.73296147)(508.98745394,718.73296147)
+				\curveto(508.51545395,718.73296147)(508.11945396,718.57894278)(507.91145397,718.36062503)
+				\curveto(506.07412068,718.23202690)(504.03145407,717.82230729)(501.80078745,717.10604562)
+				\lineto(314.19812548,717.10604562)
+				\curveto(311.96745887,717.82230729)(309.92612559,718.23202690)(308.08745896,718.36062503)
+				\curveto(307.8807923,718.57894278)(307.48345898,718.73296147)(307.01145899,718.73296147)
+				\curveto(306.55812567,718.73296147)(306.17812568,718.58866241)(305.96479235,718.38380260)
+				\curveto(303.53945908,718.22155961)(302.26612578,717.47165309)(301.78745912,717.10604562)
+				\lineto(299.37279252,717.10604562)
+				\lineto(299.37279252,723.83202676)
+				\curveto(300.66879248,728.26417619)(301.33145913,732.21782095)(301.33145913,735.58679282)
+				\lineto(301.33145913,792.65519015)
+				\curveto(303.78479241,794.87350785)(308.36212562,798.06004983)(314.41545881,798.06004983)
+				\lineto(501.58345413,798.06004983)
+				\curveto(507.63278731,798.06004983)(512.21412053,794.87126486)(514.66878713,792.65294716)
+				\lineto(514.66878713,735.58679282)
+				\curveto(514.66878713,732.21782095)(515.33145378,728.26417619)(516.62745375,723.83202676)
+				\lineto(516.62745375,717.10604562)
+				\closepath
+			}
+		}\end{pspicture}%
+	};%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------- Color Match-Up and Turn Number Statistic Ornament Outline ------------------- %
+\newcommand{\colorMatchUpTurnNumberStatisticOrnamentOutline}{%
+	\begin{scope}
+		\clip ($(current page.center) + (-500pt, -150pt)$) rectangle ++(0.550\paperwidth,-0.232\paperheight);
+		\clip ($(current page.center) + (-500pt, -150pt)$) -- ++(10pt,0) arc[start angle=200, end angle=270, radius=0.5] arc[start angle=270, end angle=310, radius=1] -- ++(575pt,0) arc[start angle=230, end angle=270, radius=1] arc[start angle=270, end angle=340, radius=0.5] -- ++(10pt,0) -- ++(0,-183pt) arc[start angle=100, end angle=180, radius=1] -- ++(-613pt,0) arc[start angle=0, end angle=80, radius=1] -- cycle;
+		% Fill the clipped area
+		% Replace \sectionColour and \sectionOpacity with actual values or definitions
+		\fill[\sectionColour, fill opacity=\sectionOpacity] ($(current page.center) + (-500pt, -150pt)$) rectangle ++(0.550\paperwidth,-0.232\paperheight);
+	\end{scope}
+	\node[xshift=340pt, yshift=-1000pt] {%
+		\psset{xunit=3pt,yunit=3pt,runit=0.1pt}%
+		\begin{pspicture}(816,1056){%
+			\pscustom[linestyle=none,fillstyle=solid,fillcolor=outline-color]%
+			{%
+				\newpath
+				\moveto(298.5086592,651.11131706)
+				\curveto(300.0299925,650.63931707)(303.97532573,648.89531711)(303.97532573,646.52198384)
+				\lineto(303.97532573,645.85531719)
+				\lineto(512.02332053,645.85531719)
+				\lineto(512.02332053,646.52198384)
+				\curveto(512.02332053,648.88865044)(515.97132043,650.63798373)(517.4913204,651.11131706)
+				\lineto(517.96065372,651.25665039)
+				\lineto(517.96065372,712.36331552)
+				\lineto(513.46065383,712.35798219)
+				\lineto(513.26865383,712.01531553)
+				\curveto(513.22998717,711.94064887)(512.33265386,710.40864891)(509.95665392,710.08998225)
+				\curveto(509.73132059,710.38731557)(509.3913206,710.59398224)(508.98865394,710.59398224)
+				\curveto(508.59932062,710.59398224)(508.26732063,710.40198224)(508.04065397,710.12064891)
+				\curveto(506.35132067,710.33664891)(504.43798739,711.03798222)(502.31398744,712.27264886)
+				\lineto(502.15932078,712.36331552)
+				\lineto(313.84065882,712.36331552)
+				\lineto(313.68599216,712.27264886)
+				\curveto(311.56199221,711.03798222)(309.64865893,710.33664891)(307.95932563,710.12064891)
+				\curveto(307.73399231,710.40198224)(307.40065898,710.59398224)(307.01265899,710.59398224)
+				\curveto(306.60999233,710.59398224)(306.26865901,710.38731557)(306.04332568,710.08998225)
+				\curveto(303.66732574,710.40864891)(302.77132576,711.94064887)(302.73399243,712.0099822)
+				\lineto(302.5446591,712.36331552)
+				\lineto(298.03932588,712.36331552)
+				\lineto(298.03932588,651.25665039)
+				\closepath
+				\moveto(300.66465915,657.94998355)
+				\curveto(299.9539925,659.19131685)(299.51665918,660.1219835)(299.37265918,660.43531682)
+				\lineto(299.37265918,694.63931597)
+				\curveto(300.23132583,688.49131612)(300.66465915,682.93798293)(300.66465915,678.07264971)
+				\closepath
+				\moveto(305.24465904,647.18865049)
+				\curveto(304.69799238,650.04065042)(300.75665915,651.71798371)(299.37265918,652.22331703)
+				\lineto(299.37265918,657.4913169)
+				\curveto(301.06199247,654.46465031)(304.37132572,649.53931709)(309.03665894,647.18865049)
+				\closepath
+				\moveto(510.7526539,647.18865049)
+				\lineto(506.96465399,647.18865049)
+				\curveto(511.62865388,649.53931709)(514.93798713,654.46465031)(516.62732042,657.4913169)
+				\lineto(516.62732042,652.22331703)
+				\curveto(515.24465379,651.71798371)(511.30065388,650.04065042)(510.7526539,647.18865049)
+				\moveto(516.62732042,660.43531682)
+				\curveto(516.48332042,660.12065016)(516.0459871,659.18998352)(515.33532045,657.94731688)
+				\lineto(515.33532045,678.07264971)
+				\curveto(515.33532045,682.93798293)(515.76865377,688.49131612)(516.62732042,694.63931597)
+				\closepath
+				\moveto(301.78732579,711.02998222)
+				\curveto(302.26599244,710.37664891)(303.53932574,709.04064894)(305.96465902,708.75131561)
+				\curveto(306.17932568,708.38598229)(306.55799234,708.12864896)(307.01265899,708.12864896)
+				\curveto(307.48465898,708.12864896)(307.88065897,708.40331562)(308.08865896,708.79264895)
+				\curveto(309.92599225,709.02198227)(311.96865887,709.75264892)(314.19932548,711.02998222)
+				\lineto(501.80198745,711.02998222)
+				\curveto(504.03265407,709.75264892)(506.07398735,709.02198227)(507.91265397,708.79264895)
+				\curveto(508.11932063,708.40331562)(508.51665395,708.12864896)(508.98865394,708.12864896)
+				\curveto(509.44198726,708.12864896)(509.82198725,708.38598229)(510.03532058,708.75131561)
+				\curveto(512.46065386,709.04064894)(513.73398716,710.37664891)(514.21265381,711.02998222)
+				\lineto(516.62732042,711.02998222)
+				\lineto(516.62732042,699.03531586)
+				\curveto(515.33132045,691.13131606)(514.6686538,684.08064956)(514.6686538,678.07264971)
+				\lineto(514.6686538,656.82731691)
+				\curveto(512.21532053,652.87131701)(507.63798731,647.18865049)(501.58465413,647.18865049)
+				\lineto(314.41665881,647.18865049)
+				\curveto(308.36732562,647.18865049)(303.78599241,652.87531701)(301.3313258,656.83131691)
+				\lineto(301.3313258,678.07264971)
+				\curveto(301.3313258,684.08064956)(300.66865915,691.13131606)(299.37265918,699.03531586)
+				\lineto(299.37265918,711.02998222)
+				\closepath
+			}%
+		}\end{pspicture}%
+	};%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------ In-Depth Statistic Ornament Outline ------------------------------ %
+\newcommand{\inDepthStatisticOrnamentOutline}[2]{%
+	\begin{scope}[xshift=#1, yshift=#2]
+		\clip (78pt,223pt) rectangle ++(141pt,-203.5pt);
+		\clip (78pt,220pt) arc[start angle=270, end angle=360, radius=4pt] -- ++(134pt,0) arc[start angle=180, end angle=270, radius=4pt] -- ++(0,-197.5pt) arc[start angle=90, end angle=180, radius=4pt] -- ++(-134pt,0) arc[start angle=0, end angle=90, radius=4pt] -- cycle;
+		%\clip ($(current page.center) + (-500pt, -150pt)$) -- ++(10pt,0) arc[start angle=200, end angle=270, radius=0.5] arc[start angle=270, end angle=310, radius=1] -- ++(575pt,0) arc[start angle=230, end angle=270, radius=1] arc[start angle=270, end angle=340, radius=0.5] -- ++(10pt,0) -- ++(0,-183pt) arc[start angle=100, end angle=180, radius=1] -- ++(-613pt,0) arc[start angle=0, end angle=80, radius=1] -- cycle;
+		% Fill the clipped area
+		% Replace \sectionColour and \sectionOpacity with actual values or definitions
+		\fill[\sectionColour, fill opacity=\sectionOpacity] (78pt,223pt) rectangle ++(141pt,-203.5pt);
+	\end{scope}
+	\node[xshift=#1, yshift=#2] {%
+		\psset{xunit=0.59pt,yunit=0.62pt,runit=0.5pt}%
+		\begin{pspicture}(816,1056){%
+			\pscustom[linestyle=none,fillstyle=solid,fillcolor=outline-color]%
+			{%
+				\newpath
+				\moveto(779.9999805,594.31931847)
+				\lineto(779.9999805,883.1286445900001)
+				\lineto(779.41464718,883.31131126)
+				\curveto(777.92664722,883.77664458)(774.06531398,885.47664454)(774.06531398,887.7419778100001)
+				\lineto(774.06531398,888.57531112)
+				\lineto(545.93731968,888.57531112)
+				\lineto(545.93731968,887.7419778100001)
+				\curveto(545.93731968,885.47664454)(542.07465311,883.77664458)(540.58531982,883.31131126)
+				\lineto(539.9999865,883.1286445900001)
+				\lineto(539.9999865,595.0273184499999)
+				\curveto(539.15065319,591.62865187)(535.83331994,577.6193188899999)(536.87998658,570.1393190699999)
+				\lineto(536.93731991,569.72865242)
+				\lineto(537.33198657,569.59931909)
+				\curveto(537.36798657,569.5873190899999)(538.47198654,569.21398576)(539.9999865,568.54198578)
+				\lineto(539.9999865,564.16331922)
+				\lineto(540.58531982,563.9819858899999)
+				\curveto(542.07465311,563.51931924)(545.93731968,561.82331928)(545.93731968,559.55131934)
+				\lineto(545.93731968,558.71798603)
+				\lineto(774.06531398,558.71798603)
+				\lineto(774.06531398,559.55131934)
+				\curveto(774.06531398,561.81665262)(777.92664722,563.51665257)(779.41464718,563.9819858899999)
+				\lineto(779.9999805,564.1646525599999)
+				\lineto(779.9999805,568.61665245)
+				\curveto(781.4333138,569.2393191)(782.45998044,569.5873190899999)(782.49331377,569.59931909)
+				\lineto(782.88798043,569.72865242)
+				\lineto(782.94531376,570.1393190699999)
+				\curveto(783.93064707,577.1753189)(781.05198047,589.99265191)(779.9999805,594.31931847)
+				\moveto(541.66665313,874.18331148)
+				\curveto(541.88531979,874.63931147)(542.26131978,875.38997812)(542.79198643,876.3179781000001)
+				\lineto(542.79198643,593.1753185)
+				\curveto(542.79198643,588.65131861)(542.40931977,583.52198541)(541.66665313,577.88731888)
+				\closepath
+				\moveto(541.66665313,573.21665233)
+				\curveto(542.85598643,580.71665214)(543.45865308,587.41931864)(543.45865308,593.1753185)
+				\lineto(543.45865308,877.4366447400001)
+				\curveto(545.66531969,880.9966446500001)(549.59331959,885.9499778600001)(554.76931946,886.9086445)
+				\lineto(765.2293142,886.9086445)
+				\curveto(770.40264741,885.9499778600001)(774.33331398,880.9926446500001)(776.54131392,877.4326447400001)
+				\lineto(776.54131392,593.1753185)
+				\curveto(776.54131392,587.41931864)(777.14398057,580.71665214)(778.33331388,573.21665233)
+				\lineto(778.33331388,569.33398576)
+				\curveto(774.72798063,567.6326524699999)(769.73331409,564.56465255)(768.86798078,560.38465265)
+				\lineto(550.95731956,560.38465265)
+				\curveto(550.10531958,564.49798588)(545.2573197,567.53398581)(541.66665313,569.2513190999999)
+				\closepath
+				\moveto(777.20798057,876.3139781000001)
+				\curveto(777.73864722,875.3873114500001)(778.11464721,874.6379781400001)(778.33331388,874.1819781500001)
+				\lineto(778.33331388,577.88731888)
+				\curveto(777.59064723,583.52198541)(777.20798057,588.65131861)(777.20798057,593.1753185)
+				\closepath
+				\moveto(778.33331388,881.9246446200001)
+				\lineto(778.33331388,877.06597808)
+				\curveto(776.63864725,880.03931134)(773.50398066,884.5766445600001)(769.15198077,886.9086445)
+				\lineto(772.49331402,886.9086445)
+				\curveto(773.137314,884.12731124)(776.86398058,882.47531128)(778.33331388,881.9246446200001)
+				\moveto(547.50931965,886.9086445)
+				\lineto(550.84798623,886.9086445)
+				\curveto(546.49598634,884.5766445600001)(543.36131975,880.03931134)(541.66665313,877.06597808)
+				\lineto(541.66665313,881.9246446200001)
+				\curveto(543.13731975,882.47531128)(546.86531966,884.12731124)(547.50931965,886.9086445)
+				\moveto(538.14931988,570.72731906)
+				\curveto(537.58665323,575.65131894)(538.8666532,583.44331874)(539.9999865,588.95798527)
+				\lineto(539.9999865,570.00331908)
+				\curveto(539.19731985,570.3419857399999)(538.5426532,570.58598573)(538.14931988,570.72731906)
+				\moveto(541.66665313,565.36865253)
+				\lineto(541.66665313,567.75531913)
+				\curveto(544.85598638,566.1619858399999)(548.75065295,563.6099859)(549.59065293,560.38465265)
+				\lineto(547.50931965,560.38465265)
+				\curveto(546.86531966,563.1659859199999)(543.13731975,564.81798587)(541.66665313,565.36865253)
+				\moveto(778.33331388,565.36865253)
+				\curveto(776.86398058,564.81798587)(773.137314,563.1659859199999)(772.49331402,560.38465265)
+				\lineto(770.23464741,560.38465265)
+				\curveto(771.08931406,563.6646525699999)(775.11464729,566.2539858399999)(778.33331388,567.8419858)
+				\closepath
+				\moveto(781.67598046,570.72731906)
+				\curveto(781.31198047,570.5966523999999)(780.71731382,570.3726524)(779.9999805,570.07531908)
+				\lineto(779.9999805,588.0966519599999)
+				\curveto(781.08398047,582.65531876)(782.20931378,575.40198561)(781.67598046,570.72731906)
+			}%
+		}\end{pspicture}%
+	};%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------------- Win/Lose Statistics Frame ----------------------------------- %
+% Input
+\newcommand{\frameWinLoseStatistic}[2]{%
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[xshift=-239,yshift=80.625] at (current page.center) {%
+			\begin{tikzpicture}%
+				\node (Header) {\textcolor{white}{\Huge{\titlefont{Win/Lose Statistic}}}};%
+				\node[below right=-7.5pt and -7cm of Header] (pie) {%
+					\begin{tikzpicture}%
+					\pie[explode=0.05, text=legend, radius=6.5, color={MarzGreen!60, MarzRed}, before number=\printonlypositiveHuge, after number=, at={(0, 0)}]{%
+						#1/\textcolor{white}{WIN},%
+						#2/\textcolor{white}{LOSE}%
+					}%
+					\end{tikzpicture}%
+				};%
+			\end{tikzpicture}%
+		};%
+	\end{tikzpicture}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------- Average Finish Position  Statistics Frame --------------------------- %
+% Input
+\newcommand{\frameAverageFinishPositionStatistic}[5]{%
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[xshift=-40pt, yshift=-10pt, anchor=west] (Header) at (current page.center) {\textcolor{white}{\LARGE{\titlefont{Average Finish Position}}}};%
+		\arrayrulecolor{white}%
+		\node[xshift=-20pt, yshift=-20pt, anchor=north west] at (current page.center) {%
+			\begin{tabular}{|p{3.5cm}|r|}%
+				\hline%
+				\textcolor{white}{\large{\titlefont{Self}}} & \textcolor{white}{\large{\titlefont{#1}}} \\%
+				\hline%
+			\end{tabular}%
+		};%
+		\ifx&#2&\else%
+		\node[xshift=-20pt, yshift=-40pt, anchor=north west] at (current page.center) {%
+			\begin{tabular}{|p{3.5cm}|r|}%
+				\hline%
+				\textcolor{white}{\large{\titlefont{First Player}}} & \textcolor{white}{\large{\titlefont{#2}}} \\%
+				\hline%
+				\textcolor{white}{\large{\titlefont{Second Player}}} & \textcolor{white}{\large{\titlefont{#3}}} \\%
+				\hline%
+				\textcolor{white}{\large{\titlefont{Third Player}}} & \textcolor{white}{\large{\titlefont{#4}}} \\%
+				\hline%
+				\ifx&#5&\else%
+					\textcolor{white}{\large{\titlefont{Fourth Player}}} & \textcolor{white}{\large{\titlefont{#5}}} \\%
+					\hline%
+				\fi
+			\end{tabular}%
+		};%
+		\fi%
+	\end{tikzpicture}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------- Turn Number  Statistics Frame --------------------------------- %
+% Input
+\newcommand{\frameTurnNumberStatistic}[9]{%
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%%
+		\node[posLandsStyle] at (current page.center) {%
+			\begin{tikzpicture}%
+				\node[xshift=3.5cm,yshift=2.5cm] (Header) {\textcolor{white}{\Huge{\titlefont{Turn Number Statistics}}}};%
+				\node[xshift=-1cm,yshift=1.7cm,anchor=west] (Sub) {\textcolor{white}{\LARGE{\titlefont{Average Number of Turns: \fpeval{round(#8,2)}}}}};%
+				\ifx&#7&\else%
+					\node[xshift=11.5cm,yshift=1.7cm,anchor=west] (Sub) {\textcolor{white}{\LARGE{\titlefont{Average First Kill Turn: \fpeval{round(#7,2)}}}}};%
+				\fi%
+				
+				\node[yshift=-3.2cm] {};%
+				
+				\draw[gray] (0cm,0cm) -- (20cm,0cm);%
+			
+				\foreach \x in {1,...,20}%
+    				\draw[gray!50, text=white] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3cm)%
+      				node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*#1+#2}};%
+      				
+      			\draw[fill=gray!30, draw, very thick] (\fpeval{((#5-#2)/#1) - 0.5} cm, -0.5 cm) rectangle ++(\fpeval{((#6-#2)/#1) - ((#5-#2)/#1)} cm,-2 cm);%
+      		
+	      		\draw[very thick] (\fpeval{((#3-#2)/#1) - 0.5} cm, -1 cm) -- (\fpeval{((#3-#2)/#1) - 0.5} cm, -2 cm); % Minimum
+	      		\draw[very thick] (\fpeval{((#4-#2)/#1) - 0.5} cm, -1 cm) -- (\fpeval{((#4-#2)/#1) - 0.5} cm, -2 cm); % Maximum
+	      		
+	      		\draw[very thick] (\fpeval{((#3-#2)/#1) - 0.5} cm, -1.5 cm) -- (\fpeval{((#5-#2)/#1) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+	      		\draw[very thick] (\fpeval{((#6-#2)/#1) - 0.5} cm, -1.5 cm) -- (\fpeval{((#4-#2)/#1) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
+	      		
+	      		\draw[MarzRoyal, very thick] (\fpeval{((#5-#2)/#1) - 0.5} cm, -0.5 cm) -- (\fpeval{((#5-#2)/#1) - 0.5} cm, -2.5 cm); % Lower Quartil
+	      		\draw[MarzOrange, very thick] (\fpeval{((#6-#2)/#1) - 0.5} cm, -0.5 cm) -- (\fpeval{((#6-#2)/#1) - 0.5} cm, -2.5 cm); % Upper Quartil
+	      		
+	      		% Average First Kill Turn
+	      		\ifx&#7&\else%
+	      			\filldraw[fill=white] (\fpeval{((#7-#2)/#1) - 0.5} cm,-1.5 cm) circle (8pt);%
+	      			\node[inner sep=0pt] at (\fpeval{((#7-#2)/#1) - 0.5} cm,-1.5 cm) {\hspace{2pt}\textcolor{MarzPurple}{\Huge \MtGIcons{c}}};%
+	      		\fi%
+	      		
+	      		% Average Turn Number
+	      		\filldraw[fill=MarzDarkRed] (\fpeval{((#8-#2)/#1) - 0.5} cm,-1.5 cm) circle (3pt);%
+	      		
+	      		% Median Turn Number
+	      		\draw[MarzRed, very thick] (\fpeval{((#9-#2)/#1) - 0.5} cm, -0.5 cm) -- (\fpeval{((#9-#2)/#1) - 0.5} cm, -2.5 cm); % Median
+			\end{tikzpicture}%
+		};%
+	\end{tikzpicture}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------- Color Match-Up Statistics Frame -------------------------------- %
+% Input
+\newcommand{\frameColorMatchUpStatistic}[6]{%
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[posLandsStyle] at (current page.center) {%
+			\begin{tikzpicture}%
+				\node[xshift=4cm,yshift=0.7cm] (Header) {\textcolor{white}{\Huge{\titlefont{Color Match-Up Statistics}}}};%
+				\pgfmathsetmacro{\maxValue}{max(max(max(max(max(#1,#2),#3),#4),#5),#6)}%
+				\pgfmathsetmacro{\sum}{#1+#2+#3+#4+#5+#6}%
+				
+				\draw[gray, very thick] (0cm,0cm) -- (20cm,0cm);%
+				\foreach \x in {1,...,3}%
+    				\draw[gray!50] (\fpeval{3*\x + 0.5} cm,0.15cm) -- (\fpeval{3*\x + 0.5} cm,0cm);%
+				
+				%\pgfmathsetmacro{\maxValue}{1}
+				\pgfmathsetmacro{\maxValue}{\maxValue == 0 ? 1 : \maxValue}
+				%\pgfmathsetmacro{\sum}{1}
+				\pgfmathsetmacro{\sum}{\sum == 0 ? 1 : \sum}
+				
+				\draw[gray, very thick, text=white] (12.5cm,0.2cm) -- (12.5cm,-0.2cm) node at (12.5cm,0.4 cm) {\small{\fpeval{round(\maxValue/\sum*100,2)}\%}};%
+				
+				% Color Icons
+				\filldraw[fill=white] (0.3cm,-0.4cm) circle (8pt);%
+	      		\node[inner sep=0pt] at (0.3cm,-0.4cm) {\hspace{2pt}\textcolor{black}{\Huge \MtGIcons{x}}};%
+	      		\filldraw[fill=white] (0.3cm,-1.2cm) circle (8pt);%
+	      		\node[inner sep=0pt] at (0.3cm,-1.2cm) {\hspace{2pt}\textcolor{black}{\Huge \MtGIcons{a}}};%
+	      		\filldraw[fill=white] (0.3cm,-2cm) circle (8pt);%
+	      		\node[inner sep=0pt] at (0.3cm,-2cm) {\hspace{2pt}\textcolor{MarzRoyal!80}{\Huge \MtGIcons{b}}};%
+	      		\filldraw[fill=white] (0.3cm,-2.8cm) circle (8pt);%
+	      		\node[inner sep=0pt] at (0.3cm,-2.8cm) {\hspace{2pt}\textcolor{MarzPurple}{\Huge \MtGIcons{c}}};%
+	      		\filldraw[fill=white] (0.3cm,-3.6cm) circle (8pt);%
+	      		\node[inner sep=0pt] at (0.3cm,-3.6cm) {\hspace{2pt}\textcolor{MarzDarkRed}{\Huge \MtGIcons{d}}};%
+	      		\filldraw[fill=white] (0.3cm,-4.4cm) circle (8pt);%
+	      		\node[inner sep=0pt] at (0.3cm,-4.4cm) {\hspace{2pt}\textcolor{MarzGreen!80}{\Huge \MtGIcons{e}}};%
+	      		
+	      		% Bars
+	      		\draw[fill=gray] (0.7cm, -0.2cm) rectangle ++(\fpeval{(#1/\maxValue)*11.8}cm, -0.4cm);%
+	      		\draw[fill=white] (0.7cm, -1cm) rectangle ++(\fpeval{(#2/\maxValue)*11.8}cm, -0.4cm);%
+	      		\draw[fill=MarzRoyal!80] (0.7cm, -1.8cm) rectangle ++(\fpeval{(#3/\maxValue)*11.8}cm, -0.4cm);%
+	      		\draw[fill=MarzPurple] (0.7cm, -2.6cm) rectangle ++(\fpeval{(#4/\maxValue)*11.8}cm, -0.4cm);%
+	      		\draw[fill=MarzDarkRed] (0.7cm, -3.4cm) rectangle ++(\fpeval{(#5/\maxValue)*11.8}cm, -0.4cm);%
+	      		\draw[fill=MarzGreen] (0.7cm, -4.2cm) rectangle ++(\fpeval{(#6/\maxValue)*11.8}cm, -0.4cm);%
+	      		
+	      		\draw[gray, very thick] (0.7cm,0.3cm) -- (0.7,-5cm);%
+			\end{tikzpicture}%
+		};%
+	\end{tikzpicture}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------- Fast Mana to Win//Lose Statistics Frame ---------------------------- %
+% Input
+\newcommand{\frameFastManaToWinLoseStatistic}[4]{%
+	\begin{scope}[xshift=772pt, yshift=40pt]
+		\node {\textcolor{white}{\titlefont{Fast Mana to Win/Lose}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-70pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\pie[explode=0.05, radius=2, color={MarzGreen, MarzGold, MarzOrange, MarzDarkRed}, before number=\printonlypositive, after number=, at={(0, 0)}]{%%
+					#1/,%
+					#2/,%
+					#3/,%
+					#4/%
+				}%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+				\textcolor{MarzGreen}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Fast Mana Win} \\%
+				\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{No Fast Mana Win} \\%
+				\textcolor{MarzOrange}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{No Fast Mana Lose} \\%
+				\textcolor{MarzRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Fast Mana Lose} \\%
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------------- Deck Banner Frame --------------------------------------- %
+% Input
+\newcommand{\frameDeckBanner}[1]{%
+	\node[xshift=767pt, yshift=-50pt] {\includegraphics[width = 175pt, height = 225pt, keepaspectratio]{images/deck_crests/#1.png}};
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------- Winner Start Position  Statistics Frame ---------------------------- %
+\newcommand{\frameWinnerStartPositionStatistic}[4]{%
+	\begin{scope}[xshift=935pt, yshift=40pt]
+		\node {\textcolor{white}{\titlefont{Winner's Start Position}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-70pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\ifx&#4&%
+					\ifx&#3&%
+						\pie[explode=0.05, radius=2, color={MarzGold, MarzOrange}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
+							#1/,%
+							#2/%
+						}%
+					\else%
+						\pie[explode=0.05, radius=2, color={MarzGold, MarzOrange, MarzRed}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
+							#1/,%
+							#2/,%
+							#3/%
+						}%
+					\fi%
+				\else%
+					\pie[explode=0.05, radius=2, color={MarzGold, MarzOrange, MarzRed, MarzDarkRed}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
+						#1/,%
+						#2/,%
+						#3/,%
+						#4/%
+					}%
+				\fi%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+				\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{First Player Wins} \\%
+      			\textcolor{MarzOrange}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Second Player Wins} \\%
+      			\ifx&#3&\else%
+      				\textcolor{MarzRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Third Player Wins} \\%
+      			\fi
+      			\ifx&#4&\else%
+      				\textcolor{MarzDarkRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Fourth Player Wins} \\
+      			\fi
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------- Mulligan Reason  Statistics Frame ------------------------------- %
+% Input
+\newcommand{\frameMulliganReasonsStatistic}[6]{%
+	\begin{scope}[xshift=935pt, yshift=40pt]
+		\node {\textcolor{white}{\titlefont{Mulligan Reasons}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-65pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\pie[explode=0.05, radius=2, color={MarzGreen, MarzGold, MarzRoyal, MarzOrange, MarzDarkRed}, before number=\printonlypositive, after number=, at={(0, 0)}]{%%
+					#1/,%
+					#2/,%
+					#3/,%
+					#4/,%
+					#5/%
+				}%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+				\textcolor{MarzGreen}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Mana Screw} \\%
+      			\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Mana Flood} \\%
+      			\textcolor{MarzRoyal}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Bad Mana Curve} \\%
+      			\textcolor{MarzOrange}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Action Lack} \\%
+      			\textcolor{MarzDarkRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Deck Specific} \\%
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------- Win Condition  Statistics Frame -------------------------------- %
+% Input
+\newcommand{\frameWinConditionStatistic}[5]{%
+	\begin{scope}[xshift=772pt, yshift=-185pt]
+		\node {\textcolor{white}{\titlefont{Win Condition}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-65pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\pie[explode=0.05, radius=2, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%%
+					#1/,%
+					#2/,%
+					#3/,%
+					#4/,%
+					#5/%
+				}%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+				\textcolor{MarzDarkRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Hit Points 0} \\%
+      			\textcolor{MarzPurple}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Poison} \\%
+      			\textcolor{MarzRoyal}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Deck-Out} \\%
+      			\textcolor{MarzOrange}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Card Effect} \\%
+				\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Commander DMG} \\%
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------- Lose Condition Statistics Frame -------------------------------- %
+% Input
+\newcommand{\frameLoseConditionStatistic}[5]{%
+	\begin{scope}[xshift=935pt, yshift=-185pt]
+		\node {\textcolor{white}{\titlefont{Lose Condition}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-65pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\pie[explode=0.05, radius=2, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%%
+					#1/,%
+					#2/,%
+					#3/,%
+					#4/,%
+					#5/%
+				}%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+				\textcolor{MarzDarkRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Hit Points 0} \\%
+      			\textcolor{MarzPurple}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Poison} \\%
+      			\textcolor{MarzRoyal}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Deck-Out} \\%
+      			\textcolor{MarzOrange}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Card Effect} \\%
+				\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Commander DMG} \\%
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------- Game Length  Statistics Frame --------------------------------- %
+% Input
+\newcommand{\frameGameLengthStatistic}[4]{%
+	\begin{scope}[xshift=772pt, yshift=-410pt]
+		\node {\textcolor{white}{\titlefont{Game Length}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-65pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\pie[explode=0.05, radius=2, color={MarzDarkRed, MarzGreen, MarzGold, MarzOrange}, before number=\printonlypositive, after number=, at={(0, 0)}]{%%
+					#1/,%
+					#2/,%
+					#3/,%
+					#4/
+				}%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+				\textcolor{MarzRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{1 - 5} \\%
+      			\textcolor{MarzGreen}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{6 - 10} \\%
+      			\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{11 - 15} \\%
+     			\textcolor{MarzOrange}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{16 +} \\%
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------- Obvious Problems Statistics Frame ------------------------------- %
+% Input
+\newcommand{\frameObviousProblemsStatistic}[7]{%
+	\begin{scope}[xshift=935pt, yshift=-410pt]
+		\node {\textcolor{white}{\titlefont{Game Length}}};%
+%		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
+%		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
+%		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);
+		
+		\node[yshift=-65pt, inner sep=0pt, circle] {
+			\begin{tikzpicture}%
+				\pie[explode=0.05, radius=2, color={MarzGreen, MarzRed, MarzRoyal, MarzGold, MarzGreen!50, MarzRed!50, MarzRoyal!50}, before number=\printonlypositive, after number=, at={(0, 0)}]{%%
+					#1/,%
+					#2/,%
+					#3/,%
+					#4/,%
+					#5/,%
+					#6/,%
+					#7/%
+				}%
+			\end{tikzpicture}%
+		};
+		
+		\node [yshift=-191pt, anchor=south] {%
+			\begin{tabular}{@{}l@{\hspace{-17pt}}l@{}}%
+				\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+					\textcolor{MarzGreen}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Mana Screw}\\%
+      				\textcolor{MarzRed}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Mana Flood}\\%
+      				\textcolor{MarzRoyal}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Card Draw}\\%
+      				\textcolor{MarzGold}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Lack of Responses}%
+				\end{tabular}%
+				&%
+				\begin{tabular}{@{}l@{\hspace{1pt}}l@{}}%
+					\textcolor{MarzGreen!50}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{High CMC}\\%
+      				\textcolor{MarzRed!50}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Targeting}\\%
+      				\textcolor{MarzRoyal!50}{\raisebox{-1pt}{\large{$\blacksquare$}}}&\textcolor{white}{Misplays}\\%
+      				~\\%
+				\end{tabular}%
+			\end{tabular}%
+		};%
+	\end{scope}%
+}%

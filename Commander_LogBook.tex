@@ -1,436 +1,266 @@
 \documentclass{article}
 
 \usepackage{data/datastyle}
+\usepackage{stylesheets/shadowfy}
 \usepackage{stylesheets/cmd_lb_stylesheet}
 \usepackage{stylesheets/cmd_lb_commands}
 \usepackage{stylesheets/cmd_lb_helpers}
 
-\begin{document}
-	\KOMAoptions{paper=landscape,DIV=last}
-	\newgeometry{hmargin=2.5cm,bottom=17.5mm,height=150mm,includehead, textheight=520pt, left=0.5cm, right=0.5cm}
+\usepackage{stylesheets/cmd_lb_display_commands}
+
+\geometry{a3paper, landscape}
+
+\newfontfamily\titlefont{Planewalker-38m6}[Path=./fonts/, Extension=.ttf, UprightFont=Planewalker-38m6, BoldFont=PlanewalkerBold-xZj5, ItalicFont=PlanewalkerItalic-DgM1, BoldItalicFont=PlanewalkerBoldItalic-p4qr] % requires XeLaTeX or LuaTeX
+\newfontfamily\MtGIcons{PlanewalkerDings-Pl9d}[Path=./fonts/, Extension=.ttf, UprightFont=PlanewalkerDings-Pl9d] % requires XeLaTeX or LuaTeX
+
+\begin{document}	
+	% Ornaments
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		%\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% First 28 ToC Entries
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[xshift=-488pt,yshift=295pt, text width=620pt, anchor=north west] at (current page.center) {%
+			\begin{minipage}[t][275pt]{620pt}
+				\textcolor{white}{\Huge{\textbf{~~~~Table~~of~~Decks}}}
+				\setlength{\columnsep}{30pt}\vspace*{-3pt}
+				\begin{multicols}{2}
+					\color{white}
+					\renewcommand{\contentsname}{}
+					\tableofcontents
+					\thispagestyle{fancy}
+				\end{multicols}
+			\end{minipage}
+		};%
+	\end{tikzpicture}%
+	}%
+	
+	% Second 12 ToC Entries
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[xshift=-488pt,yshift=-163pt, text width=620pt, anchor=north west] at (current page.center) {%
+			\begin{minipage}[t][275pt]{620pt}
+				\setlength{\columnsep}{30pt}
+				\begin{multicols}{2}
+					\color{white}
+					\listofsecondContents
+					\thispagestyle{fancy}
+				\end{multicols}
+			\end{minipage}
+		};%
+		\node[xshift=-488pt,yshift=-323pt, text width=620pt, align=center, anchor=north west] at (current page.center) {%
+			\color{lightgray} \textbf{This Table of Decks does support a total of 40 Decks}
+		};%
+	\end{tikzpicture}%
+	}%
+	
+	% Side Frames
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[xshift=767pt, yshift=-60pt] {\includegraphics[width = 200pt, height = 200pt, keepaspectratio]{images/M4RZ-Crafting_icon.png}};
+	\end{tikzpicture}
+	
 	\input{data/commander_decklist.tex}
 	
-	\def\winlosepieradius{4}
-	
-	\section*{\LARGE{1v1 Commander Breakdown}}
+	\newpage
+	\renewcommand{\fancypagestyleheader}{1v1 Commander Breakdown}
 	\input{data/data_1v1.tex}
 	\xdef\logbook{LogBook1v1}
 	
-	%\DTLdisplaydb{LogBook1v1}
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
 	
-	\usepgfplotslibrary{statistics}
+	% Win/Lose Statistic
+	\calculateWinLosePercentage{\logbook}
+	\frameWinLoseStatistic{\winpercentage}{\losepercentage}
 	
-	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
-	\begin{tabular}{p{0.325\textwidth}}
-		\Large{\textbf{WIN/LOSE Statistics}}\\
-		\calculateWinLosePercentage{\logbook}
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
-				\winpercentage/WIN,
-				\losepercentage/LOSE
-			}%
-		\end{tikzpicture}%
-		\\\\
-		\Large{\textbf{Turn Number Statistics}}\\
-		\calculateAverage{\logbook}{TurnNumber}
-		\calculateMedian{\logbook}{TurnNumber}
-		\calculateMinMax{\logbook}{TurnNumber}
-		\vspace*{-1.2\fontdimen6\font}\hspace*{1cm}\footnotesize{Average Number of Turns: \averageTurnNumber}\\
-		\begin{tikzpicture}
-			\calculateBoxPlotOffsetAndStep{\minimum}{\maximum}
-			\draw[gray] (0cm,0cm) -- (8cm,0cm);
-			
-			\foreach \x in {1,...,8}
-    			\draw[gray!50, text=black] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3 cm) 
-      			node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*\steps+\offset}};
-      		
-      		\draw[fill=gray!30] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) rectangle ++(\fpeval{((\upperquartile-\offset)/\steps) - ((\lowerquartile-\offset)/\steps)} cm,-1.5 cm);
-      		
-      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -2 cm); % Minimum
-      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
-      		\draw[MarzRoyal, thick] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Lower Quartil
-      		\draw[MarzRed, thick] (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
-      		\draw (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
-      		\draw (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -2 cm); % Maximum
-      		\draw[MarzOrange, thick] (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
-      		
-      		\filldraw[fill=MarzDarkRed] (\fpeval{((\averageTurnNumber-\offset)/\steps) - 0.5} cm,-1.5 cm) circle (3pt);
-		\end{tikzpicture}
-	\end{tabular}
-	&
-	\def\informationradius{2}
-	\begin{tabular}{m{0.3\textwidth}m{0.3\textwidth}}
-		\large{\textbf{\textsc{Win Condition}}} & \large{\textbf{\textsc{Lose Condition}}}
-		\\
-		\calculateWinConditionsPercentages{\logbook}{WIN}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
-				\hpopercentage/Hit Points 0,
-				\poisonpercentage/Poison,
-				\deckoutpercentage/Deck-Out,
-				\cardeffectpercentage/Card Effect,
-				\commanderdamagepercentage/ Commander Damage
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		\calculateWinConditionsPercentages{\logbook}{LOSE}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
-				\hpopercentage/Hit Points 0,
-				\poisonpercentage/Poison,
-				\deckoutpercentage/Deck-Out,
-				\cardeffectpercentage/Card Effect,
-				\commanderdamagepercentage/ Commander Damage
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		\\\\\\
-		\large{\textbf{\textsc{Fast Mana to Win/Lose}}} & \large{\textbf{\textsc{Start Position to Win}}}
-		\\
+	% Average Finish Position Statistic
+	\begin{tikzpicture}
+		\node {};
+	\end{tikzpicture}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calculateAverage{\logbook}{TurnNumber}
+	\calculateMedian{\logbook}{TurnNumber}
+	\calculateMinMax{\logbook}{TurnNumber}
+	\frameTurnNumberStatistic{1}{0}{\minimum}{\maximum}{\lowerquartile}{\upperquartile}{}{\average}{\median}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		%\frameDeckBanner{Adamantine_Flyers}%
 		\calculateTwoPlayerFastManaWinLosePercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
-				\fastmanawinpercentage/Fast Mana Win,
-				\nofastmanawinpercentage/No Fast Mana Win,
-				\nofastmanalosepercentage/No Fast Mana Lose,
-				\fastmanalosepercentage/Fast Mana Lose
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		\calculateTwoPlayerStartGameWinLosePercentage{\logbook}
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange}, before number=\printonlypositive, after number=,]{%
-				\startgamewinpercentage/First Player Wins,
-				\startgamelosepercentage/Second Player Wins
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		\\\\\\
-		\large{\textbf{\textsc{Game Lengths}}} & \large{\textbf{\textsc{Obvious Problems}}}
-		\\
+		\frameFastManaToWinLoseStatistic{\fastmanawinpercentage}{\nofastmanawinpercentage}{\nofastmanalosepercentage}{\fastmanalosepercentage}%
+	
+		% Mulligan Reason OR Winners Start Position Frame
+		\calculateTwoPlayerStartGameWinLosePercentage{\logbook}%
+		\frameWinnerStartPositionStatistic{\startgamewinpercentage}{\startgamelosepercentage}{}{}%
+		%\frameMulliganReasonsStatistic{15}{25}{30}{10}{20}{15}%
+		
+		% Win Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\frameWinConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Lose Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\frameLoseConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Game Length Frame
 		\calculateGameLengthsPercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
-				\shortgamepercentage/{0-\shortgamelength},
-				\midgamepercentage/{\shortgamelength -\midgamelength},
-				\longgamepercentage/{\midgamelength -\longgamelength},
-				\verylonggamepercentage/{\longgamelength +}
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		% ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None
-		\calculateObviousProblemsPercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={green!85, red!85, blue!85, yellow!95, green!35, red!35, blue!35}, before number=\printonlypositive, after number=,]{%
-				\manascrewpercentage/{Mana Screw},
-				\manafloodpercentage/{Mana Flood},
-				\carddrawpercentage/{Card Draw},
-				\lackofresponsespercentage/{Lack of Responses},
-				\highcmcpercentage/{High CMC},
-				\targetingpercentage/{Targeting},
-				\misplayspercentage/{Misplays}
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-	\end{tabular}
-	\end{tabular}
+		\frameGameLengthStatistic{\shortgamepercentage}{\midgamepercentage}{\longgamepercentage}{\verylonggamepercentage}%
+		
+		% Obvious Problems Frame
+		\calculateObviousProblemsPercentages{\logbook}
+		\frameObviousProblemsStatistic{\manascrewpercentage}{\manafloodpercentage}{\carddrawpercentage}{\lackofresponsespercentage}{\highcmcpercentage}{\targetingpercentage}{\misplayspercentage}%
+	\end{tikzpicture}
 	
 	\newpage
-	\section*{\LARGE{3-Player Commander Breakdown}}
+	\renewcommand{\fancypagestyleheader}{3 Player Commander Breakdown}
 	\input{data/data_3player.tex}
 	\xdef\logbook{LogBook3Player}
 	
-	%\DTLdisplaydb{LogBook3Player}
-	%\newpage
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
 	
-	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
-	\begin{tabular}{p{0.325\textwidth}}
-		\Large{\textbf{WIN/LOSE Statistics}}\\
-		\calculateWinLosePercentage{\logbook}
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
-				\winpercentage/WIN,
-				\losepercentage/LOSE
-			}%
-		\end{tikzpicture}%
-		\\\\
-		\Large{\textbf{Turn Number Statistics}}\\
-		\calculateAverage{\logbook}{TurnNumber}
-		\calculateMedian{\logbook}{TurnNumber}
-		\calculateMinMax{\logbook}{TurnNumber}
-		\vspace*{-1.2\fontdimen6\font}\hspace*{1cm}\footnotesize{Average Number of Turns: \averageTurnNumber}\\
-		\begin{tikzpicture}
-			\calculateBoxPlotOffsetAndStep{\minimum}{\maximum}
-			\draw[gray] (0cm,0cm) -- (8cm,0cm);
-			
-			\foreach \x in {1,...,8}
-    			\draw[gray!50, text=black] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3 cm) 
-      			node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*\steps+\offset}};
-      		
-      		\draw[fill=gray!30] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) rectangle ++(\fpeval{((\upperquartile-\offset)/\steps) - ((\lowerquartile-\offset)/\steps)} cm,-1.5 cm);
-      		
-      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -2 cm); % Minimum
-      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
-      		\draw[MarzRoyal, thick] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Lower Quartil
-      		\draw[MarzRed, thick] (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
-      		\draw (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
-      		\draw (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -2 cm); % Maximum
-      		\draw[MarzOrange, thick] (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
-      		
-      		\filldraw[fill=MarzDarkRed] (\fpeval{((\averageTurnNumber-\offset)/\steps) - 0.5} cm,-1.5 cm) circle (3pt);
-		\end{tikzpicture}
-		\\\\
-		\Large{\textbf{Average Finish Position}}\\
-		\calculateThreePlayerAverageFinishPositions{\logbook}
-		\hspace*{0.5cm}\begin{tabular}{|p{0.1\textwidth}c|r|}
-			\hline
-			\textsc{Self} && \averageSelfFinishPosition \\\hline
-			\textsc{First Player} && \averageFirstPlayerFinish \\\hline
-			\textsc{Second Player} && \averageSecondPlayerFinish \\\hline
-			\textsc{Third Player} && \averageThirdPlayerFinish \\\hline
-		\end{tabular}
-	\end{tabular}
-	&
-	\def\informationradius{2}
-	\begin{tabular}{m{0.3\textwidth}m{0.3\textwidth}}
-		\large{\textbf{\textsc{Win Condition}}} & \large{\textbf{\textsc{Lose Condition}}}
-		\\
-		\calculateWinConditionsPercentages{\logbook}{WIN}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
-				\hpopercentage/Hit Points 0,
-				\poisonpercentage/Poison,
-				\deckoutpercentage/Deck-Out,
-				\cardeffectpercentage/Card Effect,
-				\commanderdamagepercentage/ Commander Damage
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		\calculateWinConditionsPercentages{\logbook}{LOSE}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
-				\hpopercentage/Hit Points 0,
-				\poisonpercentage/Poison,
-				\deckoutpercentage/Deck-Out,
-				\cardeffectpercentage/Card Effect,
-				\commanderdamagepercentage/ Commander Damage
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		\\\\\\
-		\large{\textbf{\textsc{Fast Mana to Win/Lose}}} & \large{\textbf{\textsc{Start Position to Win}}}
-		\\
+	% Win/Lose Statistic
+	\calculateWinLosePercentage{\logbook}
+	\frameWinLoseStatistic{\winpercentage}{\losepercentage}
+	
+	% Average Finish Position Statistic
+	\calculateThreePlayerAverageFinishPositions{\logbook}
+	\frameAverageFinishPositionStatistic{\averageSelfFinishPosition}{\averageFirstPlayerFinish}{\averageSecondPlayerFinish}{\averageThirdPlayerFinish}{}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calculateAverage{\logbook}{TurnNumber}
+	\calculateMedian{\logbook}{TurnNumber}
+	\calculateMinMax{\logbook}{TurnNumber}
+	\calculateFirstKillTurnAverage{\logbook}{FirstKillTurn}
+	\frameTurnNumberStatistic{1}{0}{\minimum}{\maximum}{\lowerquartile}{\upperquartile}{\averageFirstKillTurnNumber}{\average}{\median}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		%\frameDeckBanner{Adamantine_Flyers}%
 		\calculateThreePlayerFastManaWinLosePercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
-				\threeplayerfastmanawinpercentage/Fast Mana Win,
-				\threeplayernofastmanawinpercentage/No Fast Mana Win,
-				\threeplayernofastmanalosepercentage/No Fast Mana Lose,
-				\threeplayerfastmanalosepercentage/Fast Mana Lose
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		\calculateThreePlayerStartGameWinLosePercentage{\logbook}
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, MarzRed}, before number=\printonlypositive, after number=,]{%
-				\threeplayerfirstwinpercentage/First Player Wins,
-				\threeplayersecondwinpercentage/Second Player Wins,
-				\threeplayerthirdwinpercentage/Third Player Wins
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		\\\\\\
-		\large{\textbf{\textsc{Game Lengths}}} & \large{\textbf{\textsc{Obvious Problems}}}
-		\\
+		\frameFastManaToWinLoseStatistic{\threeplayerfastmanawinpercentage}{\threeplayernofastmanawinpercentage}{\threeplayernofastmanalosepercentage}{\threeplayerfastmanalosepercentage}%
+	
+		% Mulligan Reason OR Winners Start Position Frame
+		\calculateThreePlayerStartGameWinLosePercentage{\logbook}%
+		\frameWinnerStartPositionStatistic{\threeplayerfirstwinpercentage}{\threeplayersecondwinpercentage}{\threeplayerthirdwinpercentage}{}%
+		%\frameMulliganReasonsStatistic{15}{25}{30}{10}{20}{15}%
+		
+		% Win Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\frameWinConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Lose Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\frameLoseConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Game Length Frame
 		\calculateGameLengthsPercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
-				\shortgamepercentage/{0-\shortgamelength},
-				\midgamepercentage/{\shortgamelength -\midgamelength},
-				\longgamepercentage/{\midgamelength -\longgamelength},
-				\verylonggamepercentage/{\longgamelength +}
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		% ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None
-		\calculateObviousProblemsPercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={green!85, red!85, blue!85, yellow!95, green!35, red!35, blue!35}, before number=\printonlypositive, after number=,]{%
-				\manascrewpercentage/{Mana Screw},
-				\manafloodpercentage/{Mana Flood},
-				\carddrawpercentage/{Card Draw},
-				\lackofresponsespercentage/{Lack of Responses},
-				\highcmcpercentage/{High CMC},
-				\targetingpercentage/{Targeting},
-				\misplayspercentage/{Misplays}
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-	\end{tabular}
-	\end{tabular}
+		\frameGameLengthStatistic{\shortgamepercentage}{\midgamepercentage}{\longgamepercentage}{\verylonggamepercentage}%
+		
+		% Obvious Problems Frame
+		\calculateObviousProblemsPercentages{\logbook}
+		\frameObviousProblemsStatistic{\manascrewpercentage}{\manafloodpercentage}{\carddrawpercentage}{\lackofresponsespercentage}{\highcmcpercentage}{\targetingpercentage}{\misplayspercentage}%
+	\end{tikzpicture}
 	
 	\newpage
-	\section*{\LARGE{4-Player Commander Breakdown}}
+	\renewcommand{\fancypagestyleheader}{4 Player Commander Breakdown}
 	\input{data/data_4player.tex}
 	\xdef\logbook{LogBook4Player}
 	
-	%\DTLdisplaydb{LogBook4Player}
-	%\newpage
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
 	
-	\begin{tabular}{p{0.325\textwidth}p{0.65\textwidth}}
-	\begin{tabular}{p{0.325\textwidth}}
-		\Large{\textbf{WIN/LOSE Statistics}}\\
-		\calculateWinLosePercentage{\logbook}
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=inside, radius=\winlosepieradius, color={MarzGreen!60, MarzRed}]{%
-				\winpercentage/WIN,
-				\losepercentage/LOSE
-			}%
-		\end{tikzpicture}%
-		\\\\
-		\Large{\textbf{Turn Number Statistics}}\\
-		\calculateAverage{\logbook}{TurnNumber}
-		\calculateMedian{\logbook}{TurnNumber}
-		\calculateMinMax{\logbook}{TurnNumber}
-		\vspace*{-1.2\fontdimen6\font}\hspace*{1cm}\footnotesize{Average Number of Turns: \averageTurnNumber}\\
-		\begin{tikzpicture}
-			\calculateBoxPlotOffsetAndStep{\minimum}{\maximum}
-			\draw[gray] (0cm,0cm) -- (8cm,0cm);
-			
-			\foreach \x in {1,...,8}
-    			\draw[gray!50, text=black] (\fpeval{\x - 0.5} cm,0.3 cm) -- (\fpeval{\x - 0.5} cm,-3 cm) 
-      			node at (\fpeval{\x - 0.5} cm,0.7 cm) {\fpeval{\x*\steps+\offset}};
-      		
-      		\draw[fill=gray!30] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) rectangle ++(\fpeval{((\upperquartile-\offset)/\steps) - ((\lowerquartile-\offset)/\steps)} cm,-1.5 cm);
-      		
-      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -2 cm); % Minimum
-      		\draw (\fpeval{((\minimum-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
-      		\draw[MarzRoyal, thick] (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\lowerquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Lower Quartil
-      		\draw[MarzRed, thick] (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\median-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
-      		\draw (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -1.5 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1.5 cm); % Whisker: Minimum - Lower Quartil
-      		\draw (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -1 cm) -- (\fpeval{((\maximum-\offset)/\steps) - 0.5} cm, -2 cm); % Maximum
-      		\draw[MarzOrange, thick] (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -0.75 cm) -- (\fpeval{((\upperquartile-\offset)/\steps) - 0.5} cm, -2.25 cm); % Upper Quartil
-      		
-      		\filldraw[fill=MarzDarkRed] (\fpeval{((\averageTurnNumber-\offset)/\steps) - 0.5} cm,-1.5 cm) circle (3pt);
-		\end{tikzpicture}
-		\\\\
-		\Large{\textbf{Average Finish Position}}\\
-		\calculateFourPlayerAverageFinishPositions{\logbook}
-		\hspace*{0.5cm}\begin{tabular}{|p{0.1\textwidth}c|r|}
-			\hline
-			\textsc{Self} && \averageSelfFinishPosition \\\hline
-			\textsc{First Player} && \averageFirstPlayerFinish \\\hline
-			\textsc{Second Player} && \averageSecondPlayerFinish \\\hline
-			\textsc{Third Player} && \averageThirdPlayerFinish \\\hline
-			\textsc{Fourth Player} && \averageFourthPlayerFinish \\\hline
-		\end{tabular}
-	\end{tabular}
-	&
-	\def\informationradius{2}
-	\begin{tabular}{m{0.3\textwidth}m{0.3\textwidth}}
-		\large{\textbf{\textsc{Win Condition}}} & \large{\textbf{\textsc{Lose Condition}}}
-		\\
-		\calculateWinConditionsPercentages{\logbook}{WIN}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=, at={(0, 0)}]{%
-				\hpopercentage/Hit Points 0,
-				\poisonpercentage/Poison,
-				\deckoutpercentage/Deck-Out,
-				\cardeffectpercentage/Card Effect,
-				\commanderdamagepercentage/ Commander Damage
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		\calculateWinConditionsPercentages{\logbook}{LOSE}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzDarkRed, MarzPurple, MarzRoyal, MarzOrange, MarzGold}, before number=\printonlypositive, after number=,]{%
-				\hpopercentage/Hit Points 0,
-				\poisonpercentage/Poison,
-				\deckoutpercentage/Deck-Out,
-				\cardeffectpercentage/Card Effect,
-				\commanderdamagepercentage/ Commander Damage
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		\\\\\\
-		\large{\textbf{\textsc{Fast Mana to Win/Lose}}} & \large{\textbf{\textsc{Start Position to Win}}}
-		\\
+	% Win/Lose Statistic
+	\calculateWinLosePercentage{\logbook}
+	\frameWinLoseStatistic{\winpercentage}{\losepercentage}
+	
+	% Average Finish Position Statistic
+	\calculateFourPlayerAverageFinishPositions{\logbook}
+	\frameAverageFinishPositionStatistic{\averageSelfFinishPosition}{\averageFirstPlayerFinish}{\averageSecondPlayerFinish}{\averageThirdPlayerFinish}{\averageFourthPlayerFinish}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calculateAverage{\logbook}{TurnNumber}
+	\calculateMedian{\logbook}{TurnNumber}
+	\calculateMinMax{\logbook}{TurnNumber}
+	\calculateFirstKillTurnAverage{\logbook}{FirstKillTurn}
+	\frameTurnNumberStatistic{1}{0}{\minimum}{\maximum}{\lowerquartile}{\upperquartile}{\averageFirstKillTurnNumber}{\average}{\median}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		%\frameDeckBanner{Adamantine_Flyers}%
 		\calculateFourPlayerFastManaWinLosePercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
-				\fourplayerfastmanawinpercentage/Fast Mana Win,
-				\fourplayernofastmanawinpercentage/No Fast Mana Win,
-				\fourplayernofastmanalosepercentage/No Fast Mana Lose,
-				\fourplayerfastmanalosepercentage/Fast Mana Lose
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
+		\frameFastManaToWinLoseStatistic{\fourplayerfastmanawinpercentage}{\fourplayernofastmanawinpercentage}{\fourplayernofastmanalosepercentage}{\fourplayerfastmanalosepercentage}%
+	
+		% Mulligan Reason OR Winners Start Position Frame
 		\calculateFourPlayerStartGameWinLosePercentage{\logbook}
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, MarzRed, MarzDarkRed}, before number=\printonlypositive, after number=,]{%
-				\fourplayerfirstwinpercentage/First Player Wins,
-				\fourplayersecondwinpercentage/Second Player Wins,
-				\fourplayerthirdwinpercentage/Third Player Wins,
-				\fourplayerfourthwinpercentage/Forth Player Wins
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		\\\\\\
-		\large{\textbf{\textsc{Game Lengths}}} & \large{\textbf{\textsc{Obvious Problems}}}
-		\\
+		\frameWinnerStartPositionStatistic{\fourplayerfirstwinpercentage}{\fourplayersecondwinpercentage}{\fourplayerthirdwinpercentage}{\fourplayerfourthwinpercentage}%
+		%\frameMulliganReasonsStatistic{15}{25}{30}{10}{20}{15}%
+		
+		% Win Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\frameWinConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Lose Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\frameLoseConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Game Length Frame
 		\calculateGameLengthsPercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={MarzGold, MarzOrange, gray!50, gray}, before number=\printonlypositive, after number=,]{%
-				\shortgamepercentage/{0-\shortgamelength},
-				\midgamepercentage/{\shortgamelength -\midgamelength},
-				\longgamepercentage/{\midgamelength -\longgamelength},
-				\verylonggamepercentage/{\longgamelength +}
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-		&
-		% ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None
-		\calculateObviousProblemsPercentages{\logbook}%
-		\begin{tikzpicture}%
-			\pie[explode=0.05, text=legend, radius=\informationradius, color={green!85, red!85, blue!85, yellow!95, green!35, red!35, blue!35}, before number=\printonlypositive, after number=,]{%
-				\manascrewpercentage/{Mana Screw},
-				\manafloodpercentage/{Mana Flood},
-				\carddrawpercentage/{Card Draw},
-				\lackofresponsespercentage/{Lack of Responses},
-				\highcmcpercentage/{High CMC},
-				\targetingpercentage/{Targeting},
-				\misplayspercentage/{Misplays}
-			}%
-			\node at (-2.25,2.25) {};%
-			\node at (-2.25,-2.25) {};%
-		\end{tikzpicture}%
-	\end{tabular}
-	\end{tabular}
+		\frameGameLengthStatistic{\shortgamepercentage}{\midgamepercentage}{\longgamepercentage}{\verylonggamepercentage}%
+		
+		% Obvious Problems Frame
+		\calculateObviousProblemsPercentages{\logbook}
+		\frameObviousProblemsStatistic{\manascrewpercentage}{\manafloodpercentage}{\carddrawpercentage}{\lackofresponsespercentage}{\highcmcpercentage}{\targetingpercentage}{\misplayspercentage}%
+	\end{tikzpicture}
 	
 	\input{deck_information_pages/Commander_Information_Connector.tex}
 \end{document}

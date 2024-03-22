@@ -65,6 +65,12 @@
 	\xdef\averageTurnNumber{\averageTurnNumber}\relax
 }
 
+\newcommand{\calculateFirstKillTurnAverage}[2]{
+	\DTLmeanforcolumn{#1}{#2}{\firstKillAverage}
+	\FPeval{averageFirstKillTurnNumber}{round(\firstKillAverage,2)}
+	\xdef\averageFirstKillTurnNumber{\averageFirstKillTurnNumber}\relax
+}
+
 \newcommand{\calculateMinMax}[2]{
 	% Initialize the maximum and minimum values
 	\FPset{maxvalue}{0}
