@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-% 				Adamantine Flyers - Sephara, Sky's Blade	Marcel Zauder 23/03/2021				%
+% 				Adamantine Flyers - Sephara, Sky's Blade	Marcel Zauder 26/03/2024				%
 % Commander Deck Information Page                                                                   %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -10,7 +10,7 @@
 % ---------------------------------------- Deck Information --------------------------------------- %
 \DTLgetrowindex{\rowid}{CommanderDecks}{\dtlcolumnindex{CommanderDecks}{DeckName}}{Adamantine Flyers}
 \DTLgetvalue{\commandername}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Commander}}
-\renewcommand{\imagename}{Adamantine_Flyers}%
+\DTLgetvalue{\imagename}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Image}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------------- Deck  Main-Information Pages --------------------------------- %

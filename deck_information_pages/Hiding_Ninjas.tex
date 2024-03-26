@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-% 					Hiding Ninjas - Satoru Umezawa	Marcel Zauder 23/03/2021				%
+% 					Hiding Ninjas - Satoru Umezawa		Marcel Zauder 26/03/2024				%
 % Commander Deck Information Page                                                                   %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -10,7 +10,7 @@
 % ---------------------------------------- Deck Information --------------------------------------- %
 \DTLgetrowindex{\rowid}{CommanderDecks}{\dtlcolumnindex{CommanderDecks}{DeckName}}{Hiding Ninjas}
 \DTLgetvalue{\commandername}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Commander}}
-\renewcommand{\imagename}{Hiding_Ninjas}%
+\DTLgetvalue{\imagename}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Image}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------------- Deck  Main-Information Pages --------------------------------- %

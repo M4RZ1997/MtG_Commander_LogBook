@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-%						cmd_lb_display_commands.sty  Marcel Zauder 23/03/2021						%
+%						cmd_lb_display_commands.sty  Marcel Zauder 26/03/2024						%
 % Stylesheet by Marcel                                                                              %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -13,6 +13,83 @@
 \setlength{\offsetLegend}{114.075pt}
 
 \newrgbcolor{outline-color}{0.850 0.764 0.466}
+
+\newcounter{TotalEntries}
+\newcounter{CurrentEntry}
+\newcounter{tempEntryCounter}
+\newcounter{tempTrackNumber}
+\newcounter{tempArchetypeCounter}
+
+\xdef\mlTimesTrackedNumber{-1}\relax
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------- First Page:  Latest Performance Statistic --------------------------- %		
+\newcommand{\fixedchar}[1]{\makebox[1em]{#1}} % Adjust the width (1em) as needed
+		
+\newcommand{\calcPerformanceStatistic}[1]{%
+	\setcounter{TotalEntries}{\DTLrowcount{#1}}%
+	\hspace*{0.5em}Number of Games:~\theTotalEntries\\\hspace*{0.5em}Last 10 Games:\vspace*{-0.75em}%
+	\begin{center}%
+		\DTLforeach{#1}{\WinOrLose=WinOrLose}{%
+			\stepcounter{CurrentEntry}%
+			\ifnum\value{CurrentEntry}>\numexpr\value{TotalEntries}-10\relax%
+				\ifthenelse{\equal{\WinOrLose}{WIN}}{%
+					\fixedchar{\textcolor{MarzGreen}{\textbf{W}}}%
+				}{%
+					\fixedchar{\textcolor{MarzDarkRed}{\textbf{L}}}%
+				}%
+			\fi%					
+		}%
+		\ifthenelse{\value{TotalEntries}<10}{%
+			\setcounter{tempEntryCounter}{\numexpr\value{TotalEntries}-10\relax}%
+			\whiledo{\value{tempEntryCounter} < 0}{%
+      			\fixedchar{~}%
+      			\stepcounter{tempEntryCounter}%
+    		}%
+    		}{}%
+	\end{center}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------ Most/Least  Played Deck ------------------------------------ %
+\newcommand{\calcMostLeastTrackedDeck}[1]{%
+	\DTLforeach{CommanderDecks}{\tempDeckName=DeckName, \tempImage=Image}{%
+		\setcounter{tempTrackNumber}{0}
+		\DTLforeach{LogBook1v1}{\lbDeckName=DeckName}{%
+			\ifthenelse{\equal{\tempDeckName}{\lbDeckName}}{\stepcounter{tempTrackNumber}}{}%
+		}%
+		\DTLforeach{LogBook3Player}{\lbDeckName=DeckName}{%
+			\ifthenelse{\equal{\tempDeckName}{\lbDeckName}}{\stepcounter{tempTrackNumber}}{}%
+		}%
+		\DTLforeach{LogBook4Player}{\lbDeckName=DeckName}{%
+			\ifthenelse{\equal{\tempDeckName}{\lbDeckName}}{\stepcounter{tempTrackNumber}}{}%
+		}%
+		\ifthenelse{\equal{#1}{>} \AND \equal{\mlTimesTrackedNumber}{-1}}{
+			\xdef\mlTimesTrackedNumber{\thetempTrackNumber}\relax%
+			\xdef\mlTrackedDeck{\tempDeckName}\relax%
+			\xdef\DeckImage{\tempImage}\relax%
+		}{}
+		\ifthenelse{\mlTimesTrackedNumber #1 \thetempTrackNumber}{%
+			\xdef\mlTimesTrackedNumber{\thetempTrackNumber}\relax%
+			\xdef\mlTrackedDeck{\tempDeckName}\relax%
+			\xdef\DeckImage{\tempImage}\relax%
+		}{}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------- Deck Archetype Distribution ---------------------------------- %
+\newcommand{\printDeckArchetypeDistribution}{%
+	\foreach \archetype in \listDeckArchetypes {%
+		\setcounter{tempArchetypeCounter}{0}%
+		\DTLforeach{CommanderDecks}{\tempArchetype=DeckArchetype}{%
+			\ifthenelse{\equal{\archetype}{\tempArchetype}}{%
+				\stepcounter{tempArchetypeCounter}%
+			}{}%
+		}%
+		\makebox[120pt][s]{\archetype\hfill\thetempArchetypeCounter}\\%
+	}%
+}%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------ Win/Lose Statistic Ornament Outline ------------------------------ %
@@ -677,7 +754,7 @@
 % Input
 \newcommand{\frameObviousProblemsStatistic}[7]{%
 	\begin{scope}[xshift=935pt, yshift=-410pt]
-		\node {\textcolor{white}{\titlefont{Game Length}}};%
+		\node {\textcolor{white}{\titlefont{Obvious Problems}}};%
 %		\draw[white, thick] (-75pt,5pt) -- ++(150pt,0);
 %		\draw[white, thick] (0,10pt) -- ++(0,-5pt);
 %		\draw[white, thick] (50pt,10pt) -- ++(0,-201pt);

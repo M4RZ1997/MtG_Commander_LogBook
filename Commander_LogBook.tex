@@ -13,7 +13,15 @@
 \newfontfamily\titlefont{Planewalker-38m6}[Path=./fonts/, Extension=.ttf, UprightFont=Planewalker-38m6, BoldFont=PlanewalkerBold-xZj5, ItalicFont=PlanewalkerItalic-DgM1, BoldItalicFont=PlanewalkerBoldItalic-p4qr] % requires XeLaTeX or LuaTeX
 \newfontfamily\MtGIcons{PlanewalkerDings-Pl9d}[Path=./fonts/, Extension=.ttf, UprightFont=PlanewalkerDings-Pl9d] % requires XeLaTeX or LuaTeX
 
-\begin{document}	
+\begin{document}
+	% Data Input
+	\input{data/commander_decklist.tex}
+	\input{data/data_1v1.tex}
+	\input{data/data_3player.tex}
+	\input{data/data_4player.tex}
+	
+	\hypertarget{startofdocument}{}
+	
 	% Ornaments
 	\begin{tikzpicture}[remember picture,overlay]%
 		\WinLoseStatisticOrnamentOutline
@@ -68,14 +76,74 @@
 	
 	% Side Frames
 	\begin{tikzpicture}[remember picture,overlay]
-		\node[xshift=767pt, yshift=-60pt] {\includegraphics[width = 200pt, height = 200pt, keepaspectratio]{images/M4RZ-Crafting_icon.png}};
+		% M4RZ-Crafting Icon
+		\node[xshift=767pt, yshift=-60pt] {%
+			\includegraphics[width = 200pt, height = 200pt, keepaspectratio]{images/M4RZ-Crafting_icon.png}%
+		};%
+		
+		% Latest Performance Information		
+		\node[xshift=935pt, yshift=30pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\Large \textsc{Performance}}
+		};
+		\node[xshift=935pt, yshift=10pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, white, align=center] {%
+			\begin{tikzpicture}
+				\node[text width=125pt] {%
+					{\large 1v1 Commander}\\\vspace*{0.3em}\calcPerformanceStatistic{LogBook1v1}
+				};%
+				\node[yshift=-55pt, text width=125pt] {%
+					{\large 3 Player Commander}\\\vspace*{0.3em}\calcPerformanceStatistic{LogBook3Player}
+				};%
+				\node[yshift=-110pt, text width=125pt] {%
+					{\large 4 Player Commander}\\\vspace*{0.3em}\calcPerformanceStatistic{LogBook4Player}
+				};%
+			\end{tikzpicture}
+		};%
+		
+		% Most Tracked Deck
+		\node[xshift=771.5pt, yshift=-195pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Most Tracked Deck}}
+		};
+		\calcMostLeastTrackedDeck{<}		
+		\node[xshift=771.5pt, yshift=-275pt, text width=136pt, inner sep=0pt, outer sep=0pt, align=center] {%
+			\includegraphics[width = 136pt, height = 136pt, keepaspectratio]{images/deck_crests/\DeckImage.png}%
+		};
+		\node[xshift=771.5pt, yshift=-350pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}The most tracked deck is\linebreak\mlTrackedDeck\linebreak(\mlTimesTrackedNumber~Games tracked)\\
+		};%
+		
+		% Least Tracked Deck
+		\node[xshift=935pt, yshift=-195pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Least Tracked Deck}}
+		};
+		\calcMostLeastTrackedDeck{>}		
+		\node[xshift=935pt, yshift=-275pt, text width=136pt, inner sep=0pt, outer sep=0pt, align=center] {%
+			\includegraphics[width = 136pt, height = 136pt, keepaspectratio]{images/deck_crests/\DeckImage.png}%
+		};
+		\node[xshift=935pt, yshift=-350pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}The least tracked deck is\linebreak\mlTrackedDeck\linebreak(\mlTimesTrackedNumber~Games tracked)\\
+		};%
+		
+		% Deck Archetypes
+		\node[xshift=771.5pt, yshift=-420pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Deck Archetypes}}%
+		};%
+		\node[xshift=771.5pt, yshift=-442.5pt, text width=120pt, anchor=north, inner sep=0pt, outer sep=0pt, white] {%
+			\printDeckArchetypeDistribution%
+		};
+		
+		% Author Notes
+		\node[xshift=935pt, yshift=-420pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Author's Notes}}%
+		};%
+		\node[xshift=935pt, yshift=-427.5pt, text width=130pt, anchor=north, inner sep=0pt, outer sep=0pt, white] {%
+			{\justify This logbook serves as a comprehensive tracker for Magic: The Gathering Commander decks, offering a detailed account of performance metrics and game statistics across an array of deck archetypes. It's designed to aid in the refinement and understanding of each deck's capabilities, providing insights into their successes and areas for improvement.}\\
+			- M4RZ
+		};
 	\end{tikzpicture}
-	
-	\input{data/commander_decklist.tex}
 	
 	\newpage
 	\renewcommand{\fancypagestyleheader}{1v1 Commander Breakdown}
-	\input{data/data_1v1.tex}
+	\renewcommand{\linktotop}{T}
 	\xdef\logbook{LogBook1v1}
 	
 	\begin{tikzpicture}[remember picture,overlay]%
@@ -138,7 +206,6 @@
 	
 	\newpage
 	\renewcommand{\fancypagestyleheader}{3 Player Commander Breakdown}
-	\input{data/data_3player.tex}
 	\xdef\logbook{LogBook3Player}
 	
 	\begin{tikzpicture}[remember picture,overlay]%
@@ -201,7 +268,6 @@
 	
 	\newpage
 	\renewcommand{\fancypagestyleheader}{4 Player Commander Breakdown}
-	\input{data/data_4player.tex}
 	\xdef\logbook{LogBook4Player}
 	
 	\begin{tikzpicture}[remember picture,overlay]%
@@ -236,7 +302,6 @@
 	% In-Depth Statistics
 	\begin{tikzpicture}[remember picture,overlay]
 		% Deck Banner OR Fast Mana to Win/Lose Frame
-		%\frameDeckBanner{Adamantine_Flyers}%
 		\calculateFourPlayerFastManaWinLosePercentages{\logbook}%
 		\frameFastManaToWinLoseStatistic{\fourplayerfastmanawinpercentage}{\fourplayernofastmanawinpercentage}{\fourplayernofastmanalosepercentage}{\fourplayerfastmanalosepercentage}%
 	

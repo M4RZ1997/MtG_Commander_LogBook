@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-% 			Arachnophobia - Shelob, Child of Ungoliant			Marcel Zauder 23/03/2021			%
+% 			Arachnophobia - Shelob, Child of Ungoliant			Marcel Zauder 26/03/2024			%
 % Commander Deck Information Page                                                                   %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -10,7 +10,7 @@
 % ---------------------------------------- Deck Information --------------------------------------- %
 \DTLgetrowindex{\rowid}{CommanderDecks}{\dtlcolumnindex{CommanderDecks}{DeckName}}{Arachnophobia}
 \DTLgetvalue{\commandername}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Commander}}
-\renewcommand{\imagename}{Arachnophobia}%
+\DTLgetvalue{\imagename}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Image}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------------- Deck  Main-Information Pages --------------------------------- %

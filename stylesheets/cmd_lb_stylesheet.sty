@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-% 								depotstyle.sty 	Marcel Zauder 23/03/2021							%
+% 								depotstyle.sty 	Marcel Zauder 26/03/2024							%
 % Stylesheet by Marcel                                                                              %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -122,6 +122,7 @@
 
 \newcommand{\fancypagestyleheader}{Magic the Gathering: Commander Logbook}
 \newcommand{\fancypagestylesubheader}{}
+\newcommand{\linktotop}{}
 %\fancyheadoffset{0pt}
 
 \renewcommand*{\headrulewidth}{0pt} % no rule for header
@@ -144,6 +145,12 @@
 		\ifx&\fancypagestylesubheader&\else%
 			\node[anchor=north west, text width=\paperwidth, align=left, font=\Huge, inner sep=1cm, xshift=40pt, yshift=-43pt] at (current page.north west) {\shadowfy{\fancypagestylesubheader}};
 		\fi
+		
+		\ifthenelse{\equal{\linktotop}{}}{}{%
+			\node[anchor=east, align=right, font=\Large, inner sep=0cm, xshift=-80pt, yshift=57pt] at (current page.south east) {%
+				\hyperlink{startofdocument}{\shadowfy{back to top}}%
+			};%
+		}%
    \end{tikzpicture}
 }
 %\fancyfoot[C]{\thepage}

@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-% 					Burning Heavens - Kaalia of the Vast	Marcel Zauder 23/03/2021				%
+% 					Burning Heavens - Kaalia of the Vast	Marcel Zauder 26/03/2024				%
 % Commander Deck Information Page                                                                   %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -10,7 +10,7 @@
 % ---------------------------------------- Deck Information --------------------------------------- %
 \DTLgetrowindex{\rowid}{CommanderDecks}{\dtlcolumnindex{CommanderDecks}{DeckName}}{Burning Heavens}
 \DTLgetvalue{\commandername}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Commander}}
-\renewcommand{\imagename}{Burning_Heavens}%
+\DTLgetvalue{\imagename}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Image}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------------- Deck  Main-Information Pages --------------------------------- %

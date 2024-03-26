@@ -1,5 +1,5 @@
 % ------------------------------------------------------------------------------------------------- %
-% 		Stealing Pirate Memory Game - Admiral Beckett Brass			Marcel Zauder 23/03/2021		%
+% 		Stealing Pirate Memory Game - Admiral Beckett Brass			Marcel Zauder 26/03/2024		%
 % Commander Deck Information Page                                                                   %
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
@@ -10,7 +10,7 @@
 % ---------------------------------------- Deck Information --------------------------------------- %
 \DTLgetrowindex{\rowid}{CommanderDecks}{\dtlcolumnindex{CommanderDecks}{DeckName}}{Stealing Pirate Memory Game}
 \DTLgetvalue{\commandername}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Commander}}
-\renewcommand{\imagename}{Stealing_Pirate_Memory_Game}%
+\DTLgetvalue{\imagename}{CommanderDecks}{\rowid}{\dtlcolumnindex{CommanderDecks}{Image}}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ---------------------------------- Deck  Main-Information Pages --------------------------------- %

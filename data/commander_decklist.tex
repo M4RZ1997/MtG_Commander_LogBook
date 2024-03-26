@@ -1,34 +1,37 @@
 \DTLnewdb{CommanderDecks}
 
-\newcommand{\addCommanderDeck}[3]{%
+\newcommand{\addCommanderDeck}[5]{%
 	\DTLnewrow{CommanderDecks}%
 	\DTLnewdbentry{CommanderDecks}{DeckName}{#1}%
 	\DTLnewdbentry{CommanderDecks}{Commander}{#2}%
 	\DTLnewdbentry{CommanderDecks}{ColorIdentity}{#3}%
+	\DTLnewdbentry{CommanderDecks}{Image}{#4}%
+	\conditionalSet{\listDeckArchetypes}{CommanderDecks}{DeckArchetype}{#5}%
 }
 
-\addCommanderDeck{Adamantine Flyers}{Sephara, Sky's Blade}{W}%
-\addCommanderDeck{De/Reforestation}{Titania, Voice of Gaea}{G}%
-\addCommanderDeck{Eldrazi Unbound}{Zhulodok, Void Gorger}{C}%
-\addCommanderDeck{Strength IS Relative}{Rograkh, Son of Rogahh and Jeska, Thrice Reborn}{R}%
+\addCommanderDeck{Adamantine Flyers}{Sephara, Sky's Blade}{W}{Adamantine_Flyers}{Pillow Fort}%
+\addCommanderDeck{De/Reforestation}{Titania, Voice of Gaea}{G}{DeReforestation}{Ramp/Landfall}%
+\addCommanderDeck{Eldrazi Unbound}{Zhulodok, Void Gorger}{C}{Eldrazi_Unbound}{Ramp/Landfall}%
+\addCommanderDeck{Strength IS Relative}{Rograkh, Son of Rogahh and Jeska, Thrice Reborn}{R}{Strength_IS_Relative}{Aggro/Burn}%
 
-\addCommanderDeck{Arachnophobia}{Shelob, Child of Ungoliant}{BG}%
-\addCommanderDeck{Hiding Ninjas}{Satoru Umezawa}{UB}%
+\addCommanderDeck{Arachnophobia}{Shelob, Child of Ungoliant}{BG}{Arachnophobia}{Midrange}%
+\addCommanderDeck{Hiding Ninjas}{Satoru Umezawa}{UB}{Hiding_Ninjas}{Aggro/Burn}%
+\addCommanderDeck{Return to Monkee}{Kibo, Uktabi Prince}{RG}{Return_to_Monkee}{Midrange}%
 
-\addCommanderDeck{Blinking Dragons}{Miirym, Sentinel Wyrm}{URG}%
-\addCommanderDeck{Bloodthirsty Hybrid}{Indoraptor, the Perfect Hybrid}{BRG}%
-\addCommanderDeck{Burning Heavens}{Kaalia of the Vast}{WBR}%
-\addCommanderDeck{Controlling Time}{Obeka, Brute Chronologist}{UBR}%
-\addCommanderDeck{Corrupting Influence}{Vishgraz, the Doomhive}{WBG}%
-\addCommanderDeck{Countering Merfolks}{Ishai, Ojutai Dragonspeaker and Thrasios, Triton Hero}{WUG}%
-\addCommanderDeck{Drive-By Vehicles}{Sydri, Galvanic Genius}{WUB}%
-\addCommanderDeck{Enraged Dinosaurs}{Zacama, Primal Calamity}{WRG}%
-\addCommanderDeck{Frozen Resources}{Jorn, God of Winter}{UBG}%
-\addCommanderDeck{Hybridization}{Indominus Rex, Alpha}{UBG}%
-\addCommanderDeck{Stealing Pirate Memory Game}{Admiral Beckett Brass}{UBR}%
+\addCommanderDeck{Blinking Dragons}{Miirym, Sentinel Wyrm}{URG}{Blinking_Dragons}{Ramp/Landfall}%
+\addCommanderDeck{Bloodthirsty Hybrid}{Indoraptor, the Perfect Hybrid}{BRG}{Bloodthirsty_Hybrid}{Voltron}%
+\addCommanderDeck{Burning Heavens}{Kaalia of the Vast}{WBR}{Burning_Heavens}{Aggro/Burn}%
+\addCommanderDeck{Controlling Time}{Obeka, Brute Chronologist}{UBR}{Controlling_Time}{Combo}%
+\addCommanderDeck{Corrupting Influence}{Vishgraz, the Doomhive}{WBG}{Corrupting_Influence}{Midrange}%
+\addCommanderDeck{Countering Merfolks}{Ishai, Ojutai Dragonspeaker and Thrasios, Triton Hero}{WUG}{Countering_Merfolks}{Control}%
+\addCommanderDeck{Drive-By Vehicles}{Sydri, Galvanic Genius}{WUB}{Drive-By_Vehicles}{Control}%
+\addCommanderDeck{Enraged Dinosaurs}{Zacama, Primal Calamity}{WRG}{Enraged_Dinosaurs}{Ramp/Landfall}%
+\addCommanderDeck{Frozen Resources}{Jorn, God of Winter}{UBG}{Frozen_Resources}{Stax/Tax/Lock}%
+\addCommanderDeck{Hybridization}{Indominus Rex, Alpha}{UBG}{Hybridization}{Voltron}%
+\addCommanderDeck{Stealing Pirate Memory Game}{Admiral Beckett Brass}{UBR}{Stealing_Pirate_Memory_Game}{Control}%
 
-\addCommanderDeck{Shining Artifacts}{Breya, Etherium Shaper}{WUBR}%
-\addCommanderDeck{The Fellowship}{Aragorn, the Uniter}{WURG}%
+\addCommanderDeck{Shining Artifacts}{Breya, Etherium Shaper}{WUBR}{Shining_Artifacts}{Midrange}%
+\addCommanderDeck{The Fellowship}{Aragorn, the Uniter}{WURG}{The_Fellowship}{Combo}%
 
-\addCommanderDeck{Flourishing Shrines}{Go-Shintai of Life's Origin}{WUBRG}%
-\addCommanderDeck{Legendary Legends}{Sisay, Weatherlight Captain}{WUBRG}%
+\addCommanderDeck{Flourishing Shrines}{Go-Shintai of Life's Origin}{WUBRG}{Flourishing_Shrines}{Pillow Fort}%
+\addCommanderDeck{Legendary Legends}{Sisay, Weatherlight Captain}{WUBRG}{Legendary_Legends}{Midrange}%
