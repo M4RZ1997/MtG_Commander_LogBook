@@ -5,6 +5,7 @@
 % ################################################################################################# %
 % ---------------------------------------------- Lists -------------------------------------------- %
 \def\listDeckArchetypes{Aggro/Burn, Control, Midrange, Combo, Ramp/Landfall, Token, Voltron, Stax/Tax/Lock, Mill, Aristocrats, Pillow Fort, Reanimator, Toolbox}%
+\def\listColorCombinations{C, W, U, B, R, G, WU, WB, WR, WG, UB, UR, UG, BR, BG, RG, WUB, WUR, WUG, WBR, WBG, WRG, UBR, UBG, URG, BRG, WUBR, WUBG, WURG, WBRG, UBRG, WUBRG}%
 
 \def\listWinConditions{HP0, Poison, DeckOut, CardEffect, CommanderDamage}%
 \def\listObviousProblems{ManaScrew, ManaFlood, CardDraw, LackOfResponses, HighCMC, Targeting, Misplays, None}%
@@ -25,6 +26,13 @@
 		\PackageError{M4RZStyleCorp}{Error: #4 Invalid Input}{The Input can only be: #1}%%
 	\fi
 }
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------- Set PreCon Color Identity and Archetype ---------------------------- %
+\newcommand{\setPreconInformation}[3]{%
+	\conditionalSet{\listColorCombinations}{#1}{DeckColor}{#2}%
+	\conditionalSet{\listDeckArchetypes}{#1}{DeckArchetype}{#3}%
+}%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % ------------------------------ Set First Turn Kill and Turn Number ------------------------------ %

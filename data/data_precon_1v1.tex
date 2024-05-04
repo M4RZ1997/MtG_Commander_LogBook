@@ -1,0 +1,23 @@
+\DTLnewdb{LogBookPreCon1v1}
+
+\newcommand{\addpreconsingleplayerentry}[9]{%
+	\DTLnewrow{LogBookPreCon1v1}%
+	\setPreconInformation{LogBookPreCon1v1}#1%
+	\DTLnewdbentry{LogBookPreCon1v1}{WinOrLose}{#2}%
+	\DTLnewdbentry{LogBookPreCon1v1}{PlayerStart}{#3}%
+	\DTLnewdbentry{LogBookPreCon1v1}{FastMana}{#4}%
+	\DTLnewdbentry{LogBookPreCon1v1}{TurnNumber}{#5}%
+	\DTLnewdbentry{LogBookPreCon1v1}{FirstKillTurn}{#5}%
+	\conditionalSet{\listWinConditions}{LogBookPreCon1v1}{WinCondition}{#6}%
+	\DTLnewdbentry{LogBookPreCon1v1}{MulliganNumber}{#7}%
+	\conditionalSet{\listMulliganCauses}{LogBookPreCon1v1}{MulliganCause}{#8}%
+	\conditionalSet{\listObviousProblems}{LogBookPreCon1v1}{ObviousProblems}{#9}%
+}
+
+% Testing
+\addpreconsingleplayerentry{{C}{Token}}{WIN}{SELF}{NONE}{12}{HP0}{1}{ManaScrew}{None}%
+\addpreconsingleplayerentry{{RG}{Aggro/Burn}}{WIN}{SELF}{NONE}{4}{HP0}{1}{ManaScrew}{None}%
+\addpreconsingleplayerentry{{WUBR}{Voltron}}{LOSE}{OPP}{SELF}{8}{Poison}{0}{None}{None}%
+\addpreconsingleplayerentry{{RG}{Aggro/Burn}}{WIN}{OPP}{NONE}{9}{HP0}{0}{None}{None}%
+\addpreconsingleplayerentry{{WUBG}{Toolbox}}{LOSE}{SELF}{NONE}{8}{HP0}{0}{None}{None}%
+% Real Games

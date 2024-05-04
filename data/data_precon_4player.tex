@@ -1,0 +1,21 @@
+\DTLnewdb{LogBookPreCon4Player}
+
+\newcommand{\addpreconfourplayerentry}[9]{%
+	\DTLnewrow{LogBookPreCon4Player}%
+	\setPreconInformation{LogBookPreCon4Player}#1%
+	\DTLnewdbentry{LogBookPreCon4Player}{WinOrLose}{#2}%
+	\setFourPlayerFinishPosition{LogBookPreCon4Player}{#3}%
+	\setFourPlayerFastMana{LogBookPreCon4Player}{#4}%
+	%\DTLnewdbentry{LogBook4Player}{TurnNumber}{#5}%
+	\setFirstKillAndTurnNumber{LogBookPreCon4Player}#5
+	\conditionalSet{\listWinConditions}{LogBookPreCon4Player}{WinCondition}{#6}%
+	\DTLnewdbentry{LogBookPreCon4Player}{MulliganNumber}{#7}%
+	\conditionalSet{\listMulliganCauses}{LogBookPreCon4Player}{MulliganCause}{#8}%
+	\conditionalSet{\listObviousProblems}{LogBookPreCon4Player}{ObviousProblems}{#9}%
+}
+
+% Test Games
+\addpreconfourplayerentry{{WUR}{Control}}{LOSE}{SELF/2,1/1,2/3,3/2,4/4}{NO/NO/NO/NO}{{3}{9}}{HP0}{1}{ManaFlood}{None}%
+\addpreconfourplayerentry{{WBR}{Stax/Tax/Lock}}{LOSE}{SELF/2,1/1,2/4,3/3,4/2}{NO/NO/NO/NO}{{12}{15}}{HP0}{0}{None}{Targeting}%
+\addpreconfourplayerentry{{WUBRG}{Midrange}}{WIN}{SELF/1,1/2,2/3,3/1,4/4}{NO/NO/NO/NO}{{9}{10}}{HP0}{0}{None}{ManaScrew}%
+% Real Games

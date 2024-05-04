@@ -328,4 +328,289 @@
 	\end{tikzpicture}
 	
 	\input{deck_information_pages/Commander_Information_Connector.tex}
+	
+	% Pre-Constructed Decks Statistic
+	\newpage
+	\renewcommand{\fancypagestyleheader}{Pre-Constructed Decks - General Statistic}
+	\renewcommand{\fancypagestylesubheader}{}
+	\tocAddDeck{Pre-Constructed Decks}
+	
+	\input{data/data_precon_1v1.tex}
+	\input{data/data_precon_3player.tex}
+	\input{data/data_precon_4player.tex}
+	
+	%\xdef\logbook{PreConstructedLogbook}
+	% General Statistic Page
+	% Ornaments
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		%\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% Win/Lose Statistic
+	%\frameWinLoseStatistic{\winpercentage}{\losepercentage}
+	\framePreConWinLoseStatistic
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calcMostLeastPreConColorIdentity{<}
+	\framePreConColorCombinationAppearances
+	
+	% Side Frames
+	\begin{tikzpicture}[remember picture,overlay]
+		% Pre-Constructed Icon
+		\node[xshift=767pt, yshift=-60pt] {%
+			\includegraphics[width = 190pt, height = 200pt, keepaspectratio]{images/deck_crests/PreCon.png}%
+		};%
+		
+		% Latest Performance Information		
+		\node[xshift=935pt, yshift=30pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\Large \textsc{Performance}}
+		};
+		\node[xshift=935pt, yshift=10pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, white, align=center] {%
+			\begin{tikzpicture}
+				\node[text width=125pt] {%
+					{\large 1v1 Commander}\\\vspace*{0.3em}\calcPerformanceStatistic{LogBookPreCon1v1}
+				};%
+				\node[yshift=-55pt, text width=125pt] {%
+					{\large 3 Player Commander}\\\vspace*{0.3em}\calcPerformanceStatistic{LogBookPreCon3Player}
+				};%
+				\node[yshift=-110pt, text width=125pt] {%
+					{\large 4 Player Commander}\\\vspace*{0.3em}\calcPerformanceStatistic{LogBookPreCon4Player}
+				};%
+			\end{tikzpicture}
+		};%
+		
+		% Most Played Color Combination
+		\node[xshift=771.5pt, yshift=-192.5pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Most Played Color Combination}}
+		};
+		\node[xshift=771.5pt, yshift=-277.5pt, text width=136pt, inner sep=0pt, outer sep=0pt, align=center] {%
+			\includegraphics[width = 120pt, height = 120pt, keepaspectratio]{images/color_crests/\mlColorIdentity.png}%
+		};
+		\node[xshift=771.5pt, yshift=-340pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}The most played Color-Combination is\linebreak\mlColorIdentityName~(\mlColorIdentity)\linebreak(\mlTimesAppearanceNumber~Games played)\\
+		};%
+		
+		% Least Played Color Combination
+		\node[xshift=935pt, yshift=-192.5pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Least Played Color Combination}}
+		};
+		\calcMostLeastPreConColorIdentity{>}		
+		\node[xshift=935pt, yshift=-277.5pt, text width=136pt, inner sep=0pt, outer sep=0pt, align=center] {%
+			\includegraphics[width = 120pt, height = 120pt, keepaspectratio]{images/color_crests/\mlColorIdentity.png}%
+		};
+		\node[xshift=935pt, yshift=-340pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}The least played Color-Combination is\linebreak\mlColorIdentityName~(\mlColorIdentity)\linebreak(\mlTimesAppearanceNumber~Games played)\\
+		};%
+		
+		% Deck Archetypes
+		\node[xshift=771.5pt, yshift=-420pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Deck Archetypes}}%
+		};%
+		\node[xshift=771.5pt, yshift=-442.5pt, text width=120pt, anchor=north, inner sep=0pt, outer sep=0pt, white] {%
+			\printPreConDeckArchetypeDistribution%
+		};
+		
+		% Author Notes
+		\node[xshift=935pt, yshift=-420pt, text width=136pt, anchor=north, inner sep=0pt, outer sep=0pt, align=center] {%
+			\color{white}{\large \textsc{Color-WIN Statistic}}%
+		};%
+		\node[xshift=935pt, yshift=-427.5pt, text width=130pt, anchor=north, inner sep=0pt, outer sep=0pt, white] {%
+			\printPreConColorWinDistribution%
+		};
+	\end{tikzpicture}
+	
+	\newpage
+	\renewcommand{\fancypagestyleheader}{1v1 Commander Breakdown (PreCon)}
+	\xdef\logbook{LogBookPreCon1v1}
+	
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% Win/Lose Statistic
+	\calculateWinLosePercentage{\logbook}
+	\frameWinLoseStatistic{\winpercentage}{\losepercentage}
+	
+	% Average Finish Position Statistic
+	\begin{tikzpicture}
+		\node {};
+	\end{tikzpicture}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calculateAverage{\logbook}{TurnNumber}
+	\calculateMedian{\logbook}{TurnNumber}
+	\calculateMinMax{\logbook}{TurnNumber}
+	\frameTurnNumberStatistic{1}{0}{\minimum}{\maximum}{\lowerquartile}{\upperquartile}{}{\average}{\median}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		%\frameDeckBanner{Adamantine_Flyers}%
+		\calculateTwoPlayerFastManaWinLosePercentages{\logbook}%
+		\frameFastManaToWinLoseStatistic{\fastmanawinpercentage}{\nofastmanawinpercentage}{\nofastmanalosepercentage}{\fastmanalosepercentage}%
+	
+		% Mulligan Reason OR Winners Start Position Frame
+		\calculateTwoPlayerStartGameWinLosePercentage{\logbook}%
+		\frameWinnerStartPositionStatistic{\startgamewinpercentage}{\startgamelosepercentage}{}{}%
+		%\frameMulliganReasonsStatistic{15}{25}{30}{10}{20}{15}%
+		
+		% Win Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\frameWinConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Lose Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\frameLoseConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Game Length Frame
+		\calculateGameLengthsPercentages{\logbook}%
+		\frameGameLengthStatistic{\shortgamepercentage}{\midgamepercentage}{\longgamepercentage}{\verylonggamepercentage}%
+		
+		% Obvious Problems Frame
+		\calculateObviousProblemsPercentages{\logbook}
+		\frameObviousProblemsStatistic{\manascrewpercentage}{\manafloodpercentage}{\carddrawpercentage}{\lackofresponsespercentage}{\highcmcpercentage}{\targetingpercentage}{\misplayspercentage}%
+	\end{tikzpicture}
+	
+	\newpage
+	\renewcommand{\fancypagestyleheader}{3 Player Commander Breakdown (PreCon)}
+	\xdef\logbook{LogBookPreCon3Player}
+	
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% Win/Lose Statistic
+	\calculateWinLosePercentage{\logbook}
+	\frameWinLoseStatistic{\winpercentage}{\losepercentage}
+	
+	% Average Finish Position Statistic
+	\calculateThreePlayerAverageFinishPositions{\logbook}
+	\frameAverageFinishPositionStatistic{\averageSelfFinishPosition}{\averageFirstPlayerFinish}{\averageSecondPlayerFinish}{\averageThirdPlayerFinish}{}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calculateAverage{\logbook}{TurnNumber}
+	\calculateMedian{\logbook}{TurnNumber}
+	\calculateMinMax{\logbook}{TurnNumber}
+	\calculateFirstKillTurnAverage{\logbook}{FirstKillTurn}
+	\frameTurnNumberStatistic{1}{0}{\minimum}{\maximum}{\lowerquartile}{\upperquartile}{\averageFirstKillTurnNumber}{\average}{\median}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		%\frameDeckBanner{Adamantine_Flyers}%
+		\calculateThreePlayerFastManaWinLosePercentages{\logbook}%
+		\frameFastManaToWinLoseStatistic{\threeplayerfastmanawinpercentage}{\threeplayernofastmanawinpercentage}{\threeplayernofastmanalosepercentage}{\threeplayerfastmanalosepercentage}%
+	
+		% Mulligan Reason OR Winners Start Position Frame
+		\calculateThreePlayerStartGameWinLosePercentage{\logbook}%
+		\frameWinnerStartPositionStatistic{\threeplayerfirstwinpercentage}{\threeplayersecondwinpercentage}{\threeplayerthirdwinpercentage}{}%
+		%\frameMulliganReasonsStatistic{15}{25}{30}{10}{20}{15}%
+		
+		% Win Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\frameWinConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Lose Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\frameLoseConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Game Length Frame
+		\calculateGameLengthsPercentages{\logbook}%
+		\frameGameLengthStatistic{\shortgamepercentage}{\midgamepercentage}{\longgamepercentage}{\verylonggamepercentage}%
+		
+		% Obvious Problems Frame
+		\calculateObviousProblemsPercentages{\logbook}
+		\frameObviousProblemsStatistic{\manascrewpercentage}{\manafloodpercentage}{\carddrawpercentage}{\lackofresponsespercentage}{\highcmcpercentage}{\targetingpercentage}{\misplayspercentage}%
+	\end{tikzpicture}
+	
+	\newpage
+	\renewcommand{\fancypagestyleheader}{4 Player Commander Breakdown (PreCon)}
+	\xdef\logbook{LogBookPreCon4Player}
+	
+	\begin{tikzpicture}[remember picture,overlay]%
+		\WinLoseStatisticOrnamentOutline
+		\colorMatchUpTurnNumberStatisticOrnamentOutline
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-220pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-220pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-445pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-445pt}
+		
+		\inDepthStatisticOrnamentOutline{623pt}{-670pt}
+		\inDepthStatisticOrnamentOutline{786.5pt}{-670pt}
+	\end{tikzpicture}%
+	
+	% Win/Lose Statistic
+	\calculateWinLosePercentage{\logbook}
+	\frameWinLoseStatistic{\winpercentage}{\losepercentage}
+	
+	% Average Finish Position Statistic
+	\calculateFourPlayerAverageFinishPositions{\logbook}
+	\frameAverageFinishPositionStatistic{\averageSelfFinishPosition}{\averageFirstPlayerFinish}{\averageSecondPlayerFinish}{\averageThirdPlayerFinish}{\averageFourthPlayerFinish}
+	
+	% Color Match-Up OR Turn Number Statistic
+	\calculateAverage{\logbook}{TurnNumber}
+	\calculateMedian{\logbook}{TurnNumber}
+	\calculateMinMax{\logbook}{TurnNumber}
+	\calculateFirstKillTurnAverage{\logbook}{FirstKillTurn}
+	\frameTurnNumberStatistic{1}{0}{\minimum}{\maximum}{\lowerquartile}{\upperquartile}{\averageFirstKillTurnNumber}{\average}{\median}%
+	
+	% In-Depth Statistics
+	\begin{tikzpicture}[remember picture,overlay]
+		% Deck Banner OR Fast Mana to Win/Lose Frame
+		\calculateFourPlayerFastManaWinLosePercentages{\logbook}%
+		\frameFastManaToWinLoseStatistic{\fourplayerfastmanawinpercentage}{\fourplayernofastmanawinpercentage}{\fourplayernofastmanalosepercentage}{\fourplayerfastmanalosepercentage}%
+	
+		% Mulligan Reason OR Winners Start Position Frame
+		\calculateFourPlayerStartGameWinLosePercentage{\logbook}
+		\frameWinnerStartPositionStatistic{\fourplayerfirstwinpercentage}{\fourplayersecondwinpercentage}{\fourplayerthirdwinpercentage}{\fourplayerfourthwinpercentage}%
+		%\frameMulliganReasonsStatistic{15}{25}{30}{10}{20}{15}%
+		
+		% Win Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{WIN}%
+		\frameWinConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Lose Condition Frame
+		\calculateWinConditionsPercentages{\logbook}{LOSE}%
+		\frameLoseConditionStatistic{\hpopercentage}{\poisonpercentage}{\deckoutpercentage}{\cardeffectpercentage}{\commanderdamagepercentage}%
+		
+		% Game Length Frame
+		\calculateGameLengthsPercentages{\logbook}%
+		\frameGameLengthStatistic{\shortgamepercentage}{\midgamepercentage}{\longgamepercentage}{\verylonggamepercentage}%
+		
+		% Obvious Problems Frame
+		\calculateObviousProblemsPercentages{\logbook}
+		\frameObviousProblemsStatistic{\manascrewpercentage}{\manafloodpercentage}{\carddrawpercentage}{\lackofresponsespercentage}{\highcmcpercentage}{\targetingpercentage}{\misplayspercentage}%
+	\end{tikzpicture}
 \end{document}

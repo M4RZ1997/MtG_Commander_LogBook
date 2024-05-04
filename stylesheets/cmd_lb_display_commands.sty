@@ -18,9 +18,11 @@
 \newcounter{CurrentEntry}
 \newcounter{tempEntryCounter}
 \newcounter{tempTrackNumber}
+\newcounter{tempAppearanceNumber}
 \newcounter{tempArchetypeCounter}
 
 \xdef\mlTimesTrackedNumber{-1}\relax
+\xdef\mlTimesAppearanceNumber{-1}\relax
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % --------------------------- First Page:  Latest Performance Statistic --------------------------- %		
@@ -78,6 +80,369 @@
 }%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
+% ------------------------- Most/Least PreCon  Color Identity Appearances ------------------------- %
+% Key-Value Structure
+\ExplSyntaxOn
+
+% Create a property list
+\prop_new:N \l_color_identity
+
+% Populate the property list
+\prop_put:Nnn \l_color_identity {C} {Colorless}
+\prop_put:Nnn \l_color_identity {W} {White}
+\prop_put:Nnn \l_color_identity {U} {Blue}
+\prop_put:Nnn \l_color_identity {B} {Black}
+\prop_put:Nnn \l_color_identity {R} {Red}
+\prop_put:Nnn \l_color_identity {G} {Green}
+
+\prop_put:Nnn \l_color_identity {WU} {Azorius}
+\prop_put:Nnn \l_color_identity {WB} {Orzhov}
+\prop_put:Nnn \l_color_identity {WR} {Boros}
+\prop_put:Nnn \l_color_identity {WG} {Selesnya}
+\prop_put:Nnn \l_color_identity {UB} {Dimir}
+\prop_put:Nnn \l_color_identity {UR} {Izzet}
+\prop_put:Nnn \l_color_identity {UG} {Simic}
+\prop_put:Nnn \l_color_identity {BR} {Rakdos}
+\prop_put:Nnn \l_color_identity {BG} {Golgari}
+\prop_put:Nnn \l_color_identity {RG} {Gruul}
+
+\prop_put:Nnn \l_color_identity {WUB} {Esper}
+\prop_put:Nnn \l_color_identity {WUR} {Jeskai}
+\prop_put:Nnn \l_color_identity {WUG} {Bant}
+\prop_put:Nnn \l_color_identity {WBR} {Mardu}
+\prop_put:Nnn \l_color_identity {WBG} {Abzan}
+\prop_put:Nnn \l_color_identity {WRG} {Naya}
+\prop_put:Nnn \l_color_identity {UBR} {Grixis}
+\prop_put:Nnn \l_color_identity {UBG} {Sultai}
+\prop_put:Nnn \l_color_identity {URG} {Temur}
+\prop_put:Nnn \l_color_identity {BRG} {Jund}
+
+\prop_put:Nnn \l_color_identity {WUBR} {Dune}
+\prop_put:Nnn \l_color_identity {WUBG} {Glint}
+\prop_put:Nnn \l_color_identity {WURG} {Ink}
+\prop_put:Nnn \l_color_identity {WBRG} {Witch}
+\prop_put:Nnn \l_color_identity {UBRG} {Yore}
+
+\prop_put:Nnn \l_color_identity {WUBRG} {Rainbow}
+
+% Define a command to retrieve values by key
+\NewDocumentCommand{\getKeyValue}{m}{%
+	\prop_get:NnNTF \l_color_identity {#1} \l_tmpa_tl
+		{ \tl_use:N \l_tmpa_tl }
+		{ Key~`#1'~undefined }
+}
+
+\ExplSyntaxOff
+% Calculation
+\newcommand{\calcMostLeastPreConColorIdentity}[1]{%
+	\foreach \lColorIdentity in \listColorCombinations {%
+		\setcounter{tempAppearanceNumber}{0}
+		\DTLforeach{LogBookPreCon1v1}{\lbDeckColor=DeckColor}{%
+			\ifthenelse{\equal{\lColorIdentity}{\lbDeckColor}}{\stepcounter{tempAppearanceNumber}}{}%
+		}%
+		\DTLforeach{LogBookPreCon3Player}{\lbDeckColor=DeckColor}{%
+			\ifthenelse{\equal{\lColorIdentity}{\lbDeckColor}}{\stepcounter{tempAppearanceNumber}}{}%
+		}%
+		\DTLforeach{LogBookPreCon4Player}{\lbDeckColor=DeckColor}{%
+			\ifthenelse{\equal{\lColorIdentity}{\lbDeckColor}}{\stepcounter{tempAppearanceNumber}}{}%
+		}%
+		\ifthenelse{\equal{#1}{>} \AND \equal{\mlTimesAppearanceNumber}{-1}}{
+			\xdef\mlTimesAppearanceNumber{\thetempAppearanceNumber}\relax%
+			\xdef\mlColorIdentity{\lColorIdentity}\relax%
+			\xdef\mlColorIdentityName{\getKeyValue{\lColorIdentity}}\relax%
+		}{}
+		\ifthenelse{\mlTimesAppearanceNumber #1 \thetempAppearanceNumber}{%
+			\xdef\mlTimesAppearanceNumber{\thetempAppearanceNumber}\relax%
+			\xdef\mlColorIdentity{\lColorIdentity}\relax%
+			\xdef\mlColorIdentityName{\getKeyValue{\lColorIdentity}}\relax%
+		}{}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------------- PreCon WIN/LOSE Statistic ----------------------------------- %
+\newcounter{tempPreConWinNumber}
+\newcommand{\framePreConWinLoseStatistic}{%
+	\setcounter{tempPreConWinNumber}{0}%
+	\pgfmathsetmacro{\precongamestotal}{\DTLrowcount{LogBookPreCon1v1} + \DTLrowcount{LogBookPreCon3Player} + \DTLrowcount{LogBookPreCon4Player}}%
+	\DTLforeach{LogBookPreCon1v1}{\lbWinOrLose=WinOrLose}{%
+		\ifthenelse{\equal{WIN}{\lbWinOrLose}}{\stepcounter{tempPreConWinNumber}}{}%
+	}%
+	\DTLforeach{LogBookPreCon3Player}{\lbWinOrLose=WinOrLose}{%
+		\ifthenelse{\equal{WIN}{\lbWinOrLose}}{\stepcounter{tempPreConWinNumber}}{}%
+	}%
+	\DTLforeach{LogBookPreCon4Player}{\lbWinOrLose=WinOrLose}{%
+		\ifthenelse{\equal{WIN}{\lbWinOrLose}}{\stepcounter{tempPreConWinNumber}}{}%
+	}%
+	\FPset{preconwinpercentage}{0}%
+	\FPeval{preconwinpercentage}{round(\thetempPreConWinNumber/\precongamestotal*100,2)}%
+	\FPeval{preconlosepercentage}{round(100-\preconwinpercentage,2)}%
+	\frameWinLoseStatistic{\preconwinpercentage}{\preconlosepercentage}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------- PreCon Color Combination Distribution ----------------------------- %
+% Shading Variants
+\pgfdeclarehorizontalshading{C}{4cm}{%
+	color(0cm)=(gray);%
+	color(6cm)=(gray)%
+}%
+\pgfdeclarehorizontalshading{W}{4cm}{%
+	color(0cm)=(white);%
+	color(6cm)=(white)%
+}%
+\pgfdeclarehorizontalshading{U}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(6cm)=(MarzRoyal)%
+}%
+\pgfdeclarehorizontalshading{B}{4cm}{%
+	color(0cm)=(black);%
+	color(6cm)=(black)%
+}%
+\pgfdeclarehorizontalshading{R}{4cm}{%
+	color(0cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{G}{4cm}{%
+	color(0cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+
+\pgfdeclarehorizontalshading{WU}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(4cm)=(MarzRoyal);%
+	color(6cm)=(MarzRoyal)%
+}%
+\pgfdeclarehorizontalshading{WB}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(4cm)=(black);%
+	color(6cm)=(black)%
+}%
+\pgfdeclarehorizontalshading{WR}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{WG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{UB}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(4cm)=(black);%
+	color(6cm)=(black)%
+}%
+\pgfdeclarehorizontalshading{UR}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{UG}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{BR}{4cm}{%
+	color(0cm)=(black);%
+	color(2cm)=(black);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{BG}{4cm}{%
+	color(0cm)=(black);%
+	color(2cm)=(black);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{RG}{4cm}{%
+	color(0cm)=(MarzDarkRed);%
+	color(2cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+
+\pgfdeclarehorizontalshading{WUB}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(3cm)=(MarzRoyal);%
+	color(4cm)=(black);%
+	color(6cm)=(black)%
+}%
+\pgfdeclarehorizontalshading{WUR}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(3cm)=(MarzRoyal);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{WUG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(3cm)=(MarzRoyal);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{WBR}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(3cm)=(black);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{WBG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(3cm)=(black);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{WRG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(3cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{UBR}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(3cm)=(black);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{UBG}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(3cm)=(black);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{URG}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(3cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{BRG}{4cm}{%
+	color(0cm)=(black);%
+	color(2cm)=(black);%
+	color(3cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+
+\pgfdeclarehorizontalshading{WUBR}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(2.66cm)=(MarzRoyal);%
+	color(3.33cm)=(black);%
+	color(4cm)=(MarzDarkRed);%
+	color(6cm)=(MarzDarkRed)%
+}%
+\pgfdeclarehorizontalshading{WUBG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(2.66cm)=(MarzRoyal);%
+	color(3.33cm)=(black);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{WURG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(2.66cm)=(MarzRoyal);%
+	color(3.33cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{WBRG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(2.66cm)=(black);%
+	color(3.33cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+\pgfdeclarehorizontalshading{UBRG}{4cm}{%
+	color(0cm)=(MarzRoyal);%
+	color(2cm)=(MarzRoyal);%
+	color(2.66cm)=(black);%
+	color(3.33cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+
+\pgfdeclarehorizontalshading{WUBRG}{4cm}{%
+	color(0cm)=(white);%
+	color(2cm)=(white);%
+	color(2.5cm)=(MarzRoyal);%
+	color(3cm)=(black);%
+	color(3.5cm)=(MarzDarkRed);%
+	color(4cm)=(MarzGreen);%
+	color(6cm)=(MarzGreen)%
+}%
+% Draw Color Combination Distribution
+\newcommand{\framePreConColorCombinationAppearances}{%
+	{\Large%
+	\begin{tikzpicture}[remember picture,overlay]%
+		\node[posLandsStyle] at (current page.center) {%
+			\begin{tikzpicture}%
+				\node[xshift=3.5cm,yshift=0.7cm] (Header) {\textcolor{white}{\Huge{\titlefont{Color Combination Distribution}}}};%
+				\node at (20cm, 0cm) {};
+				\pgfmathsetmacro{\maxValue}{\mlTimesAppearanceNumber}%
+				\pgfmathsetmacro{\sum}{\DTLrowcount{LogBookPreCon1v1} + \DTLrowcount{LogBookPreCon3Player} + \DTLrowcount{LogBookPreCon4Player}}%
+				
+%				\draw[gray, very thick] (0cm,0cm) -- (20cm,0cm);%
+%				\foreach \x in {1,...,3}%
+%    				\draw[gray!50] (\fpeval{3*\x + 0.5} cm,0.15cm) -- (\fpeval{3*\x + 0.5} cm,0cm);%
+				
+				%\pgfmathsetmacro{\maxValue}{1}
+				\pgfmathsetmacro{\maxValue}{\maxValue == 0 ? 1 : \maxValue}
+				%\pgfmathsetmacro{\sum}{1}
+				\pgfmathsetmacro{\sum}{\sum == 0 ? 1 : \sum}
+				
+				\draw[gray, very thick, text=white] (-0.5cm,0.3cm) -- (-0.5,-5cm);%
+				
+				\foreach \y in {1,...,3}%
+					\draw[gray!50] (-0.65cm,\fpeval{1.1*\y -4.4}cm) -- (-0.5cm,\fpeval{1.1*\y -4.4}cm);%
+				\draw[gray, very thick, text=white] (-0.7cm,0cm) -- (-0.3cm,0cm) node at (-1.25cm,0cm) {\small{\fpeval{round(\maxValue/\sum*100,2)}\%}};%
+				\draw[gray, very thick, text=white] (-0.7cm,-4.4cm) -- (-0.3cm,-4.4cm) node at (-1.25cm,-4.4cm) {\small{0\%}};%
+				
+				\newcounter{tempStepCICounter}
+				\setcounter{tempStepCICounter}{0}				
+				\foreach \lColorIdentity in \listColorCombinations {%
+					\stepcounter{tempStepCICounter}%
+					
+					\setcounter{tempAppearanceNumber}{0}
+					\DTLforeach{LogBookPreCon1v1}{\lbDeckColor=DeckColor}{%
+						\ifthenelse{\equal{\lColorIdentity}{\lbDeckColor}}{\stepcounter{tempAppearanceNumber}}{}%
+					}%
+					\DTLforeach{LogBookPreCon3Player}{\lbDeckColor=DeckColor}{%
+						\ifthenelse{\equal{\lColorIdentity}{\lbDeckColor}}{\stepcounter{tempAppearanceNumber}}{}%
+					}%
+					\DTLforeach{LogBookPreCon4Player}{\lbDeckColor=DeckColor}{%
+						\ifthenelse{\equal{\lColorIdentity}{\lbDeckColor}}{\stepcounter{tempAppearanceNumber}}{}%
+					}%
+					
+					\draw[shading=\lColorIdentity,shading angle=-70] (\fpeval{0.6*\thetempStepCICounter - 0.75}cm, -4.8cm) rectangle ++(0.4cm, \fpeval{(\thetempAppearanceNumber/\maxValue)*4.4 + 0.4}cm);%
+				}%
+				\draw[gray, very thick] (-0.8cm,-4.8cm) -- (19cm,-4.8cm);%
+			\end{tikzpicture}%
+		};%
+	\end{tikzpicture}%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
 % ---------------------------------- Deck Archetype Distribution ---------------------------------- %
 \newcommand{\printDeckArchetypeDistribution}{%
 	\foreach \archetype in \listDeckArchetypes {%
@@ -89,6 +454,101 @@
 		}%
 		\makebox[120pt][s]{\archetype\hfill\thetempArchetypeCounter}\\%
 	}%
+}%
+% Pre-Constructed Decks %
+\newcommand{\printPreConDeckArchetypeDistribution}{%
+	\foreach \archetype in \listDeckArchetypes {%
+		\setcounter{tempArchetypeCounter}{0}%
+		\DTLforeach{LogBookPreCon1v1}{\tempArchetype=DeckArchetype}{%
+			\ifthenelse{\equal{\archetype}{\tempArchetype}}{%
+				\stepcounter{tempArchetypeCounter}%
+			}{}%
+		}%
+		\DTLforeach{LogBookPreCon3Player}{\tempArchetype=DeckArchetype}{%
+			\ifthenelse{\equal{\archetype}{\tempArchetype}}{%
+				\stepcounter{tempArchetypeCounter}%
+			}{}%
+		}%
+		\DTLforeach{LogBookPreCon4Player}{\tempArchetype=DeckArchetype}{%
+			\ifthenelse{\equal{\archetype}{\tempArchetype}}{%
+				\stepcounter{tempArchetypeCounter}%
+			}{}%
+		}%
+		\makebox[120pt][s]{\archetype\hfill\thetempArchetypeCounter}\\%
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------ Pre Constructed Decks -- Color-Win Distribution ------------------------ %
+% Char-in-String Check
+\makeatletter
+\def\instring#1#2{TT\fi\begingroup
+  \edef\x{\endgroup\noexpand\in@{#1}{#2}}\x\ifin@}
+\makeatother
+% Calculation and Plotter
+\newcounter{tempColorCounter}%
+\newcounter{tempColorWinCounter}%
+\newcounter{tempHelper}%
+\newcommand{\printPreConColorWinDistribution}{%
+	\begin{tikzpicture}
+		\node at (0,0) {};
+		
+		% Color Icons
+		\filldraw[fill=white] (1cm,-0.4cm) circle (5pt);%
+		\node[inner sep=0pt] at (1.025cm,-0.2cm) {\textcolor{black}{\LARGE \MtGIcons{x}}};%
+		\filldraw[fill=white] (1.5cm,-0.4cm) circle (5pt);%
+		\node[inner sep=0pt] at (1.525cm,-0.2cm) {\textcolor{black}{\LARGE \MtGIcons{a}}};%
+		\filldraw[fill=white] (2cm,-0.4cm) circle (5pt);%
+		\node[inner sep=0pt] at (2.025cm,-0.2cm) {\textcolor{MarzRoyal!80}{\LARGE \MtGIcons{b}}};%
+		\filldraw[fill=white] (2.5cm,-0.4cm) circle (5pt);%
+		\node[inner sep=0pt] at (2.525cm,-0.2cm) {\textcolor{MarzPurple}{\LARGE \MtGIcons{c}}};%
+		\filldraw[fill=white] (3cm,-0.4cm) circle (5pt);%
+		\node[inner sep=0pt] at (3.025cm,-0.2cm) {\textcolor{MarzDarkRed}{\LARGE \MtGIcons{d}}};%
+		\filldraw[fill=white] (3.5cm,-0.4cm) circle (5pt);%
+		\node[inner sep=0pt] at (3.525cm,-0.2cm) {\textcolor{MarzGreen!80}{\LARGE \MtGIcons{e}}};%
+		
+		\foreach \y in {0,...,4} {%
+			\node[anchor=east] at (0.5cm,\fpeval{-1.25*\y - 1}cm) {\fpeval{25*\y}\%};%
+		}%
+		\draw[gray, very thick, text=white] (0.6cm,-0.2cm) -- (0.6cm,-6.25cm);%
+		
+		\setcounter{tempHelper}{0}%
+		\foreach \color in {C, W, U, B, R, G} {%
+			\stepcounter{tempHelper}
+			\setcounter{tempColorCounter}{0}%
+			\setcounter{tempColorWinCounter}{0}%
+			\DTLforeach{LogBookPreCon1v1}{\tempDeckColor=DeckColor, \tempWinOrLose=WinOrLose}{%
+				\if\instring{\color}{\tempDeckColor}%
+					\stepcounter{tempColorCounter}%
+					\ifthenelse{\equal{WIN}{\tempWinOrLose}}{%
+						\stepcounter{tempColorWinCounter}%
+					}{}%
+				\else\fi%
+			}%
+			\DTLforeach{LogBookPreCon3Player}{\tempDeckColor=DeckColor, \tempWinOrLose=WinOrLose}{%
+				\if\instring{\color}{\tempDeckColor}%
+					\stepcounter{tempColorCounter}%
+					\ifthenelse{\equal{WIN}{\tempWinOrLose}}{%
+						\stepcounter{tempColorWinCounter}%
+					}{}%
+				\else\fi%
+			}%
+			\DTLforeach{LogBookPreCon4Player}{\tempDeckColor=DeckColor, \tempWinOrLose=WinOrLose}{%
+				\if\instring{\color}{\tempDeckColor}%
+					\stepcounter{tempColorCounter}%
+					\ifthenelse{\equal{WIN}{\tempWinOrLose}}{%
+						\stepcounter{tempColorWinCounter}%
+					}{}%
+				\else\fi%
+			}%
+			
+			\pgfmathsetmacro{\colorsum}{\thetempColorCounter == 0 ? 1 : \thetempColorCounter}%
+			
+			\draw[shading=\color,shading angle=-70] (\fpeval{0.5*\thetempHelper + 0.35}cm, -0.6cm) rectangle ++(0.3cm, \fpeval{-(\thetempColorWinCounter/\colorsum)*5 - 0.4}cm);%
+		}%
+		
+		\draw[gray, very thick, text=white] (-0.2cm,-0.6cm) -- (4cm,-0.6cm);%
+	\end{tikzpicture}%
 }%
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
