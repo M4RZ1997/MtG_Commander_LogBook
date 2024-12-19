@@ -803,11 +803,21 @@
 			\ifthenelse{\mulligannumber>0}{%
 				\FPeval{deckTotalMulliganNumber}{clip(deckTotalMulliganNumber + \mulligannumber)}%
 				
-				\IfSubStr{\mulligancauses}{ManaScrew}{\stepcounter{deckmcmanascrewnumber}}{}%
-				\IfSubStr{\mulligancauses}{ManaFlood}{\stepcounter{deckmcmanafloodnumber}}{}%
-				\IfSubStr{\mulligancauses}{BadManaCurve}{\stepcounter{deckmcbadmanacurvenumber}}{}%
-				\IfSubStr{\mulligancauses}{ActionLack}{\stepcounter{deckmcactionlacknumber}}{}%
-				\IfSubStr{\mulligancauses}{DeckSpecific}{\stepcounter{deckmcdeckspecificnumber}}{}%
+				\IfSubStr{\mulligancauses}{ManaScrew}{
+					\setcounter{deckmcmanascrewnumber}{\thedeckmcmanascrewnumber + \mulligannumber}%
+				}{}%
+				\IfSubStr{\mulligancauses}{ManaFlood}{
+					\setcounter{deckmcmanafloodnumber}{\thedeckmcmanafloodnumber + \mulligannumber}%
+				}{}%
+				\IfSubStr{\mulligancauses}{BadManaCurve}{
+					\setcounter{deckmcbadmanacurvenumber}{\thedeckmcbadmanacurvenumber + \mulligannumber}%
+				}{}%
+				\IfSubStr{\mulligancauses}{ActionLack}{
+					\setcounter{deckmcactionlacknumber}{\thedeckmcactionlacknumber + \mulligannumber}%
+				}{}%
+				\IfSubStr{\mulligancauses}{DeckSpecific}{
+					\setcounter{deckmcdeckspecificnumber}{\thedeckmcdeckspecificnumber + \mulligannumber}%
+				}{}%
 			}{}%
 		}{}%
 	}%
