@@ -30,6 +30,7 @@
 		
 \newcommand{\calcPerformanceStatistic}[1]{%
 	\setcounter{TotalEntries}{\DTLrowcount{#1}}%
+	\setcounter{CurrentEntry}{0}
 	\hspace*{0.5em}Number of Games:~\theTotalEntries\\\hspace*{0.5em}Last 10 Games:\vspace*{-0.75em}%
 	\begin{center}%
 		\DTLforeach{#1}{\WinOrLose=WinOrLose}{%
